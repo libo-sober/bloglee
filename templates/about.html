@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+{% load custom_tag %}
+
+{## 导航条#}
+{% block Navigation %}
+{% navigation categories %}
+{% endblock %}
 {% block content %}
 
     <p>西游记 （中国古典四大名著之一） 编辑 讨论99+ 上传视频

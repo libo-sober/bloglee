@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # 首页
     path('', views.Index.as_view(), name='index'),
-    path('about/', views.About.as_view(), name='index'),
+    path('about/', views.About.as_view(), name='about'),
     re_path(r'^articles/detail/(\d+)/', views.ArticleView.as_view(), name='detail'),
     re_path(r'^articles/category/(\d+)/', views.CategoryView.as_view(), name='category'),
 

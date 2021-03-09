@@ -60,8 +60,11 @@ class CategoryView(View):
 
         return render(request, 'category.html', {'categories': categories, 'all_articles': all_articles, })
 
+
 # 关于我
 class About(View):
 
     def get(self, request):
-        return render(request, 'about.html')
+        # 文章分类
+        categories = models.Category.objects.all()
+        return render(request, 'about.html', {'categories': categories, })

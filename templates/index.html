@@ -6,9 +6,11 @@
     首页
 {% endblock %}
 
+{## 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入#}
 {% block Navigation %}
 {% navigation categories %}
 {% endblock %}
+
 
 {% block content %}
     {% for article in all_articles %}

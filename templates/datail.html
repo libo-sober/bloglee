@@ -396,9 +396,9 @@
 
 
         <div style="display:none;" id="morphing-content">
-            <h1 class="text-center my-0 p-0">说说我的博客</h1>
+            <h1 class="text-center my-0 p-0">{{ article.title }}</h1>
             <div class="text-muted text-center">
-                <span class="byline">未雨晴空</span>&nbsp;•&nbsp;<time class="date">2021年01月18日</time>
+                <span class="byline">大聪明</span>&nbsp;•&nbsp;<time class="date">{{ article.update_time | date:"Y-m-d" }}</time>
             </div>
             <div class="article-content">
                 {{ detail_html | custom_markdown | safe }}
