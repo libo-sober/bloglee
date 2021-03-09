@@ -1,0 +1,877 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="{{ article.title }}">
+
+
+    <meta name="keywords" content="{{ article.title }},django,java,Spring,python">
+{% endblock %}
+
+{% block content %}
+    <!--主内容-start--->
+    <main role="main">
+
+        <!--主内容-start--->
+        <div class="container">
+            <div class="row">
+                <!--左边内容区-start-->
+                <section class="col-sm-12 col-md-12 col-lg-8" id="main">
+                    <!--面包屑-start-->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item" style="color: #0056b3;">分类</li>
+                            <li class="breadcrumb-item" aria-current="page">{{ article.category.name }}</li>
+                        </ol>
+
+                    </nav>
+                    <!--面包屑-end-->
+
+                    <!--文章-start-->
+                    <article>
+                        <div class="article px-2 pt-3 pb-2 bg-white">
+                            <!--文章相关参数-start-->
+                            <header class="text-center">
+                                <!--文章标题-->
+                                <h2 class="article-title">{{ article.title }}</h2>
+                                <!--文章相关参数以及操作-->
+                                <div class="article-relative-meta">
+                                    <i class="fa fa-calendar"
+                                       style="color: pink;"></i> {{ article.update_time | date:"Y-m-d" }}
+                                    <i class="fa fa-user" style="color: #f0c674;"></i>大聪明
+                                    <a href="#comment" class="mr-auto"><i class="fa fa-comments"
+                                                                          style="color: yellowgreen;"></i>9评论</a>
+                                    <i class="fa fa-eye" style="color: lightskyblue;"></i>{{ article.click_count }}
+                                    <i class="fa fa-heart" style="color: #FF6767;"></i><span id="like-count">4</span>喜欢
+                                    <!--移动端和平板端会被隐藏-->
+                                    <span class="hd hidden-sm">
+                            <!--文章内容操作功能如：开启阅读模式-->
+                            <a data-morphing="" id="morphing" data-src="#morphing-content" href="javascript:;"
+                               class=" mr-0">
+                                <i class="fa fa-columns" aria-hidden="true" style="color: #F5DEB3;"></i>阅读模式
+                            </a>
+                            <a href="javascript:;" class="close-sidebar" title="隐藏边栏"><i class="fa fa-toggle-off"
+                                                                                         style="color:#28a745"></i>隐藏边栏</a>
+                            <a href="javascript:;" class="show-sidebar" style="display: none;"><i
+                                    class="fa fa-toggle-on" style="color:#28a745;"></i>显示边栏</a>
+                        </span>
+                                </div>
+
+                            </header>
+
+                            <!--文章内容区域-start-->
+                            <div id="article-content" class="article-content">
+                                <section style="box-sizing: border-box; text-align: justify;">
+                                    <section style="position: static; box-sizing: border-box;" powered-by="xiumi.us">
+                                        <section
+                                                style="display: flex; flex-flow: row nowrap; text-align: center; justify-content: center; opacity: 0.99; margin: 10px 0% -10px; position: static; box-sizing: border-box;">
+                                            <section
+                                                    style="display: inline-block; width: auto; vertical-align: top; flex: 0 0 0%; align-self: flex-start; height: auto; line-height: 1; box-sizing: border-box;">
+                                                <section style="position: static; box-sizing: border-box;"
+                                                         powered-by="xiumi.us"><br></section>
+                                            </section>
+                                        </section>
+                                    </section>
+                                    <section style="position: static; box-sizing: border-box;" powered-by="xiumi.us">
+                                        <section
+                                                style="display: flex; flex-flow: row nowrap; text-align: center; justify-content: center; opacity: 0.99; margin: -10px 0% 10px; position: static; box-sizing: border-box;">
+                                            <section
+                                                    style="display: inline-block; width: auto; vertical-align: top; flex: 0 0 0%; align-self: flex-start; height: auto; line-height: 1; box-sizing: border-box;">
+                                                <section style="position: static; box-sizing: border-box;"
+                                                         powered-by="xiumi.us">
+                                                    <section class="group-empty"
+                                                             style="display: inline-block; width: 15px; height: 15px; vertical-align: top; overflow: hidden; background-color: rgb(255, 255, 255); box-sizing: border-box;">
+                                                        <section>
+                                                            <svg viewbox="0 0 1 1"
+                                                                 style="float:left;line-height:0;width:0;vertical-align:top;"></svg>
+                                                        </section>
+                                                    </section>
+                                                </section>
+                                            </section>
+                                        </section>
+                                    </section>
+                                    <h1 id="8792_1610173171188_06805"
+                                        style="text-align: center; justify-content: center; margin: 10px 0%; position: static; box-sizing: border-box;">
+                                        <section
+                                                style="display: inline-block; width: auto; vertical-align: top; min-width: 10%; max-width: 100%; height: auto; border-style: solid; border-width: 2px; border-radius: 0px; border-color: rgb(49, 116, 161); padding: 3px 5px; box-sizing: border-box;">
+                                            <section
+                                                    style="display: inline-block; width: 100%; vertical-align: top; border-top: 1px solid rgb(49, 116, 161); border-top-left-radius: 0px; border-bottom: 1px solid rgb(49, 116, 161); border-bottom-right-radius: 0px; padding: 3px 10px; box-sizing: border-box;"
+                                                    powered-by="xiumi.us">
+                                                <section
+                                                        style="text-align: left; color: rgb(106, 106, 106); letter-spacing: 2px; box-sizing: border-box;"
+                                                        powered-by="xiumi.us"><p
+                                                        style="margin-top: 0px; margin-bottom: 0px; padding: 0px; box-sizing: border-box;">
+                                                    &nbsp;前言<br></p></section>
+                                            </section>
+                                        </section>
+                                    </h1>
+                                </section>
+                                <section style="box-sizing: border-box; text-align: justify;">
+                                    <section style="margin: 10px 0%; position: static; box-sizing: border-box;"
+                                             powered-by="xiumi.us">
+                                        <section
+                                                style="display: inline-block; width: 100%; vertical-align: top; border-style: solid; border-width: 1px; border-radius: 0px; border-color: rgb(126, 153, 92); padding: 3px; margin: 0px; box-sizing: border-box;">
+                                            <section style="position: static; box-sizing: border-box;"
+                                                     powered-by="xiumi.us">
+                                                <section
+                                                        style="display: flex; flex-flow: row nowrap; margin: 0px 0% 2px; text-align: right; justify-content: flex-end; position: static; box-sizing: border-box;">
+                                                    <section
+                                                            style="display: inline-block; vertical-align: top; width: auto; flex: 0 0 0%; align-self: flex-start; height: auto; line-height: 0; letter-spacing: 0px; margin: 0px 1px 0px 0px; box-sizing: border-box;">
+                                                        <section
+                                                                style="text-align: left; margin: 0px 0% 1px; justify-content: flex-start; position: static; box-sizing: border-box;"
+                                                                powered-by="xiumi.us">
+                                                            <section class="group-empty"
+                                                                     style="display: inline-block; width: 6px; height: 6px; vertical-align: top; overflow: hidden; background-color: rgb(75, 86, 59); box-sizing: border-box;">
+                                                                <section>
+                                                                    <svg viewbox="0 0 1 1"
+                                                                         style="float:left;line-height:0;width:0;vertical-align:top;"></svg>
+                                                                </section>
+                                                            </section>
+                                                        </section>
+                                                    </section>
+                                                    <section
+                                                            style="display: inline-block; vertical-align: top; width: auto; align-self: flex-start; flex: 0 0 0%; height: auto; line-height: 0; letter-spacing: 0px; margin: 0px 1px 0px 0px; box-sizing: border-box;">
+                                                        <section
+                                                                style="text-align: left; margin: 0px 0% 1px; justify-content: flex-start; position: static; box-sizing: border-box;"
+                                                                powered-by="xiumi.us">
+                                                            <section class="group-empty"
+                                                                     style="display: inline-block; width: 6px; height: 6px; vertical-align: top; overflow: hidden; background-color: rgb(126, 153, 92); box-sizing: border-box;">
+                                                                <section>
+                                                                    <svg viewbox="0 0 1 1"
+                                                                         style="float:left;line-height:0;width:0;vertical-align:top;"></svg>
+                                                                </section>
+                                                            </section>
+                                                        </section>
+                                                    </section>
+                                                    <section
+                                                            style="display: inline-block; vertical-align: top; width: auto; align-self: flex-start; flex: 0 0 0%; height: auto; line-height: 0; letter-spacing: 0px; margin: 0px 1px 0px 0px; box-sizing: border-box;">
+                                                        <section
+                                                                style="text-align: left; margin: 0px 0% 1px; justify-content: flex-start; position: static; box-sizing: border-box;"
+                                                                powered-by="xiumi.us">
+                                                            <section class="group-empty"
+                                                                     style="display: inline-block; width: 6px; height: 6px; vertical-align: top; overflow: hidden; background-color: rgb(189, 189, 128); box-sizing: border-box;">
+                                                                <section>
+                                                                    <svg viewbox="0 0 1 1"
+                                                                         style="float:left;line-height:0;width:0;vertical-align:top;"></svg>
+                                                                </section>
+                                                            </section>
+                                                        </section>
+                                                    </section>
+                                                    <section
+                                                            style="display: inline-block; vertical-align: top; width: auto; align-self: flex-start; flex: 0 0 0%; height: auto; line-height: 0; letter-spacing: 0px; margin: 0px 1px 0px 0px; box-sizing: border-box;">
+                                                        <section
+                                                                style="text-align: left; margin: 0px 0% 1px; justify-content: flex-start; position: static; box-sizing: border-box;"
+                                                                powered-by="xiumi.us">
+                                                            <section class="group-empty"
+                                                                     style="display: inline-block; width: 6px; height: 6px; vertical-align: top; overflow: hidden; background-color: rgb(153, 164, 118); box-sizing: border-box;">
+                                                                <section>
+                                                                    <svg viewbox="0 0 1 1"
+                                                                         style="float:left;line-height:0;width:0;vertical-align:top;"></svg>
+                                                                </section>
+                                                            </section>
+                                                        </section>
+                                                    </section>
+                                                </section>
+                                            </section>
+                                            <section
+                                                    style="display: inline-block; width: 100%; vertical-align: top; background-color: rgba(153, 164, 118, 0.09); padding: 10px 15px; box-sizing: border-box;"
+                                                    powered-by="xiumi.us">
+                                                <section
+                                                        style="font-size: 15px; color: rgb(75, 86, 59); letter-spacing: 1px; line-height: 1.8; padding: 0px; box-sizing: border-box;"
+                                                        powered-by="xiumi.us">
+                                                    <p>
+                                                        {{ article.content }}
+                                                    </p>
+                                                </section>
+                                            </section>
+                                        </section>
+                                    </section>
+                                </section>
+                                <section style="box-sizing: border-box; text-align: justify;">
+                                    <section style="position: static; box-sizing: border-box;" powered-by="xiumi.us">
+                                        <section
+                                                style="display: flex; flex-flow: row nowrap; text-align: center; justify-content: center; opacity: 0.99; margin: -10px 0% 10px; position: static; box-sizing: border-box;">
+                                            <section
+                                                    style="display: inline-block; width: auto; vertical-align: top; flex: 0 0 0%; align-self: flex-start; height: auto; line-height: 1; box-sizing: border-box;">
+                                                <section style="position: static; box-sizing: border-box;"
+                                                         powered-by="xiumi.us">
+                                                    <section class="group-empty"
+                                                             style="display: inline-block; width: 15px; height: 15px; vertical-align: top; overflow: hidden; background-color: rgb(255, 255, 255); box-sizing: border-box;">
+                                                        <section>
+                                                            <svg viewbox="0 0 1 1"
+                                                                 style="float:left;line-height:0;width:0;vertical-align:top;"></svg>
+                                                        </section>
+                                                    </section>
+                                                </section>
+                                            </section>
+                                        </section>
+                                    </section>
+                                    <h1 id="5020_1610173146628_81530"
+                                        style="text-align: center; justify-content: center; margin: 10px 0%; position: static; box-sizing: border-box;">
+                                        <section
+                                                style="display: inline-block; width: auto; vertical-align: top; min-width: 10%; max-width: 100%; height: auto; border-style: solid; border-width: 2px; border-radius: 0px; border-color: rgb(49, 116, 161); padding: 3px 5px; box-sizing: border-box;">
+                                            <section
+                                                    style="display: inline-block; width: 100%; vertical-align: top; border-top: 1px solid rgb(49, 116, 161); border-top-left-radius: 0px; border-bottom: 1px solid rgb(49, 116, 161); border-bottom-right-radius: 0px; padding: 3px 10px; box-sizing: border-box;"
+                                                    powered-by="xiumi.us">
+                                                <section
+                                                        style="text-align: left; color: rgb(106, 106, 106); letter-spacing: 2px; box-sizing: border-box;"
+                                                        powered-by="xiumi.us"><p
+                                                        style="margin-top: 0px; margin-bottom: 0px; padding: 0px; box-sizing: border-box;">
+                                                    &nbsp;博客部署<br></p></section>
+                                            </section>
+                                        </section>
+                                    </h1>
+                                </section>
+                                <section style="box-sizing: border-box; text-align: justify;">
+                                    <section style="margin: 10px 0%; position: static; box-sizing: border-box;"
+                                             powered-by="xiumi.us">
+                                        <section
+                                                style="display: inline-block; width: 100%; vertical-align: top; border-style: solid; border-width: 1px; border-radius: 0px; border-color: rgb(126, 153, 92); padding: 3px; margin: 0px; box-sizing: border-box;">
+                                            <section style="position: static; box-sizing: border-box;"
+                                                     powered-by="xiumi.us">
+                                                <section
+                                                        style="display: flex; flex-flow: row nowrap; margin: 0px 0% 2px; text-align: right; justify-content: flex-end; position: static; box-sizing: border-box;">
+                                                    <section
+                                                            style="display: inline-block; vertical-align: top; width: auto; flex: 0 0 0%; align-self: flex-start; height: auto; line-height: 0; letter-spacing: 0px; margin: 0px 1px 0px 0px; box-sizing: border-box;">
+                                                        <section
+                                                                style="text-align: left; margin: 0px 0% 1px; justify-content: flex-start; position: static; box-sizing: border-box;"
+                                                                powered-by="xiumi.us"></section>
+                                                    </section>
+                                                </section>
+                                            </section>
+                                            <section
+                                                    style="display: inline-block; width: 100%; vertical-align: top; background-color: rgba(153, 164, 118, 0.09); padding: 10px 15px; box-sizing: border-box;"
+                                                    powered-by="xiumi.us">
+                                                <section
+                                                        style="font-size: 15px; color: rgb(75, 86, 59); letter-spacing: 1px; line-height: 1.8; padding: 0px; box-sizing: border-box;"
+                                                        powered-by="xiumi.us"><p>&nbsp;&nbsp;&nbsp;&nbsp;</p></section>
+                                            </section>
+                                        </section>
+                                    </section>
+                                </section>
+                                <p><br></p>
+                                <p><br></p>
+                            </div>
+                            <!--文章内容区域-end-->
+
+                            <!--版权申明-->
+                            <div class="breadcrumb d-block text-center my-2">
+                                © 著作权归作者所有,欢迎转载，转载请说明出处：<a href="index.html" class="">大聪明</a>,谢谢理解！
+                            </div>
+
+                            <!--文章操作区域-start-->
+                            <div class="text-center py-5 operation btn-group-sm ">
+                                <button type="button" class="btn btn-outline-primary" data-id="13" id="post-like"><i
+                                        class="fa fa-heart"></i>喜欢
+                                </button>
+                                <button type="button" id="dashang" class="btn btn-outline-danger" data-toggle="modal"
+                                        data-target="#modal-dashang"><i class="fa fa-usd"></i>打赏
+                                </button>
+                                <button type="button" class="btn btn-outline-success" id="share"><i
+                                        class="fa fa-share-alt"></i>分享
+                                </button>
+                                <!--分享对象组-start-->
+                                <div class="text-center share-group mt-2 position-static" style="display:none">
+                                    <a href="javascript:;" class="d-inline-block"
+                                       onclick="share('qq','说说我的博客','博客第四版本已经上线，此次重构在于划分应用模块，充分发挥django的优势，如使用模板缓存、利用信号机制实现信息变更清除缓存、新增【文件上传器应用】来调用django-storage接口来存储文件(方便后期更换存储接口)、优化文章模块，支持两种编辑器，新增文章置顶功能等','/media/2020-12/06/1d38909f489e4d5d957e125ec3d137f6.jpg');"
+                                       rel="nofollow" data-toggle="tooltip" title="分享到qq">
+                                        <div class="border border-info rounded-circle">
+                                            <i class="fa fa-qq text-info"></i>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:;" class="d-inline-block"
+                                       onclick="share('qzone','说说我的博客','博客第四版本已经上线，此次重构在于划分应用模块，充分发挥django的优势，如使用模板缓存、利用信号机制实现信息变更清除缓存、新增【文件上传器应用】来调用django-storage接口来存储文件(方便后期更换存储接口)、优化文章模块，支持两种编辑器，新增文章置顶功能等','/media/2020-12/06/1d38909f489e4d5d957e125ec3d137f6.jpg');"
+                                       rel="nofollow" data-toggle="tooltip" title="分享到qq空间">
+                                        <div class="border border-primary rounded-circle">
+                                            <i class="fa fa-star text-primary"></i>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:;" class="d-inline-block"
+                                       onclick="share('weibo','说说我的博客','博客第四版本已经上线，此次重构在于划分应用模块，充分发挥django的优势，如使用模板缓存、利用信号机制实现信息变更清除缓存、新增【文件上传器应用】来调用django-storage接口来存储文件(方便后期更换存储接口)、优化文章模块，支持两种编辑器，新增文章置顶功能等','/media/2020-12/06/1d38909f489e4d5d957e125ec3d137f6.jpg');"
+                                       rel="nofollow" data-toggle="tooltip" title="分享到微博">
+                                        <div class="border border-danger rounded-circle">
+                                            <i class="fa fa-weibo text-danger"></i>
+                                        </div>
+                                    </a>
+
+                                    <a href="javascript:;" class="d-inline-block" rel="nofollow" id="weixin">
+                                        <div class="border border-success rounded-circle">
+                                            <i class="fa fa-weixin text-success"></i>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:;" class="d-inline-block" rel="nofollow" data-toggle="tooltip"
+                                       title="生成分享图">
+                                        <div class="border border-dark rounded-circle">
+                                            <i class="fa fa-camera"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!--分享对象组-end-->
+
+
+                            </div>
+                            <!--文章操作区域-end-->
+
+                            <!--文章脚部-start-->
+                            <div class="article-footer clearfix">
+                                <!--文章标签-->
+                                <div class="float-left tags">
+                                    <i class="fa fa-tags"></i>
+
+                                    <a class="btn btn-sm border rounded-pill m-0" href="#">博客</a>
+
+                                </div>
+                                <!--文章编辑时间-->
+                                <div class="float-right mt-2 pull-date">
+                                    <span class="mt-2 text-muted">最后编辑：{{ article.update_time }}</span>
+                                </div>
+                            </div>
+                            <!--文章脚部-end-->
+                        </div>
+
+                        <!--文章翻页操作-start-->
+                        <div class="clearfix m-2">
+
+
+                            <a class="btn btn-outline-primary float-left" href="skill-wangyiyun.html">上一篇</a>
+
+
+                            <a class="btn btn-outline-success float-right" href="install-virtualenvwrapper.html">下一篇</a>
+
+
+                        </div>
+                        <!--文章翻页操作-end-->
+
+
+                        <!--评论模块-start-->
+
+
+                        <div id="comments" class="" style="opacity:0.85;">
+
+                            <!--评论列表-start-->
+                            <ol class="list-group comment-list" id="comments">
+
+
+                                <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">
+                                    <div class="clearfix" id="div-comment-67">
+                                        <div class="media">
+                                            <img src="{% static 'picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg' %}"
+                                                 class="mr-3 rounded-circle" width="50" height="50"
+                                                 onerror="javascript:this.src='/static/images/unknow.png';">
+                                            <div class="media-body">
+                                                <div class="comment-info">
+                                                    <cite class="c3">
+
+                                                        amelie
+
+                                                    </cite>
+
+                                                </div>
+                                                <div class="comment-meta"><span class="font-weight-light text-muted">2020-10-31 09:10:14</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-break mt-2">看起来很不错，从刚刚从追梦人生那里学习了搭建简单的博客，希望自己也能整出个漂亮点的博客</p>
+                                        <a class="btn btn-sm btn-secondary float-right"
+                                           onclick="reply('div-comment-67','67')">回复</a>
+                                    </div>
+
+
+                                    <ol class="children">
+
+
+                                        <li class="list-group-item comment-79 mt-3 px-2 pt-3 pb-2 depth-1">
+                                            <div class="clearfix" id="div-comment-79">
+                                                <div class="media">
+                                                    <img src="{% static 'picture/g-sdk_obvjuI0rv7HLquMV7kLpFg_100.jpg' %}"
+                                                         class="mr-3 rounded-circle" width="50" height="50"
+                                                         onerror="javascript:this.src='/static/images/unknow.png';">
+                                                    <div class="media-body">
+                                                        <div class="comment-info">
+                                                            <cite class="c3">
+
+                                                                dyp
+
+                                                            </cite>
+
+                                                            <i class="fa fa-share fa-fw fa-1x mr-2 c1"
+                                                               aria-hidden="true"></i><cite class="c3"><a
+                                                                href="#div-comment-67"
+                                                                class="text-reset">amelie</a></cite>
+
+                                                        </div>
+                                                        <div class="comment-meta"><span
+                                                                class="font-weight-light text-muted">2020-12-09 14:12:07</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="text-break mt-2">追梦人生的网站打不开了。<img class='biaoqing'
+                                                                                            src='{% static 'picture/erha_org.png' %}'>
+                                                </p>
+                                                <a class="btn btn-sm btn-secondary float-right"
+                                                   onclick="reply('div-comment-79','79')">回复</a>
+                                            </div>
+
+
+                                        </li>
+
+
+                                        <li class="list-group-item comment-68 mt-3 px-2 pt-3 pb-2 depth-1">
+                                            <div class="clearfix" id="div-comment-68">
+                                                <div class="media">
+                                                    <img src="{% static 'picture/avatar.jpg' %}" class="mr-3 rounded-circle"
+                                                         width="50" height="50"
+                                                         onerror="javascript:this.src='/static/images/unknow.png';">
+                                                    <div class="media-body">
+                                                        <div class="comment-info">
+                                                            <cite class="c3">
+
+                                                                <a href="index.html"
+                                                                   class='text-reset superuser'>admin</a>
+
+                                                            </cite>
+
+                                                            <i class="fa fa-share fa-fw fa-1x mr-2 c1"
+                                                               aria-hidden="true"></i><cite class="c3"><a
+                                                                href="#div-comment-67"
+                                                                class="text-reset">amelie</a></cite>
+
+                                                        </div>
+                                                        <div class="comment-meta"><span
+                                                                class="font-weight-light text-muted">2020-10-31 09:10:01</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="text-break mt-2">谢谢，如果能自己搭建一个出来。相信我，这其中的过程会带给你很多前所未有的感觉。</p>
+                                                <a class="btn btn-sm btn-secondary float-right"
+                                                   onclick="reply('div-comment-68','68')">回复</a>
+                                            </div>
+
+
+                                        </li>
+
+
+                                    </ol>
+
+
+                                </li>
+
+
+                                <li class="list-group-item comment-63 mt-3 px-2 pt-3 pb-2 depth-0">
+                                    <div class="clearfix" id="div-comment-63">
+                                        <div class="media">
+                                            <img src="{% static 'picture/g-sdk_NyNiam72Clic819HjJ03vPhA_1.jpg' %}"
+                                                 class="mr-3 rounded-circle" width="50" height="50"
+                                                 onerror="javascript:this.src='/static/images/unknow.png';">
+                                            <div class="media-body">
+                                                <div class="comment-info">
+                                                    <cite class="c3">
+
+                                                        675675
+
+                                                    </cite>
+
+                                                </div>
+                                                <div class="comment-meta"><span class="font-weight-light text-muted">2020-10-26 12:10:33</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-break mt-2">8</p>
+                                        <a class="btn btn-sm btn-secondary float-right"
+                                           onclick="reply('div-comment-63','63')">回复</a>
+                                    </div>
+
+
+                                    <ol class="children">
+
+
+                                        <li class="list-group-item comment-64 mt-3 px-2 pt-3 pb-2 depth-1">
+                                            <div class="clearfix" id="div-comment-64">
+                                                <div class="media">
+                                                    <img src="{% static 'picture/avatar.jpg' %}" class="mr-3 rounded-circle"
+                                                         width="50" height="50"
+                                                         onerror="javascript:this.src='/static/images/unknow.png';">
+                                                    <div class="media-body">
+                                                        <div class="comment-info">
+                                                            <cite class="c3">
+
+                                                                <a href="index.html"
+                                                                   class='text-reset superuser'>admin</a>
+
+                                                            </cite>
+
+                                                            <i class="fa fa-share fa-fw fa-1x mr-2 c1"
+                                                               aria-hidden="true"></i><cite class="c3"><a
+                                                                href="#div-comment-63"
+                                                                class="text-reset">675675</a></cite>
+
+                                                        </div>
+                                                        <div class="comment-meta"><span
+                                                                class="font-weight-light text-muted">2020-10-26 12:10:04</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="text-break mt-2">朋友，你好。欢迎你的到来！</p>
+                                                <a class="btn btn-sm btn-secondary float-right"
+                                                   onclick="reply('div-comment-64','64')">回复</a>
+                                            </div>
+
+
+                                        </li>
+
+
+                                    </ol>
+
+
+                                </li>
+
+
+                                <li class="list-group-item comment-55 mt-3 px-2 pt-3 pb-2 depth-0">
+                                    <div class="clearfix" id="div-comment-55">
+                                        <div class="media">
+                                            <img src="{% static 'picture/g-sdk_joiaJK41fYYp5F6Hm3uibuDQ_1.jpg' %}"
+                                                 class="mr-3 rounded-circle" width="50" height="50"
+                                                 onerror="javascript:this.src='/static/images/unknow.png';">
+                                            <div class="media-body">
+                                                <div class="comment-info">
+                                                    <cite class="c3">
+
+                                                        huanyy
+
+                                                    </cite>
+
+                                                </div>
+                                                <div class="comment-meta"><span class="font-weight-light text-muted">2020-08-31 15:08:29</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-break mt-2">
+                                            大佬就是大佬，真是太强了，俺之前用Django搭了一个小博客，看到大佬也是用Django搭建的，崇拜哈哈！！！我要去整第二版了，期待博主后面出一些架构思路之类的，可以给我这样的小白提供一些帮助，哈哈，太强了...</p>
+                                        <a class="btn btn-sm btn-secondary float-right"
+                                           onclick="reply('div-comment-55','55')">回复</a>
+                                    </div>
+
+
+                                    <ol class="children">
+
+
+                                        <li class="list-group-item comment-56 mt-3 px-2 pt-3 pb-2 depth-1">
+                                            <div class="clearfix" id="div-comment-56">
+                                                <div class="media">
+                                                    <img src="{% static 'picture/avatar.jpg' %}" class="mr-3 rounded-circle"
+                                                         width="50" height="50"
+                                                         onerror="javascript:this.src='/static/images/unknow.png';">
+                                                    <div class="media-body">
+                                                        <div class="comment-info">
+                                                            <cite class="c3">
+
+                                                                <a href="index.html"
+                                                                   class='text-reset superuser'>admin</a>
+
+                                                            </cite>
+
+                                                            <i class="fa fa-share fa-fw fa-1x mr-2 c1"
+                                                               aria-hidden="true"></i><cite class="c3"><a
+                                                                href="#div-comment-55"
+                                                                class="text-reset">huanyy</a></cite>
+
+                                                        </div>
+                                                        <div class="comment-meta"><span
+                                                                class="font-weight-light text-muted">2020-08-31 15:08:24</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="text-break mt-2">
+                                                    不瞒你说，我也是搭建了好多个版本的博客，这个算是心血投入比较多的，也是加入了自己的想法，毕竟自己亲手一点点实现那成就感爆棚啊！欢迎一起交流学习。</p>
+                                                <a class="btn btn-sm btn-secondary float-right"
+                                                   onclick="reply('div-comment-56','56')">回复</a>
+                                            </div>
+
+
+                                        </li>
+
+
+                                    </ol>
+
+
+                                </li>
+
+
+                                <li class="list-group-item comment-48 mt-3 px-2 pt-3 pb-2 depth-0">
+                                    <div class="clearfix" id="div-comment-48">
+                                        <div class="media">
+                                            <img src="{% static 'picture/g-sdk_41lXEPcbAjRUicw0OhX1pHg_10.jpg' %}"
+                                                 class="mr-3 rounded-circle" width="50" height="50"
+                                                 onerror="javascript:this.src='/static/images/unknow.png';">
+                                            <div class="media-body">
+                                                <div class="comment-info">
+                                                    <cite class="c3">
+
+                                                        hpp
+
+                                                    </cite>
+
+                                                </div>
+                                                <div class="comment-meta"><span class="font-weight-light text-muted">2020-06-26 16:06:18</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-break mt-2">网站源码可以开源吗？</p>
+                                        <a class="btn btn-sm btn-secondary float-right"
+                                           onclick="reply('div-comment-48','48')">回复</a>
+                                    </div>
+
+
+                                    <ol class="children">
+
+
+                                        <li class="list-group-item comment-49 mt-3 px-2 pt-3 pb-2 depth-1">
+                                            <div class="clearfix" id="div-comment-49">
+                                                <div class="media">
+                                                    <img src="{% static 'picture/avatar.jpg' %}" class="mr-3 rounded-circle"
+                                                         width="50" height="50"
+                                                         onerror="javascript:this.src='/static/images/unknow.png';">
+                                                    <div class="media-body">
+                                                        <div class="comment-info">
+                                                            <cite class="c3">
+
+                                                                <a href="index.html"
+                                                                   class='text-reset superuser'>admin</a>
+
+                                                            </cite>
+
+                                                            <i class="fa fa-share fa-fw fa-1x mr-2 c1"
+                                                               aria-hidden="true"></i><cite class="c3"><a
+                                                                href="#div-comment-48" class="text-reset">hpp</a></cite>
+
+                                                        </div>
+                                                        <div class="comment-meta"><span
+                                                                class="font-weight-light text-muted">2020-06-26 16:06:11</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p class="text-break mt-2">
+                                                    不好意思，考虑到本站搭建时间不长，目前本网站代码还不打算开源。后期准备出一个简单一点的但架构与当前博客架构一致的django搭建博客教程。</p>
+                                                <a class="btn btn-sm btn-secondary float-right"
+                                                   onclick="reply('div-comment-49','49')">回复</a>
+                                            </div>
+
+
+                                        </li>
+
+
+                                    </ol>
+
+
+                                </li>
+
+
+                            </ol>
+
+                            <!--评论表单-start-->
+                            <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
+                                <a name="comment"></a>
+                                <h4>发表评论
+                                    <a class="btn btn-sm btn-info d-none text-white" id="cancel-reply"
+                                       onclick="cancelReply();">取消回复</a>
+                                </h4>
+                                <p class="text-muted">电子邮件地址不会被公开。</p>
+
+                                <form id="comment-form" onsubmit="return false;" method="post" action="/comment/add/">
+
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="content" name="content" rows="5"
+                                                  placeholder="居然什么都不说，哼！" autocomplete="off" aria-label="content"
+                                                  aria-describedby="addon-wrapping" required=""></textarea>
+                                        <div class="invalid-feedback" id="content-feedback">
+
+                                        </div>
+                                        <a href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo"
+                                           rel="external nofollow"><i class="fa fa-smile-o"
+                                                                      aria-hidden="true"></i>表情</a>
+                                    </div>
+                                    <div class="OwO"></div>
+                                    <!--评论人信息--->
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-center"><i class="fa fa-user"></i></span>
+                                        </div>
+                                        <input name="username" id="username" type="text" class="form-control"
+                                               placeholder="昵称(必填)" aria-label="username"
+                                               aria-describedby="addon-wrapping" required="">
+                                        <div class="invalid-feedback" id="username-feedback">
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-center"><i class="fa fa-envelope-o"></i></span>
+                                        </div>
+                                        <input name="email" type="email" id="email" class="form-control"
+                                               placeholder="QQ邮箱(必填)" aria-label="email"
+                                               aria-describedby="addon-wrapping" required="">
+                                        <div class="invalid-feedback" id="email-feedback">
+                                        </div>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text text-center"><i class="fa fa-link"></i></span>
+                                        </div>
+                                        <input name="link" id="link" type="text" class="form-control"
+                                               placeholder="网站(选填)" aria-label="link" aria-describedby="addon-wrapping">
+                                        <div class="invalid-feedback">
+                                            请输入以http或https开头的URL,格式如:https://oneisall.top
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-info btn-block" id="comment-submit"
+                                            data-placement="top" data-toggle="tooltip" title="评论需博主审核才会显示">提交评论
+                                    </button>
+                                    <input type="hidden" name="article_id" value="13" id="comment_post_ID">
+                                    <input type="hidden" name="category_id" value="7" id="comment_post_type">
+                                    <input type="hidden" name="parent_id" id="comment_parent" value="0"><!--为0代表新评论-->
+                                    <input type="hidden" name="csrfmiddlewaretoken"
+                                           value="13fuPwPJplNcsC9wTDaYPs3KK5qS6W6u9HTA2NaMmjdDkHlqCcSdMO92BzDF0BIs">
+                                </form>
+                            </div>
+                            <!--评论表单-end-->
+
+                        </div>
+                        <script src="{% static 'js/owo.js' %}"></script>
+                        <script>
+                            var OwO_demo = new OwO({
+                                logo: 'OωO表情',
+                                container: document.getElementsByClassName('OwO')[0],
+                                target: document.getElementById('content'),
+                                api: window.location.origin + '/emoji',
+                                position: 'down',
+                                width: '100%',
+                                maxHeight: '250px'
+                            });
+                        </script>
+
+                        <!--评论模块-end-->
+
+
+                    </article>
+                    <!--文章-end-->
+
+                </section>
+                <!--左边内容区-end-->
+
+            </div>
+
+
+        </div>
+
+
+        <div style="display:none;" id="morphing-content">
+            <h1 class="text-center my-0 p-0">说说我的博客</h1>
+            <div class="text-muted text-center">
+                <span class="byline">未雨晴空</span>&nbsp;•&nbsp;<time class="date">2021年01月18日</time>
+            </div>
+            <div class="article-content">
+
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal-dashang" tabindex="-1" role="dialog" aria-labelledby="modal-dashang-title"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-info">
+                        <h5 class="modal-title" id="modal-dashang-title">用金钱砸我吧，我挺得住！！！</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center bg-light">
+                        <figure class="figure">
+                            <img src="{% static 'picture/pay_weixin.png' %}" class="figure-img img-fluid rounded" alt="..."
+                                 style="max-width: 130px;width: 130px;">
+                            <figcaption class="figure-caption text-center">微信</figcaption>
+                        </figure>
+                        <figure class="figure">
+                            <img src="{% static 'picture/pay-zhifubao.jpg' %}" class="figure-img img-fluid rounded" alt="..."
+                                 style="max-width: 130px;width: 130px;">
+                            <figcaption class="figure-caption text-center">支付宝</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(function () {
+
+                $("#post-like").on("click", function () {
+                    if ($(this).hasClass('have-like')) {
+                        layer.msg('你已经点过赞啦(･∀･)！');
+                        return false;
+                    } else {
+                        $(this).addClass('have-like');
+                        var id = $(this).data("id");
+                        $.ajax({
+                            url: "/article/love",
+                            type: "POST",
+                            data: {"id": id},
+                            dataType: "json",
+                            beforeSend: function (xhr, settings) {
+                                xhr.setRequestHeader("X-CSRFToken", "13fuPwPJplNcsC9wTDaYPs3KK5qS6W6u9HTA2NaMmjdDkHlqCcSdMO92BzDF0BIs");
+                            },
+                            success: function (data) {
+                                console.log(data);
+                                if (data.status == "success") {
+                                    $("#like-count").html(parseInt($("#like-count").html()) + 1);
+                                    layer.msg('୧(๑•̀⌄•́๑)૭感谢你喜欢我的文章！');
+                                } else {
+                                    layer.msg(data.msg);
+                                }
+                            }
+
+                        });
+                    }
+                });
+                //初始化文章相关js
+                initArticleJS();
+            })
+        </script>
+
+
+        <!--主内容-end--->
+    </main>
+{% endblock %}
+
+
+{% block aside %}
+    <!--右边内容区域-start-->
+    <aside class="col-lg-4 col-xl-4 hidden-xs hidden-sm" id="aside">
+        <div class="sidebar" id="sidebar">
+
+
+            <aside class="col-12 pl-3 aside-article-catalog tab-6">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link border-0 text-center text-dark active" data-toggle="tab"
+                           href="#aside-article-catalog" role="tab" aria-controls="aside-article-catalog">文章目录</a>
+                    </li>
+                </ul>
+                <div class="tab-content pt-2">
+                    <div class="tab-pane active" id="aside-article-catalog" role="tabpanel">
+                        <div id="tocContainer" class="tocContainer toc"></div>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </aside>
+    <!--右边内容区域-end-->
+
+{% endblock %}

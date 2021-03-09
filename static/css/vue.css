@@ -1,0 +1,326 @@
+@import 'fonts.css';
+
+:root {
+    --side-bar-bg-color: #fff;
+    --control-text-color: #777;
+    --font-sans-serif: 'Ubuntu', 'Source Sans Pro', sans-serif !important;
+    --font-monospace: 'Fira Code', 'Roboto Mono', monospace !important;
+}
+html {
+    font-size: 16px;
+}
+
+.article-content {
+    font-family: var(--font-sans-serif);
+    color: #34495e;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6rem;
+    letter-spacing: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#article-content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px 30px 100px;
+}
+
+#article-content p {
+    line-height: 1.6rem;
+    word-spacing: .05rem;
+}
+
+#article-content ol li {
+    padding-left: 0.5rem;
+}
+
+#article-content > ul:first-child,
+#article-content > ol:first-child {
+    margin-top: 30px;
+}
+
+
+
+.article-content a {
+    color: #42b983;
+    font-weight: 600;
+    padding: 0 2px;
+    text-decoration: none;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+
+.article-content h1:hover a.anchor,
+.article-content h2:hover a.anchor,
+.article-content h3:hover a.anchor,
+.article-content h4:hover a.anchor,
+.article-content h5:hover a.anchor,
+.article-content h6:hover a.anchor {
+    text-decoration: none;
+}
+
+.article-content h1 tt,
+.article-content h1 code {
+    font-size: inherit !important;
+}
+
+.article-content h2 tt,
+.article-content h2 code {
+    font-size: inherit !important;
+}
+
+.article-content h3 tt,
+.article-content h3 code {
+    font-size: inherit !important;
+}
+
+.article-content h4 tt,
+.article-content h4 code {
+    font-size: inherit !important;
+}
+
+.article-content h5 tt,
+.article-content h5 code {
+    font-size: inherit !important;
+}
+
+.article-content h6 tt,
+.article-content h6 code {
+    font-size: inherit !important;
+}
+
+.article-content h2 a,
+.article-content h3 a {
+    color: #34495e;
+}
+
+.article-content h1 {
+    padding-bottom: .4rem;
+    font-size: 2.2rem;
+    line-height: 1.3;
+}
+
+.article-content h2 {
+    font-size: 1.75rem;
+    line-height: 1.225;
+    margin: 35px 0 15px;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ddd;
+}
+
+.article-content h3 {
+    font-size: 1.4rem;
+    line-height: 1.43;
+    margin: 20px 0 7px;
+}
+
+.article-content h4 {
+    font-size: 1.2rem;
+}
+
+.article-content h5 {
+    font-size: 1rem;
+}
+
+.article-content h6 {
+    font-size: 1rem;
+    color: #777;
+}
+
+.article-content p,
+.article-content blockquote,
+.article-content ul,
+.article-content ol,
+.article-content dl,
+.article-content table {
+    margin: 0.8em 0;
+}
+
+.article-content li > ol,
+.article-content li > ul {
+    margin: 0 0;
+}
+
+.article-content hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+.article-content > h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.article-content > h1:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.article-content > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.article-content > h3:first-child,
+.article-contentbody > h4:first-child,
+.article-content > h5:first-child,
+.article-content > h6:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.article-content a:first-child h1,
+.article-content a:first-child h2,
+.article-content a:first-child h3,
+.article-content a:first-child h4,
+.article-content a:first-child h5,
+.article-content a:first-child h6 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.article-content h1 p,
+.article-content h2 p,
+.article-content h3 p,
+.article-content h4 p,
+.article-content h5 p,
+.article-content h6 p {
+    margin-top: 0;
+}
+
+.article-content li p.first {
+    display: inline-block;
+}
+
+.article-content ul,
+.article-content ol {
+    padding-left: 30px;
+}
+
+.article-content ul:first-child,
+.article-content ol:first-child {
+    margin-top: 0;
+}
+
+.article-content ul:last-child,
+.article-content ol:last-child {
+    margin-bottom: 0;
+}
+
+.article-content blockquote {
+    border-left: 4px solid #42b983;
+    padding: 10px 15px;
+    color: #777;
+    background-color: rgba(66, 185, 131, .1);
+}
+
+.article-content table {
+    padding: 0;
+    word-break: initial;
+}
+
+.article-content table tr {
+    border-top: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+
+.article-content table tr:nth-child(2n),
+.article-content thead {
+    background-color: #fafafa;
+}
+
+.article-content table tr th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+.article-content table tr td {
+    border: 1px solid #dfe2e5;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+.article-content table tr th:first-child,
+.article-content table tr td:first-child {
+    margin-top: 0;
+}
+
+.article-content table tr th:last-child,
+.article-content table tr td:last-child {
+    margin-bottom: 0;
+}
+
+.article-content strong {
+    padding: 0 1px;
+}
+
+.article-content em {
+    padding: 0 5px 0 2px;
+}
+
+.article-content table thead th {
+    background-color: #f2f2f2;
+}
+
+.article-content code {
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-family: var(--font-monospace);
+    font-size: 0.92rem;
+    color: #e96900;
+}
+.article-content tt {
+    margin: 0 2px;
+}
+
+.article-content del {
+    padding: 1px 2px;
+}
+
+
+
+
+.article-content .task-list-item input {
+     margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+
+    table,
+    pre {
+        page-break-inside: avoid;
+    }
+
+    pre {
+        word-wrap: break-word;
+    }
+}
+
+
