@@ -22,8 +22,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # 首页
     path('', views.Index.as_view(), name='index'),
+    # 关于
     path('about/', views.About.as_view(), name='about'),
+    # 文章详情
     re_path(r'^articles/detail/(\d+)/', views.ArticleView.as_view(), name='detail'),
+    # 文章分类
     re_path(r'^articles/category/(\d+)/', views.CategoryView.as_view(), name='category'),
+    # 增加评论
+    re_path(r'^add_comment/(\d+)/', views.CategoryView.as_view(), name='add_comment'),
 
 ]

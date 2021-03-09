@@ -48,6 +48,23 @@ class ArticleView(View):
 
         return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories,})
 
+    def post(self, request, article_id=None):
+        # 接收评论
+        # print(article_id)
+        # print(request.POST.get('content'))
+        content = request.POST.get('content')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        link = request.POST.get('link')
+        models.Comment.objects.create(
+            content=content,
+            username=username,
+            article_id=models.Article.objects.get(id=article_id).id,
+            qq_email=email,
+            web_site=link,
+        )
+        return render(request, 'datail.html')
+
 
 class CategoryView(View):
 
