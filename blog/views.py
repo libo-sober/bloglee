@@ -46,7 +46,10 @@ class ArticleView(View):
         # 文章分类
         categories = models.Category.objects.all()
 
-        return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories,})
+        # 该文章的所有评论
+        coment_obj = models.Comment.objects.filter(article_id=article_id)
+
+        return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, 'coment_obj': coment_obj, })
 
     def post(self, request, article_id=None):
         # 接收评论
@@ -63,6 +66,8 @@ class ArticleView(View):
             qq_email=email,
             web_site=link,
         )
+
+
         return render(request, 'datail.html')
 
 
