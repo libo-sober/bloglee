@@ -173,8 +173,9 @@
         <div id="comments" class="" style="opacity:0.85;">
 
             <!--评论列表-start-->
+        <ol class="list-group comment-list" id="comments">
             {% for coment in coment_obj %}
-            <ol class="list-group comment-list" id="comments">
+
 
 
                 <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">
@@ -283,8 +284,9 @@
                 </li>
 
 
-            </ol>
+
             {% endfor %}
+ </ol>
             <!--评论表单-start-->
             <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
                 <a name="comment"></a>
@@ -297,7 +299,7 @@
                 <form id="comment-form" onsubmit="return false;" method="post" action="{% url 'comment' %}" novalidate>
                     {% csrf_token %}
                     <div class="form-group">
-                                        <textarea class="form-control" id="content" name="content" rows="5"
+                                        <textarea class="form-control" id="coment_content" name="content" rows="5"
                                                   placeholder="居然什么都不说，哼！" autocomplete="off" aria-label="content"
                                                   aria-describedby="addon-wrapping" required=""></textarea>
                         <div class="invalid-feedback" id="content-feedback">
@@ -325,18 +327,18 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text text-center"><i class="fa fa-envelope-o"></i></span>
                         </div>
-                        <input name="email" type="email" id="email" class="form-control"
+                        <input name="qq_email" type="email" id="qq_email" class="form-control"
                                placeholder="QQ邮箱(必填)" aria-label="email"
                                aria-describedby="addon-wrapping" required="">
                         <div class="invalid-feedback" id="email-feedback">
-                            请输入正确格式的qq邮箱
+{#                            请输入正确格式的qq邮箱#}
                         </div>
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text text-center"><i class="fa fa-link"></i></span>
                         </div>
-                        <input name="link" id="link" type="text" class="form-control"
+                        <input name="link" id="web_site" type="text" class="form-control"
                                placeholder="网站(选填)" aria-label="link" aria-describedby="addon-wrapping">
                         <div class="invalid-feedback">
                             请输入以http或https开头的URL,格式如:https://libo_sober.top
@@ -346,9 +348,9 @@
                     <button type="submit" class="btn btn-info btn-block" id="comment-submit"
                             data-placement="top" data-toggle="tooltip" title="评论需博主审核才会显示">提交评论
                     </button>
-                                        <input type="hidden" name="article_id" value="{{ article.id }}" id="comment_post_ID">
+                                        <input type="hidden" name="article" value="{{ article.id }}" id="comment_post_ID">
                     {#                    <input type="hidden" name="category_id" value="7" id="comment_post_type">#}
-                    {#                    <input type="hidden" name="parent_id" id="comment_parent" value="0"><!--为0代表新评论-->#}
+                    {#                    <input type="hidden" name="p_id" id="comment_parent" value="0"><!--为0代表新评论-->#}
                     {#                    <input type="hidden" name="csrfmiddlewaretoken"#}
                     {#                           value="13fuPwPJplNcsC9wTDaYPs3KK5qS6W6u9HTA2NaMmjdDkHlqCcSdMO92BzDF0BIs">#}
                 </form>

@@ -108,7 +108,7 @@ $(function () {
                 }
                 if (data.error.qq_email) {
                     $("#email").addClass("is-invalid");
-                    // $("#email-feedback").html(data.error.qq_email);
+                    $("#email-feedback").html(data.error.qq_email);
                 }
                 if (data.error.web_site) {
                     $("#link").addClass("is-invalid");
@@ -125,20 +125,55 @@ $(function () {
                 //     Swal.fire({text: data.error.category_id.join(","), type: 'error'});
                 //     //layer.msg(data.error.category_id.join(","),{icon:2,time:3000});
                 // }
-                if (data.error.p_id) {
-                    Swal.fire({text: data.error.parent_id, type: 'error'});
-                }
+                // if (data.error.p_id) {
+                //     Swal.fire({text: data.error.parent_id, type: 'error'});
+                // }
                 // if (data.error.msg) {  join(",")
                 //     Swal.fire({text: data.error.msg, type: 'error'});
                 // }
             } else {
-                if ($("input[name='parent']").val() != '0') {
-                    $('#respond').before('<ol class="children">' + data.data + '</ol>');
+
+                var content = data.data.content
+                var add_time = data.data.add_time
+                var username = data.data.username
+
+                // ajax动态加载评论
+                var libo = `           
+                <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">
+                    <div class="clearfix" id="div-comment-67">
+                        <div class="media">
+                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
+                                 class="mr-3 rounded-circle" width="50" height="50"
+                                 onerror="javascript:this.src='/static/image/unknow.png';">
+                            <div class="media-body">
+                                <div class="comment-info">
+                                    <cite class="c3">
+
+                                        ${username}
+
+                                    </cite>
+
+                                </div>
+                                <div class="comment-meta"><span
+                                        class="font-weight-light text-muted">${add_time}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-break mt-2">${content}</p>
+                        <a class="btn btn-sm btn-secondary float-right"
+                           onclick="reply('div-comment-67','67')">回复</a>
+                    </div>                </li>
+                        `
+
+                if ($("input[name='p_id']").val() != '0') {
+                    $('#respond').before('<ol class="children">' + libo + '</ol>');
                 } else {
-                    $(".comment-list").append(data.data);
+                    $(".comment-list").append(libo);
                 }
                 $("input[name='parent']").val(0);
-                $("#content").text("");//清空评论内容
+                // js改变了输入框的值但是页面不显示,用prop()
+                // $("#coment_content").text(" ");//清空评论内容
+                $("#coment_content").prop('value','');//清空评论内容
                 //触发取消评论按钮点击事件即恢复评论输入框位置，同时隐藏取消评论按钮
                 $("#cancel-reply").trigger("click").addClass("d-none");
                 //页面反馈信息

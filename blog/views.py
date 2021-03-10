@@ -107,12 +107,16 @@ class CommentView(View):
     def post(self, request):
         msg = {}
         error = {}
+        data = {}
         form = CommentForm(request.POST)
-
         if form.is_valid():
             print(form.cleaned_data)
             msg['success'] = True
-            form.save()
+            comment_obj = form.save()
+            data['content'] = comment_obj.content
+            data['username'] = comment_obj.username
+            data['add_time'] = comment_obj.add_time.strftime('%Y-%m-%d %H:%M:%S')
+            msg['data'] = data
 
         else:
             msg['success'] = False
@@ -120,7 +124,7 @@ class CommentView(View):
                 if form.has_error(field):
                     error[field] = 'valied'
                 else:
-                    error[field] = None
+                    error[field] = 0
             msg['error'] = error
-        print(msg)
+        # print(msg)
         return JsonResponse(msg)
