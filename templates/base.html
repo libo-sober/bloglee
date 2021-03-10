@@ -13,54 +13,15 @@
 
 {% block meta %}
 <meta name="description" content="开始于兴趣，沦陷于编程，钟情于电影，沉醉">
-
-
 <meta name="keywords" content="django,java,Spring,python">
 {% endblock %}
 
-
-
-<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
-<script src="{% static 'js/jquery.form.min.js' %}"></script>
-
-
-
 <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
 <link rel="shortcut icon" type="image/ico" href="{% static 'image/favicon.ico' %}">
-
-
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-
-
-
-
-
-
 <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
-<script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
-
-
-
-<script src="{% static 'js/qrcode.min.js' %}"></script>
-
-
-<script src="{% static 'js/lazyload.min.js' %}"></script>
-
-
-
-
-
-
-
-
-
-
-
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" href="{% static 'css/hover-min.css' %}">
-<script src="{% static 'js/blog.js' %}"></script>
-
 
 {% block css %}
 {% endblock %}
@@ -161,11 +122,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="my-3 col-md-6 offset-md-3 text-center">
-						<p class="text-muted">©2020 <a href="" class="text-white-50 ">大聪明&#039;s Blog</a>.All Rights Reserved<br>
+						<p class="text-muted">©2021 <a href="/" class="text-white-50 ">大聪明&#039;s Blog</a>.All Rights Reserved<br>
                             <a id="StranLink" class="text-white-50 ">繁體切换</a>
                                 |
                             <a href="javascript:;" target="_blank" rel="nofollow" class="text-white-50 ">站点地图</a><br>
-                            <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1277508844'%3E%3C/span%3E%3Cscript src='https://s23.cnzz.com/z_stat.php%3Fid%3D1277508844%26online%3D2' type='text/javascript'%3E%3C/script%3E"));</script>|本站已运行<span id="web-time"></span><br>
+{#                            友盟站点数据统计#}
+                            <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1277508844'%3E%3C/span%3E%3Cscript src='申请的链接' type='text/javascript'%3E%3C/script%3E"));</script>|本站已运行<span id="web-time"></span><br>
                             <a href="javascript:;" rel="external nofollow" target="_blank" class="text-white-50 ">
                             <i class="govimg"></i>皖ICP备20002742号
                             </a>
@@ -178,29 +140,6 @@
 </footer>
 
 
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" color="255,69,0" opacity='0.7' zindex="-1" count="100" src="{% static 'js/canvas-nest.min.js' %}"></script>
-
-
-<!--输入框烟花特效--->
-<script type="text/javascript" src="{% static 'js/commentTyping.js' %}"></script>
-
-<!--sweet弹框-->
-<script src="{% static 'js/sweetalert.js' %}"></script>
-
-
-
-<script src="{% static 'js/zh-cn-tw.js' %}"></script>
-
-
 <div id="rightClickMenu">
   <ul class="list-group rightClickMenuList">
     <li class="list-group-item list-group-item-secondary">欢迎访问大聪明博客</li>
@@ -210,49 +149,6 @@
     <li class="list-group-item"><span>QQ：</span>SoberLee</li>
   </ul>
 </div>
-
-
-
-
-
-
-
-<script src='{% static 'js/disable-devtool.min.js' %}'></script>
-<script>
-    DisableDevtool({disableMenu: false})
-    loadRightMenu();
-</script>
-
-
-
-<script>
-
-    document.addEventListener('visibilitychange',function(){if(document.visibilityState=='hidden'){normal_title=document.title;document.title='(つェ⊂)我藏好了哦 ';}else{document.title=normal_title;}});
-
-    setInterval("createtime()",250);
-
-    document.body.oncopy = function(){Swal.fire({allowOutsideClick:false,type:'success',title: '复制成功,如转载请注明出处！',showConfirmButton: false,timer: 2000});};
-    //document.body.oncopy = function() {layer.msg('复制成功,若要转载请务必保留原文链接！', function(){});};
-    loadNeedTime();
-</script>
-
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?e9b3c4ff48473f2a3e422a69c1bc19c1";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-{% block js %}
-{% endblock %}
-
-
-
-
 
 
 
@@ -302,5 +198,61 @@ var _hmt = _hmt || [];
 </div>
 
 </body>
+
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.form.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+<script src="{% static 'js/qrcode.min.js' %}"></script>
+<script src="{% static 'js/lazyload.min.js' %}"></script>
+
+<script type="text/javascript" color="255,69,0" opacity='0.7' zindex="-1" count="100" src="{% static 'js/canvas-nest.min.js' %}"></script>
+
+<!--输入框烟花特效--->
+<script type="text/javascript" src="{% static 'js/commentTyping.js' %}"></script>
+
+<!--sweet弹框-->
+<script src="{% static 'js/sweetalert.js' %}"></script>
+
+<script src="{% static 'js/zh-cn-tw.js' %}"></script>
+<script src="{% static 'js/blog.js' %}"></script>
+
+{#禁用开发者工具#}
+{#<script src='{% static 'js/disable-devtool.min.js' %}'></script>#}
+
+
+
+<script>
+    DisableDevtool({disableMenu: false})
+    loadRightMenu();
+</script>
+
+
+
+<script>
+
+    document.addEventListener('visibilitychange',function(){if(document.visibilityState=='hidden'){normal_title=document.title;document.title='(つェ⊂)我藏好了哦 ';}else{document.title=normal_title;}});
+
+    setInterval("createtime()",250);
+
+    document.body.oncopy = function(){Swal.fire({allowOutsideClick:false,type:'success',title: '复制成功,如转载请注明出处！',showConfirmButton: false,timer: 2000});};
+    //document.body.oncopy = function() {layer.msg('复制成功,若要转载请务必保留原文链接！', function(){});};
+    loadNeedTime();
+</script>
+<script>
+    {#百度统计的js#}
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e9b3c4ff48473f2a3e422a69c1bc19c1";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+{% block js %}
+{% endblock %}
+
+
 
 </html>

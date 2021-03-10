@@ -1,7 +1,9 @@
 import datetime
 import mistune
 
-from django.shortcuts import render
+from django import forms
+from django.shortcuts import render, HttpResponse
+from django.http import JsonResponse
 from django.views.generic.base import View
 from blog import models
 from BlogLee import settings
@@ -9,6 +11,7 @@ from blog.utils.page_html import MyPagination
 
 # Create your views here.
 time = datetime.datetime(year=2099, month=1, day=1)
+
 
 class Index(View):
 
@@ -50,26 +53,26 @@ class ArticleView(View):
         coment_obj = models.Comment.objects.filter(article_id=article_id)
 
         return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, 'coment_obj': coment_obj, })
-
-    def post(self, request, article_id=None):
-        # 接收评论
-        # print(article_id)
-        # print(request.POST.get('content'))
-        content = request.POST.get('content')
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        link = request.POST.get('link')
-        models.Comment.objects.create(
-            content=content,
-            username=username,
-            article_id=models.Article.objects.get(id=article_id).id,
-            qq_email=email,
-            web_site=link,
-        )
-
-
-        return render(request, 'datail.html')
-
+    #
+    # def post(self, request, article_id=None):
+    #     # 接收评论
+    #     # print(article_id)
+    #     # print(request.POST.get('content'))
+    #     content = request.POST.get('content')
+    #     username = request.POST.get('username')
+    #     email = request.POST.get('email')
+    #     link = request.POST.get('link')
+    #     models.Comment.objects.create(
+    #         content=content,
+    #         username=username,
+    #         article_id=models.Article.objects.get(id=article_id).id,
+    #         qq_email=email,
+    #         web_site=link,
+    #     )
+    #
+    #
+    #     # return render(request, 'datail.html')
+    #     return HttpResponse('ok')
 
 class CategoryView(View):
 
@@ -90,3 +93,34 @@ class About(View):
         # 文章分类
         categories = models.Category.objects.all()
         return render(request, 'about.html', {'categories': categories, })
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Comment
+        fields = "__all__"
+
+
+class CommentView(View):
+
+    def post(self, request):
+        msg = {}
+        error = {}
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            print(form.cleaned_data)
+            msg['success'] = True
+            form.save()
+
+        else:
+            msg['success'] = False
+            for field in form.fields.keys():
+                if form.has_error(field):
+                    error[field] = 'valied'
+                else:
+                    error[field] = None
+            msg['error'] = error
+        print(msg)
+        return JsonResponse(msg)

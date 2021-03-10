@@ -107,10 +107,10 @@ class Comment(models.Model):
     文章评论
     """
     content = models.TextField(verbose_name='评论内容')
-    username = models.CharField(max_length=30, blank=True, null=True, verbose_name='用户名')
+    username = models.CharField(max_length=30, verbose_name='用户名')
     add_time = models.DateTimeField(auto_now_add=True, verbose_name='发布时间')
-    article = models.ForeignKey(Article, blank=True, null=True, verbose_name='文章', on_delete=models.CASCADE)
-    qq_email = models.CharField(max_length=100, blank=True, null=True, verbose_name='qq邮箱')
+    article = models.ForeignKey(Article, verbose_name='文章', on_delete=models.CASCADE)
+    qq_email = models.CharField(max_length=100, verbose_name='qq邮箱')
     web_site = models.CharField(max_length=100, blank=True, null=True, verbose_name='网站')
     pid = models.ForeignKey('self', blank=True, null=True, verbose_name='父级评论', on_delete=models.CASCADE)
 
