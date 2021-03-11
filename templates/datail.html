@@ -173,13 +173,44 @@
         <div id="comments" class="" style="opacity:0.85;">
 
             <!--评论列表-start-->
+
         <ol class="list-group comment-list" id="comments">
             {% for coment in coment_obj %}
-
-
-
+{#                {% if not coment.pid %}#}
+{#                    #}
+{#                    <script type="text/javascript">#}
+{#                        var s = `<li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">#}
+{#                    <div class="clearfix" id="div-comment-{{ coment.id }}">#}
+{#                        <div class="media">#}
+{#                            <img src="{% static 'picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg' %}"#}
+{#                                 class="mr-3 rounded-circle" width="50" height="50"#}
+{#                                 onerror="javascript:this.src='/static/images/unknow.png';">#}
+{#                            <div class="media-body">#}
+{#                                <div class="comment-info">#}
+{#                                    <cite class="c3">#}
+{##}
+{#                                        {{ coment.username }}#}
+{##}
+{#                                    </cite>#}
+{##}
+{#                                </div>#}
+{#                                <div class="comment-meta"><span#}
+{#                                        class="font-weight-light text-muted">{{ coment.add_time | date:"Y-m-d H:i:s" }}</span>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <p class="text-break mt-2">{{ coment.content }}</p>#}
+{#                        <a class="btn btn-sm btn-secondary float-right"#}
+{#                           onclick="reply('div-comment-{{coment.id}}','{{ coment.id }}')">回复</a>#}
+{#                    </div></li>`#}
+{#                        console.log(s)#}
+{##}
+{#                        $('.comment-list').append(s)#}
+{#                    window.sessionStorage.setItem({{ coment.pid }}, s)#}
+{#                    </script>#}
+{#                {% endif %}#}
                 <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">
-                    <div class="clearfix" id="div-comment-67">
+                    <div class="clearfix" id="div-comment-{{ coment.id }}">
                         <div class="media">
                             <img src="{% static 'picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg' %}"
                                  class="mr-3 rounded-circle" width="50" height="50"
@@ -200,85 +231,42 @@
                         </div>
                         <p class="text-break mt-2">{{ coment.content }}</p>
                         <a class="btn btn-sm btn-secondary float-right"
-                           onclick="reply('div-comment-67','67')">回复</a>
+                           onclick="reply('div-comment-{{coment.id}}','{{ coment.id }}')">回复</a>
                     </div>
+                    {% if coment.pid %}
+                        <ol class="children">
+                                        <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">
+                    <div class="clearfix" id="div-comment-{{ coment.pid.id }}">
+                        <div class="media">
+                            <img src="{% static 'picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg' %}"
+                                 class="mr-3 rounded-circle" width="50" height="50"
+                                 onerror="javascript:this.src='/static/images/unknow.png';">
+                            <div class="media-body">
+                                <div class="comment-info">
+                                    <cite class="c3">
 
-{#                    子评论#}
-{#                    <ol class="children">#}
-{##}
-{##}
-{#                        <li class="list-group-item comment-79 mt-3 px-2 pt-3 pb-2 depth-1">#}
-{#                            <div class="clearfix" id="div-comment-79">#}
-{#                                <div class="media">#}
-{#                                    <img src="{% static 'picture/g-sdk_obvjuI0rv7HLquMV7kLpFg_100.jpg' %}"#}
-{#                                         class="mr-3 rounded-circle" width="50" height="50"#}
-{#                                         onerror="javascript:this.src='/static/images/unknow.png';">#}
-{#                                    <div class="media-body">#}
-{#                                        <div class="comment-info">#}
-{#                                            <cite class="c3">#}
-{##}
-{#                                                dyp#}
-{##}
-{#                                            </cite>#}
-{##}
-{#                                            <i class="fa fa-share fa-fw fa-1x mr-2 c1"#}
-{#                                               aria-hidden="true"></i><cite class="c3"><a#}
-{#                                                href="#div-comment-67"#}
-{#                                                class="text-reset">amelie</a></cite>#}
-{##}
-{#                                        </div>#}
-{#                                        <div class="comment-meta"><span#}
-{#                                                class="font-weight-light text-muted">2020-12-09 14:12:07</span>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                                <p class="text-break mt-2">追梦人生的网站打不开了。<img class='biaoqing'#}
-{#                                                                            src='{% static 'picture/erha_org.png' %}'>#}
-{#                                </p>#}
-{#                                <a class="btn btn-sm btn-secondary float-right"#}
-{#                                   onclick="reply('div-comment-79','79')">回复</a>#}
-{#                            </div>#}
-{##}
-{##}
-{#                        </li>#}
-{##}
-{##}
-{#                        <li class="list-group-item comment-68 mt-3 px-2 pt-3 pb-2 depth-1">#}
-{#                            <div class="clearfix" id="div-comment-68">#}
-{#                                <div class="media">#}
-{#                                    <img src="{% static 'picture/avatar.jpg' %}" class="mr-3 rounded-circle"#}
-{#                                         width="50" height="50"#}
-{#                                         onerror="javascript:this.src='/static/images/unknow.png';">#}
-{#                                    <div class="media-body">#}
-{#                                        <div class="comment-info">#}
-{#                                            <cite class="c3">#}
-{##}
-{#                                                <a href="index.html"#}
-{#                                                   class='text-reset superuser'>admin</a>#}
-{##}
-{#                                            </cite>#}
-{##}
-{#                                            <i class="fa fa-share fa-fw fa-1x mr-2 c1"#}
-{#                                               aria-hidden="true"></i><cite class="c3"><a#}
-{#                                                href="#div-comment-67"#}
-{#                                                class="text-reset">amelie</a></cite>#}
-{##}
-{#                                        </div>#}
-{#                                        <div class="comment-meta"><span#}
-{#                                                class="font-weight-light text-muted">2020-10-31 09:10:01</span>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                                <p class="text-break mt-2">谢谢，如果能自己搭建一个出来。相信我，这其中的过程会带给你很多前所未有的感觉。</p>#}
-{#                                <a class="btn btn-sm btn-secondary float-right"#}
-{#                                   onclick="reply('div-comment-68','68')">回复</a>#}
-{#                            </div>#}
-{##}
-{##}
-{#                        </li>#}
-{##}
-{##}
-{#                    </ol>#}
+                                        {{ coment.pid.username }}
+
+                                    </cite>
+                        <i class="fa fa-share fa-fw fa-1x mr-2 c1" aria-hidden="true"></i>
+                                    <cite class="c3">
+
+                                        {{ coment.username }}
+
+                                    </cite>
+                                </div>
+                                <div class="comment-meta"><span
+                                        class="font-weight-light text-muted">{{ coment.pid.add_time | date:"Y-m-d H:i:s" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-break mt-2">{{ coment.pid.content }}</p>
+                        <a class="btn btn-sm btn-secondary float-right"
+                           onclick="reply('div-comment-{{coment.pid.id}}','{{ coment.pid.id }}')">回复</a>
+                    </div>
+                        </ol>
+
+                    {% endif %}
 
 
                 </li>
@@ -299,7 +287,7 @@
                 <form id="comment-form" onsubmit="return false;" method="post" action="{% url 'comment' %}" novalidate>
                     {% csrf_token %}
                     <div class="form-group">
-                                        <textarea class="form-control" id="coment_content" name="content" rows="5"
+                                        <textarea class="form-control" id="content" name="content" rows="5"
                                                   placeholder="居然什么都不说，哼！" autocomplete="off" aria-label="content"
                                                   aria-describedby="addon-wrapping" required=""></textarea>
                         <div class="invalid-feedback" id="content-feedback">
@@ -330,8 +318,8 @@
                         <input name="qq_email" type="email" id="qq_email" class="form-control"
                                placeholder="QQ邮箱(必填)" aria-label="email"
                                aria-describedby="addon-wrapping" required="">
-                        <div class="invalid-feedback" id="email-feedback">
-{#                            请输入正确格式的qq邮箱#}
+                        <div class="invalid-feedback" id="qq_email-feedback">
+                            请输入正确格式的qq邮箱
                         </div>
                     </div>
                     <div class="input-group mb-3">
@@ -350,7 +338,7 @@
                     </button>
                                         <input type="hidden" name="article" value="{{ article.id }}" id="comment_post_ID">
                     {#                    <input type="hidden" name="category_id" value="7" id="comment_post_type">#}
-                    {#                    <input type="hidden" name="p_id" id="comment_parent" value="0"><!--为0代表新评论-->#}
+{#                                        <input type="hidden" name="pid" id="pid" value="{{  }}"><!--为0代表新评论-->#}
                     {#                    <input type="hidden" name="csrfmiddlewaretoken"#}
                     {#                           value="13fuPwPJplNcsC9wTDaYPs3KK5qS6W6u9HTA2NaMmjdDkHlqCcSdMO92BzDF0BIs">#}
                 </form>

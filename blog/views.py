@@ -109,13 +109,21 @@ class CommentView(View):
         error = {}
         data = {}
         form = CommentForm(request.POST)
+        pid = request.POST.get('pid')
         if form.is_valid():
-            print(form.cleaned_data)
             msg['success'] = True
+            print(form.cleaned_data)
             comment_obj = form.save()
             data['content'] = comment_obj.content
             data['username'] = comment_obj.username
             data['add_time'] = comment_obj.add_time.strftime('%Y-%m-%d %H:%M:%S')
+
+            if comment_obj.pid != None:
+                # pid = int(comment_obj.pid)
+                # print(comment_obj.pid)
+                data['fu_username'] = models.Comment.objects.get(pk=pid).username
+            else:
+                data['fu_username'] = 0
             msg['data'] = data
 
         else:
@@ -126,5 +134,5 @@ class CommentView(View):
                 else:
                     error[field] = 0
             msg['error'] = error
-        # print(msg)
+        print(msg)
         return JsonResponse(msg)

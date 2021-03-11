@@ -107,11 +107,11 @@ $(function () {
                     $("#username-feedback").html(data.error.username);
                 }
                 if (data.error.qq_email) {
-                    $("#email").addClass("is-invalid");
-                    $("#email-feedback").html(data.error.qq_email);
+                    $("#qq_email").addClass("is-invalid");
+                    $("#qq_email-feedback").html(data.error.qq_email);
                 }
                 if (data.error.web_site) {
-                    $("#link").addClass("is-invalid");
+                    $("#web_site").addClass("is-invalid");
                 }
                 if (data.error.content) {
                     $("#content").addClass("is-invalid");
@@ -136,9 +136,10 @@ $(function () {
                 var content = data.data.content
                 var add_time = data.data.add_time
                 var username = data.data.username
+                var fu_username = data.data.fu_username
 
                 // ajax动态加载评论
-                var libo = `           
+                var gen_comment = `           
                 <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">
                     <div class="clearfix" id="div-comment-67">
                         <div class="media">
@@ -164,16 +165,43 @@ $(function () {
                            onclick="reply('div-comment-67','67')">回复</a>
                     </div>                </li>
                         `
+                var zi_comment = `
+                <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">
+                    <div class="clearfix" id="div-comment-67">
+                        <div class="media">
+                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
+                                 class="mr-3 rounded-circle" width="50" height="50"
+                                 onerror="javascript:this.src='/static/image/unknow.png';">
+                            <div class="media-body">
+                                <div class="comment-info">
+                                    <cite class="c3">
 
-                if ($("input[name='p_id']").val() != '0') {
-                    $('#respond').before('<ol class="children">' + libo + '</ol>');
+                                        ${username}
+
+                                    </cite>
+                       <i class="fa fa-share fa-fw fa-1x mr-2 c1" aria-hidden="true"></i>
+                       <cite class="c3"><a href="#div-comment-48" class="text-reset">${fu_username}</a></cite>
+                                                       </div>
+                                <div class="comment-meta"><span
+                                        class="font-weight-light text-muted">${add_time}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-break mt-2">${content}</p>
+                        <a class="btn btn-sm btn-secondary float-right"
+                           onclick="reply('div-comment-67','67')">回复</a>
+                    </div>                </li>
+                `
+                if ($("input[name='pid']").val() != '0') {
+                    // console.log('pid')
+                    $('#respond').before('<ol class="children">' + zi_comment + '</ol>');
                 } else {
-                    $(".comment-list").append(libo);
+                    $(".comment-list").append(gen_comment);
                 }
                 $("input[name='parent']").val(0);
                 // js改变了输入框的值但是页面不显示,用prop()
-                // $("#coment_content").text(" ");//清空评论内容
-                $("#coment_content").prop('value','');//清空评论内容
+                // $("#content").text(" ");//清空评论内容
+                $("#content").prop('value','');//清空评论内容
                 //触发取消评论按钮点击事件即恢复评论输入框位置，同时隐藏取消评论按钮
                 $("#cancel-reply").trigger("click").addClass("d-none");
                 //页面反馈信息
@@ -442,7 +470,7 @@ function reply(parentCommentDivId, parentCommentId) {
         //获取输入框表单所在div
         responseDiv = document.getElementById('respond'),
         //获取包含父评论信息的hidden的input
-        input = document.getElementById('comment_parent'),
+        input = document.getElementById('pid'),
         //获取表单
         form = 'form' == responseDiv.tagName ? responseDiv : responseDiv.getElementsByTagName('form')[0],
         //获取文本域
@@ -451,8 +479,8 @@ function reply(parentCommentDivId, parentCommentId) {
     if (null == input) {
         input = document.createElement('input');
         input.setAttribute('type', 'hidden');
-        input.setAttribute('name', 'parent');
-        input.setAttribute('id', 'comment_parent');
+        input.setAttribute('name', 'pid');
+        input.setAttribute('id', 'pid');
         //追加到表单末尾，用于向后台传递值
         form.appendChild(input);
     }
