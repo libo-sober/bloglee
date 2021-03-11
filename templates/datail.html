@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{% static 'css/GrayMac.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/tocbot.css' %}">
+    <link rel="stylesheet" href="{% static 'css/OwO.min.css' %}">
 
 {% endblock %}
 
@@ -174,78 +175,8 @@
 
             <!--评论列表-start-->
 
-        <ol class="list-group comment-list" id="comments">
+        <ol class="list-group comment-list" id="comments"></ol>
 
-
-
-
-{#            {% for coment in coment_obj %}#}
-{#                <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">#}
-{#                    <div class="clearfix" id="div-comment-{{ coment.id }}">#}
-{#                        <div class="media">#}
-{#                            <img src="{% static 'picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg' %}"#}
-{#                                 class="mr-3 rounded-circle" width="50" height="50"#}
-{#                                 onerror="javascript:this.src='/static/images/unknow.png';">#}
-{#                            <div class="media-body">#}
-{#                                <div class="comment-info">#}
-{#                                    <cite class="c3">#}
-{##}
-{#                                        {{ coment.username }}#}
-{##}
-{#                                    </cite>#}
-{##}
-{#                                </div>#}
-{#                                <div class="comment-meta"><span#}
-{#                                        class="font-weight-light text-muted">{{ coment.add_time | date:"Y-m-d H:i:s" }}</span>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <p class="text-break mt-2">{{ coment.content }}</p>#}
-{#                        <a class="btn btn-sm btn-secondary float-right"#}
-{#                           onclick="reply('div-comment-{{coment.id}}','{{ coment.id }}')">回复</a>#}
-{#                    </div>#}
-{#                    {% if coment.pid %}#}
-{#                        <ol class="children">#}
-{#                                        <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">#}
-{#                    <div class="clearfix" id="div-comment-{{ coment.pid.id }}">#}
-{#                        <div class="media">#}
-{#                            <img src="{% static 'picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg' %}"#}
-{#                                 class="mr-3 rounded-circle" width="50" height="50"#}
-{#                                 onerror="javascript:this.src='/static/images/unknow.png';">#}
-{#                            <div class="media-body">#}
-{#                                <div class="comment-info">#}
-{#                                    <cite class="c3">#}
-{##}
-{#                                        {{ coment.pid.username }}#}
-{##}
-{#                                    </cite>#}
-{#                        <i class="fa fa-share fa-fw fa-1x mr-2 c1" aria-hidden="true"></i>#}
-{#                                    <cite class="c3">#}
-{##}
-{#                                        {{ coment.username }}#}
-{##}
-{#                                    </cite>#}
-{#                                </div>#}
-{#                                <div class="comment-meta"><span#}
-{#                                        class="font-weight-light text-muted">{{ coment.pid.add_time | date:"Y-m-d H:i:s" }}</span>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <p class="text-break mt-2">{{ coment.pid.content }}</p>#}
-{#                        <a class="btn btn-sm btn-secondary float-right"#}
-{#                           onclick="reply('div-comment-{{coment.pid.id}}','{{ coment.pid.id }}')">回复</a>#}
-{#                    </div>#}
-{#                        </ol>#}
-{##}
-{#                    {% endif %}#}
-{##}
-{##}
-{#                </li>#}
-{##}
-{##}
-{##}
-{#            {% endfor %}#}
- </ol>
             <!--评论表单-start-->
             <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
                 <a name="comment"></a>
@@ -257,18 +188,21 @@
 
                 <form id="comment-form" onsubmit="return false;" method="post" action="{% url 'comment' %}" novalidate>
                     {% csrf_token %}
-                    <div class="form-group">
-                                        <textarea class="form-control" id="content" name="content" rows="5"
+                    <div class="form-group" id="article_content">
+                                        <textarea class="form-control OwO-textarea" id="content" name="content" rows="5"
                                                   placeholder="居然什么都不说，哼！" autocomplete="off" aria-label="content"
                                                   aria-describedby="addon-wrapping" required=""></textarea>
                         <div class="invalid-feedback" id="content-feedback">
 
                         </div>
-                        <a href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo"
+                        <div class="OwO">
+                            <a href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo"
                            rel="external nofollow"><i class="fa fa-smile-o"
                                                       aria-hidden="true"></i>表情</a>
+                        </div>
+
                     </div>
-                    <div class="OwO"></div>
+
                     <!--评论人信息--->
 
                     <div class="input-group mb-3">
@@ -402,7 +336,7 @@
 {% endblock %}
 
 {% block js %}
-{#    js代码要写在body后，否则容易不执行#}
+{#    js代码要写在body后，否则容易不执行  评论树展示#}
                 <script>
                 {#$(".dianji").click(function (){#}
                     $.ajax({
@@ -500,13 +434,13 @@
 
     <!--引入DoubanBoard组件-->
     <script src="{% static 'js/DoubanBoard.js'%}"></script>
-            <script src="{% static 'js/owo.js' %}"></script>
+    <script src="{% static 'js/OwO.min.js' %}"></script>
         <script>
             var OwO_demo = new OwO({
                 logo: 'OωO表情',
                 container: document.getElementsByClassName('OwO')[0],
                 target: document.getElementById('content'),
-                api: window.location.origin + '/emoji',
+                api: window.location.origin + "{% static 'OwO.json' %}",
                 position: 'down',
                 width: '100%',
                 maxHeight: '250px'
@@ -551,7 +485,7 @@
         })
     </script>
     <script>
-        var testView = editormd.markdownToHTML("article-content", {
+        var testView = editormd.markdownToHTML("article_content", {
             emoji: true, tex: true, task_list: true, toc: false, atLink: false,
             flowChart: true, sequenceDiagram: true, previewCodeHighlight: false, htmlDecode: true
         });
@@ -571,4 +505,5 @@
             $("#morphing-content .article-content").html($("#article-content").html());
         }, 2000);
     </script>
+
 {% endblock %}

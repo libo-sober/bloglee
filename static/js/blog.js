@@ -142,7 +142,7 @@ $(function () {
 
                 // ajax动态加载评论
                 var gen_comment = `           
-                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0">
+                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>
                     <div class="clearfix" id="div-comment-${pk}">
                         <div class="media">
                             <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
@@ -168,7 +168,7 @@ $(function () {
                     </div>                </li>
                         `
                 var zi_comment = `
-                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0">
+                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>
                     <div class="clearfix" id="div-comment-${pk}">
                         <div class="media">
                             <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
