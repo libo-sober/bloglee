@@ -117,7 +117,7 @@ class CommentView(View):
                 else:
                     error[field] = 0
             msg['error'] = error
-        # print(msg)
+        # print(msg) # 发给AjaxForm的数据
         return JsonResponse(msg)
 
 
@@ -141,7 +141,7 @@ class CommentTreeView(View):
             data['username'] = comment.username
             data['add_time'] = comment.add_time.strftime('%Y-%m-%d %H:%M:%S')
             msg.append(data)
-        # print(msg)
+        # print(msg)  # print(msg) # 发给Ajax的数据
 
         return JsonResponse(msg, safe=False)
 

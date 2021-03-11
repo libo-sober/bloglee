@@ -16,7 +16,7 @@
 {% block css %}
 
     <!-- Required meta tags -->
-    <link rel="stylesheet" href="{% static 'css/GrayMac.css' %}">
+    <link rel="stylesheet" href="{% static 'css/WhiteMac.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/tocbot.css' %}">
     <link rel="stylesheet" href="{% static 'css/OwO.min.css' %}">
@@ -75,6 +75,7 @@
 
             <!--文章内容区域-start-->
             <div id="article-content" class="article-content">
+
                 {{ detail_html | custom_markdown | safe }}
             </div>
             <!--文章内容区域-end-->
@@ -485,7 +486,7 @@
         })
     </script>
     <script>
-        var testView = editormd.markdownToHTML("article_content", {
+        var testView = editormd.markdownToHTML("article-content", {
             emoji: true, tex: true, task_list: true, toc: false, atLink: false,
             flowChart: true, sequenceDiagram: true, previewCodeHighlight: false, htmlDecode: true
         });
