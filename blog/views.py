@@ -49,30 +49,8 @@ class ArticleView(View):
         # 文章分类
         categories = models.Category.objects.all()
 
-        # 该文章的所有评论
-        coment_obj = models.Comment.objects.filter(article_id=article_id)
+        return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, })
 
-        return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, 'coment_obj': coment_obj, })
-    #
-    # def post(self, request, article_id=None):
-    #     # 接收评论
-    #     # print(article_id)
-    #     # print(request.POST.get('content'))
-    #     content = request.POST.get('content')
-    #     username = request.POST.get('username')
-    #     email = request.POST.get('email')
-    #     link = request.POST.get('link')
-    #     models.Comment.objects.create(
-    #         content=content,
-    #         username=username,
-    #         article_id=models.Article.objects.get(id=article_id).id,
-    #         qq_email=email,
-    #         web_site=link,
-    #     )
-    #
-    #
-    #     # return render(request, 'datail.html')
-    #     return HttpResponse('ok')
 
 class CategoryView(View):
 
@@ -100,6 +78,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = models.Comment
         fields = "__all__"
+        # exclude = ['pid', ]
 
 
 class CommentView(View):
@@ -112,21 +91,25 @@ class CommentView(View):
         pid = request.POST.get('pid')
         if form.is_valid():
             msg['success'] = True
-            print(form.cleaned_data)
+            # print(form.cleaned_data)
             comment_obj = form.save()
+            data['pk'] = comment_obj.pk
             data['content'] = comment_obj.content
             data['username'] = comment_obj.username
             data['add_time'] = comment_obj.add_time.strftime('%Y-%m-%d %H:%M:%S')
-
+            # print(comment_obj.pid)
             if comment_obj.pid != None:
                 # pid = int(comment_obj.pid)
-                # print(comment_obj.pid)
-                data['fu_username'] = models.Comment.objects.get(pk=pid).username
+
+                fu = models.Comment.objects.get(pk=pid).username
+                # print(fu)
+                data['fu_username'] = fu
             else:
                 data['fu_username'] = 0
             msg['data'] = data
 
         else:
+            print(form.errors)
             msg['success'] = False
             for field in form.fields.keys():
                 if form.has_error(field):
@@ -134,5 +117,31 @@ class CommentView(View):
                 else:
                     error[field] = 0
             msg['error'] = error
-        print(msg)
+        # print(msg)
         return JsonResponse(msg)
+
+
+class CommentTreeView(View):
+
+    def get(self, request):
+        msg = []
+        article_id = request.GET.get('article_id')
+        # 该文章的所有评论
+        comment_obj = models.Comment.objects.filter(article_id=article_id)
+        for comment in comment_obj:
+            data = {}
+            if comment.pid:
+                data['pid'] = comment.pid.id
+                data['fu_username'] = models.Comment.objects.get(pk=comment.pid.id).username
+            else:
+                data['pid'] = None
+                data['fu_username'] = None
+            data['pk'] = comment.pk
+            data['content'] = comment.content
+            data['username'] = comment.username
+            data['add_time'] = comment.add_time.strftime('%Y-%m-%d %H:%M:%S')
+            msg.append(data)
+        # print(msg)
+
+        return JsonResponse(msg, safe=False)
+

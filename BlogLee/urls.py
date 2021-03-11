@@ -30,5 +30,7 @@ urlpatterns = [
     re_path(r'^articles/category/(\d+)/', views.CategoryView.as_view(), name='category'),
     # 评论
     path('comment/', views.CommentView.as_view(), name='comment'),
+    # 评论树
+    path('comment/tree/', views.CommentTreeView.as_view(), name='comment_tree'),
 
 ]

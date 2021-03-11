@@ -121,6 +121,7 @@ $(function () {
                     Swal.fire({text: data.error.article, type: 'error'});
                     //layer.msg(data.error.article_id.join(","),{icon:2,time:3000});
                 }
+                $("#comment-submit").html("提交评论");
                 // if (data.error.category_id) {
                 //     Swal.fire({text: data.error.category_id.join(","), type: 'error'});
                 //     //layer.msg(data.error.category_id.join(","),{icon:2,time:3000});
@@ -137,11 +138,12 @@ $(function () {
                 var add_time = data.data.add_time
                 var username = data.data.username
                 var fu_username = data.data.fu_username
+                var pk = data.data.pk
 
                 // ajax动态加载评论
                 var gen_comment = `           
-                <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">
-                    <div class="clearfix" id="div-comment-67">
+                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0">
+                    <div class="clearfix" id="div-comment-${pk}">
                         <div class="media">
                             <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
                                  class="mr-3 rounded-circle" width="50" height="50"
@@ -162,12 +164,12 @@ $(function () {
                         </div>
                         <p class="text-break mt-2">${content}</p>
                         <a class="btn btn-sm btn-secondary float-right"
-                           onclick="reply('div-comment-67','67')">回复</a>
+                           onclick="reply('div-comment-${pk}','${pk}')">回复</a>
                     </div>                </li>
                         `
                 var zi_comment = `
-                <li class="list-group-item comment-67 mt-3 px-2 pt-3 pb-2 depth-0">
-                    <div class="clearfix" id="div-comment-67">
+                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0">
+                    <div class="clearfix" id="div-comment-${pk}">
                         <div class="media">
                             <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
                                  class="mr-3 rounded-circle" width="50" height="50"
@@ -182,26 +184,27 @@ $(function () {
                        <i class="fa fa-share fa-fw fa-1x mr-2 c1" aria-hidden="true"></i>
                        <cite class="c3"><a href="#div-comment-48" class="text-reset">${fu_username}</a></cite>
                                                        </div>
-                                <div class="comment-meta"><span
-                                        class="font-weight-light text-muted">${add_time}</span>
+                                <div class="comment-meta"><span class="font-weight-light text-muted">${add_time}</span>
                                 </div>
                             </div>
                         </div>
                         <p class="text-break mt-2">${content}</p>
                         <a class="btn btn-sm btn-secondary float-right"
-                           onclick="reply('div-comment-67','67')">回复</a>
+                           onclick="reply('div-comment-${pk}','${pk}')">回复</a>
                     </div>                </li>
                 `
-                if ($("input[name='pid']").val() != '0') {
-                    // console.log('pid')
+                if ($("input[name='pid']").val()) {
+                    // console.log($("input[name='pid']").val())
                     $('#respond').before('<ol class="children">' + zi_comment + '</ol>');
                 } else {
                     $(".comment-list").append(gen_comment);
                 }
-                $("input[name='parent']").val(0);
+                // 清空pid的值，不然下次的就不是根评论啦
+                $("input[name='pid']").val('');
                 // js改变了输入框的值但是页面不显示,用prop()
                 // $("#content").text(" ");//清空评论内容
                 $("#content").prop('value','');//清空评论内容
+
                 //触发取消评论按钮点击事件即恢复评论输入框位置，同时隐藏取消评论按钮
                 $("#cancel-reply").trigger("click").addClass("d-none");
                 //页面反馈信息
