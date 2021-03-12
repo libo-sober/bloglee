@@ -142,3 +142,12 @@ STATICFILES_DIRS = [
 PAGE_COUNT = 4  # 页数栏显示多少个数
 RECORD = 10  # 每页显示多少条记录
 
+# 服务器邮箱
+EMAILHOST = 'smtp.163.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'libo_sober@163.com'
+EMAIL_HOST_PASSWORD = 'XRZMRKSOXAQNZOZT'
+EMAIL_USE_SSL = True
+
+
+

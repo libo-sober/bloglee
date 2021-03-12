@@ -8,6 +8,8 @@ from django.views.generic.base import View
 from blog import models
 from BlogLee import settings
 from blog.utils.page_html import MyPagination
+from django.core.mail import send_mail
+from BlogLee import settings
 
 # Create your views here.
 time = datetime.datetime(year=2099, month=1, day=1)
@@ -89,8 +91,10 @@ class CommentView(View):
         data = {}
         form = CommentForm(request.POST)
         pid = request.POST.get('pid')
+        article_id = request.POST.get('article')
         if form.is_valid():
             msg['success'] = True
+            # 保存
             # print(form.cleaned_data)
             comment_obj = form.save()
             data['pk'] = comment_obj.pk
@@ -98,6 +102,14 @@ class CommentView(View):
             data['username'] = comment_obj.username
             data['add_time'] = comment_obj.add_time.strftime('%Y-%m-%d %H:%M:%S')
             # print(comment_obj.pid)
+            # # 评论成功，发送邮件提醒
+            #             # article_obj = models.Article.objects.filter(pk=article_id).first()
+            #             # send_mail(
+            #             #     f'您的{article_obj.title}文章被{comment_obj.username}评论',
+            #             #     comment_obj.content,
+            #             #     settings.EMAIL_HOST_USER,
+            #             #     ["1959013723@qq.com",],  # 文章作者邮箱
+            #             # )
             if comment_obj.pid != None:
                 # pid = int(comment_obj.pid)
 
