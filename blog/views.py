@@ -19,13 +19,19 @@ class Index(View):
 
     def get(self, request):
         """首页展示"""
-
+        # 文章总数
+        article_count = models.Article.objects.count()
+        # 评论总数
+        comment_count = models.Comment.objects.count()
         page_id = request.GET.get('page')  # 获取get请求中的page数据
         num = models.Article.objects.all().count()  # 总共记录数
         base_url = request.path  # 请求路径
         get_data = request.GET.copy()  # 直接调用这个类自己的copy方法或者deepcopy方法或者自己import copy 都可以实现内容允许修改
-        models.Article.objects.filter(is_recommend=1).update(add_time=time)  # <QuerySet [<Article: 太黑的诱惑>]>
-        all_articles = models.Article.objects.all().order_by('-add_time')  # <QuerySet [<Article: 333>]>
+        # models.Article.objects.filter(is_recommend=1).update(add_time=time)  # <QuerySet [<Article: 太黑的诱惑>]>
+        # all_articles = models.Article.objects.all().order_by('-add_time')  # <QuerySet [<Article: 333>]>
+        top_articles = list(models.Article.objects.filter(is_recommend=1))
+        articles = list(models.Article.objects.filter(is_recommend=False).order_by('-add_time'))
+        all_articles = top_articles + articles
         # 以后直接在settings配置文件中修改即可
         page_count = settings.PAGE_COUNT  # 页数栏显示多少个数
         record = settings.RECORD  # 每页显示多少条记录
@@ -37,7 +43,13 @@ class Index(View):
         # 文章分类
         categories = models.Category.objects.all()
 
-        return render(request, 'index.html', {'all_articles': all_articles, 'page_html': html_obj.html_page(), 'categories': categories, })
+        # 最新文章
+        new_articles = models.Article.objects.all().order_by('-add_time')[:5]
+        # 最热文章
+        hot_articles = models.Article.objects.all().order_by('click_count')[:5]
+
+        return render(request, 'index.html', {'all_articles': all_articles, 'page_html': html_obj.html_page(), 'categories':
+            categories, 'article_count': article_count, 'comment_count': comment_count, 'new_articles': new_articles, 'hot_articles': hot_articles})
 
 
 class ArticleView(View):
