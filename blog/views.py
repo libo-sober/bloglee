@@ -44,7 +44,9 @@ class ArticleView(View):
 
     def get(self, request, article_id=None):
         article = models.Article.objects.get(pk=article_id)
-        article.viewed()  # 增加阅读数
+        article.viewed()  # 增加阅读数P
+        # 为甚么刷新页面会产生两次访问ArticleView
+        # 已经解决，因为文章中的请求js或者csss图片等路径为空或出错的，就会自动请求当前路径
         mk = mistune.Markdown()
         output = mk(article.content)
 

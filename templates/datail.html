@@ -17,6 +17,8 @@
 
     <!-- Required meta tags -->
     <link rel="stylesheet" href="{% static 'css/WhiteMac.css' %}">
+{#    <link rel="stylesheet" href="{% static 'css/layui.css' %}">#}
+{#    <link rel="stylesheet" href="{% static 'css/layui.mobile.css' %}">#}
 
     <link rel="stylesheet" href="{% static 'css/tocbot.css' %}">
     <link rel="stylesheet" href="{% static 'css/OwO.min.css' %}">
@@ -77,6 +79,7 @@
             <div id="article-content" class="article-content">
 
                 {{ detail_html | custom_markdown | safe }}
+{#                {{ article.content }}#}
             </div>
             <!--文章内容区域-end-->
 
@@ -424,6 +427,8 @@
             </script>
 
 <script src="{% static 'js/api.js' %}"></script>
+{#<script src="{% static 'js/layui.js' %}"></script>#}
+{#<script src="{% static 'js/layui.all.js' %}"></script>#}
 
 <script type="text/javascript" src="{% static 'js/prism.js' %}"></script>
 
@@ -435,6 +440,7 @@
 
     <!--引入DoubanBoard组件-->
     <script src="{% static 'js/DoubanBoard.js'%}"></script>
+{#    OwO表情#}
     <script src="{% static 'js/OwO.min.js' %}"></script>
         <script>
             var OwO_demo = new OwO({
@@ -486,25 +492,56 @@
         })
     </script>
     <script>
-        var testView = editormd.markdownToHTML("article-content", {
-            emoji: true, tex: true, task_list: true, toc: false, atLink: false,
-            flowChart: true, sequenceDiagram: true, previewCodeHighlight: false, htmlDecode: true
-        });
+        {#var testView = editormd.markdownToHTML("article-content", {#}
+        {#    emoji: true, tex: true, task_list: true, toc: false, atLink: false,#}
+        {#    flowChart: true, sequenceDiagram: true, previewCodeHighlight: false,#}
+        {#    htmlDecode: true#}
+        {# });#}
 
         highlightCodeForMDArticle();
 
-        tocbot.init({
-            tocSelector: '.tocContainer',
-            contentSelector: '.article-content',
-            positionFixedClass: 'is-position-fixed',
-            positionFixedSelector: '.aside-article-catalog'
-        });
 
-        controlSidebar();
+
+
 
         setTimeout(function () {
             $("#morphing-content .article-content").html($("#article-content").html());
         }, 2000);
     </script>
+{#    给文章的h标签添加id值#}
+    <script>
+        var headerEl = 'h1,h2,h3,h4',  //headers
+    content = '.article-content',//文章容器
+    idArr = {};  //标题数组以确定是否增加索引id
+//add #id
 
+$(content).children(headerEl).each(function () {
+    //去除空格以及多余标点
+    var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+
+    headerId = headerId.toLowerCase();
+    if (idArr[headerId]) {
+        //id已经存在
+        $(this).attr('id', headerId + '-' + idArr[headerId]);
+        idArr[headerId]++;
+    }
+    else {
+        //id未存在
+        idArr[headerId] = 1;
+        $(this).attr('id', headerId);
+    }
+});
+tocbot.init({
+            {#添加到哪里#}
+            tocSelector: '.tocContainer',
+            {#针对那个id标签#}
+            contentSelector: '.article-content',
+            {#滚动跟随#}
+            positionFixedClass: 'is-position-fixed',
+            positionFixedSelector: '.aside-article-catalog',
+            {#// 需要解析的标题#}
+            headingSelector: headerEl,
+        });
+controlSidebar();
+    </script>
 {% endblock %}

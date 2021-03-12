@@ -101,6 +101,7 @@ $(function () {
             console.log(data);
             // console.log(data.error.qq_email);
             // console.log(data.error.article);
+
             if (data.success == false) {
                 if (data.error.username) {
                     $("#username").addClass("is-invalid");

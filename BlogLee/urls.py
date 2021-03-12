@@ -13,9 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from BlogLee import settings
 from django.contrib import admin
-from django.urls import path, re_path
-
+from django.urls import path, re_path, include
+from django.conf.urls.static import static
 from blog import views
 
 urlpatterns = [
@@ -32,5 +33,14 @@ urlpatterns = [
     path('comment/', views.CommentView.as_view(), name='comment'),
     # 评论树
     path('comment/tree/', views.CommentTreeView.as_view(), name='comment_tree'),
+    # mdeditor
+    path('mdeditor/', include('mdeditor.urls')),
+
 
 ]
+# 设置后台名称
+admin.site.site_header = '大聪明博客后台'
+admin.site.site_title = 'Django Blog 后台'
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

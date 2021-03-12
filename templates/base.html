@@ -22,6 +22,8 @@
 <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" href="{% static 'css/hover-min.css' %}">
+<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.min.css' %}">
+<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.preview.css' %}">
 
 
 {% block css %}
@@ -128,7 +130,8 @@
                                 |
                             <a href="javascript:;" target="_blank" rel="nofollow" class="text-white-50 ">站点地图</a><br>
 {#                            友盟站点数据统计#}
-                            <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1277508844'%3E%3C/span%3E%3Cscript src='申请的链接' type='text/javascript'%3E%3C/script%3E"));</script>|本站已运行<span id="web-time"></span><br>
+{#                            <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1277508844'%3E%3C/span%3E%3Cscript src='申请的链接' type='text/javascript'%3E%3C/script%3E"));</script>#}
+                            |本站已运行<span id="web-time"></span><br>
                             <a href="javascript:;" rel="external nofollow" target="_blank" class="text-white-50 ">
                             <i class="govimg"></i>皖ICP备20002742号
                             </a>
@@ -206,7 +209,11 @@
 <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
 <script src="{% static 'js/qrcode.min.js' %}"></script>
 <script src="{% static 'js/lazyload.min.js' %}"></script>
-<script src="{% static 'js/editormd.js' %}"></script>
+<script src="{% static 'mdeditor/js/editormd.js' %}"></script>
+<script src="{% static 'mdeditor/js/editormd.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/marked.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/prettify.min.js' %}"></script>
+<script src="{% static 'mdeditor/js/lib/flowchart.min.js' %}"></script>
 
 <script type="text/javascript" color="255,69,0" opacity='0.7' zindex="-1" count="100" src="{% static 'js/canvas-nest.min.js' %}"></script>
 
@@ -241,16 +248,16 @@
     //document.body.oncopy = function() {layer.msg('复制成功,若要转载请务必保留原文链接！', function(){});};
     loadNeedTime();
 </script>
-<script>
+{#<script>#}
     {#百度统计的js#}
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?e9b3c4ff48473f2a3e422a69c1bc19c1";
-  var s = document.getElementsByTagName("script")[0];
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+{#var _hmt = _hmt || [];#}
+{#(function() {#}
+{#  var hm = document.createElement("script");#}
+{#  hm.src = "https://hm.baidu.com/hm.js?e9b3c4ff48473f2a3e422a69c1bc19c1";#}
+{#  var s = document.getElementsByTagName("script")[0];#}
+{#  s.parentNode.insertBefore(hm, s);#}
+{#})();#}
+{#</script>#}
 
 {% block js %}
 {% endblock %}

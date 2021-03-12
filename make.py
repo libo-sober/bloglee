@@ -5,7 +5,7 @@ import re
 #     'src="static/js/qrcode.min.js"></script>'
 
 # pattern = re.compile("'static/(.*?)'",flags=re.S)  # 一种是单引号引起
-pattern = re.compile('"static/(.*?)"',flags=re.S) # 一种是双引号引起
+# pattern = re.compile('"static/(.*?)"',flags=re.S) # 一种是双引号引起
 # rs = re.findall(pattern, s)
 # for s1 in rs:
 #     ss = 'static/' + s1
@@ -20,12 +20,17 @@ pattern = re.compile('"static/(.*?)"',flags=re.S) # 一种是双引号引起
 #     with open('index.html', mode='w+', encoding='utf-8') as f:
 #         f.write(s)
 # print(rs)
-with open('templates/datail.html', mode='r', encoding='utf-8') as fp:
-    s = fp.read()
-    rs = re.findall(pattern, s)
-    for s1 in rs:
-        ss = 'static/' + s1
-        su = "{% static '" + s1 + "' %}"
-        s = re.sub(ss, su, s)
-    with open('index.html', mode='w+', encoding='utf-8') as f:
-        f.write(s)
+# with open('templates/datail.html', mode='r', encoding='utf-8') as fp:
+#     s = fp.read()
+#     rs = re.findall(pattern, s)
+#     for s1 in rs:
+#         ss = 'static/' + s1
+#         su = "{% static '" + s1 + "' %}"
+#         s = re.sub(ss, su, s)
+#     with open('index.html', mode='w+', encoding='utf-8') as f:
+#         f.write(s)
+
+s = '<h2>单例模式</h2><h1>python---反射和单例模式</h1>'
+h_list = re.findall(r'<h\d>(.*)</h\d>', s, re.M)
+print(h_list)
+
