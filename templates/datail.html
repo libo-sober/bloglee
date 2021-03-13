@@ -179,7 +179,9 @@
 
             <!--评论列表-start-->
 
-        <ol class="list-group comment-list" id="comments"></ol>
+        <ol class="list-group comment-list" id="comments">
+            {{ ret | build_coment_tree | safe }}
+        </ol>
 
             <!--评论表单-start-->
             <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
@@ -341,90 +343,90 @@
 
 {% block js %}
 {#    js代码要写在body后，否则容易不执行  评论树展示#}
-                <script>
-                {#$(".dianji").click(function (){#}
-                    $.ajax({
-                        url: "/comment/tree/",
-                        type: "get",
-                        data: {
-                            article_id: "{{ article.id }}",
-                        },
-                        success:function (data){
-                            {#console.log(data)#}
-                            $.each(data, function (index, coment_obj){
-                                var pid = coment_obj.pid
-                                var add_time = coment_obj.add_time
-                                var content = coment_obj.content
-                                var pk = coment_obj.pk
-                                var username = coment_obj.username
-                                var fu_username = coment_obj.fu_username
-                                if(!pid){
-                                     var gen_comment =
-                                `
-                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>
-                    <div class="clearfix" id="div-comment-${pk}">
-                        <div class="media">
-                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
-                                 class="mr-3 rounded-circle" width="50" height="50"
-                                 onerror="javascript:this.src='/static/image/unknow.png';">
-                            <div class="media-body">
-                                <div class="comment-info">
-                                    <cite class="c3">
-
-                                        ${username}
-
-                                    </cite>
-
-                                </div>
-                                <div class="comment-meta"><span
-                                        class="font-weight-light text-muted">${add_time}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-break mt-2">${content}</p>
-                        <a class="btn btn-sm btn-secondary float-right"
-                           onclick="reply('div-comment-${pk}','${pk}')">回复</a>
-                    </div>                </li>`
-                                    $(".comment-list").append(gen_comment);
-                                }else {
-                                                                var zi_comment = `
-                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>
-                    <div class="clearfix" id="div-comment-${pk}">
-                        <div class="media">
-                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
-                                 class="mr-3 rounded-circle" width="50" height="50"
-                                 onerror="javascript:this.src='/static/image/unknow.png';">
-                            <div class="media-body">
-                                <div class="comment-info">
-                                    <cite class="c3">
-
-                                        ${username}
-
-                                    </cite>
-                       <i class="fa fa-share fa-fw fa-1x mr-2 c1" aria-hidden="true"></i>
-                       <cite class="c3"><a href="#div-comment-48" class="text-reset">${fu_username}</a></cite>
-                                                       </div>
-                                <div class="comment-meta"><span
-                                        class="font-weight-light text-muted">${add_time}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-break mt-2">${content}</p>
-                        <a class="btn btn-sm btn-secondary float-right"
-                           onclick="reply('div-comment-${pk}','${pk}')">回复</a>
-                    </div>                </li>`
-                                    {#console.log(pid)#}
-                                    {#console.log(fu_username)#}
-                                    $("[comment_id="+pid+"]").append('<ol class="children">' + zi_comment + '</ol>');
-                                }
-
-                            })
-                        }
-                      })
-
-                {# })#}
-
-            </script>
+{#                <script>#}
+{#                $(".dianji").click(function (){#}
+{#                    $.ajax({#}
+{#                        url: "/comment/tree/",#}
+{#                        type: "get",#}
+{#                        data: {#}
+{#                            article_id: "{{ article.id }}",#}
+{#                        },#}
+{#                        success:function (data){#}
+{#                            console.log(data)#}
+{#                            $.each(data, function (index, coment_obj){#}
+{#                                var pid = coment_obj.pid#}
+{#                                var add_time = coment_obj.add_time#}
+{#                                var content = coment_obj.content#}
+{#                                var pk = coment_obj.pk#}
+{#                                var username = coment_obj.username#}
+{#                                var fu_username = coment_obj.fu_username#}
+{#                                if(!pid){#}
+{#                                     var gen_comment =#}
+{#                                `#}
+{#                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>#}
+{#                    <div class="clearfix" id="div-comment-${pk}">#}
+{#                        <div class="media">#}
+{#                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"#}
+{#                                 class="mr-3 rounded-circle" width="50" height="50"#}
+{#                                 onerror="javascript:this.src='/static/image/unknow.png';">#}
+{#                            <div class="media-body">#}
+{#                                <div class="comment-info">#}
+{#                                    <cite class="c3">#}
+{##}
+{#                                        ${username}#}
+{##}
+{#                                    </cite>#}
+{##}
+{#                                </div>#}
+{#                                <div class="comment-meta"><span#}
+{#                                        class="font-weight-light text-muted">${add_time}</span>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <p class="text-break mt-2">${content}</p>#}
+{#                        <a class="btn btn-sm btn-secondary float-right"#}
+{#                           onclick="reply('div-comment-${pk}','${pk}')">回复</a>#}
+{#                    </div>                </li>`#}
+{#                                    $(".comment-list").append(gen_comment);#}
+{#                                }else {#}
+{#                                                                var zi_comment = `#}
+{#                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>#}
+{#                    <div class="clearfix" id="div-comment-${pk}">#}
+{#                        <div class="media">#}
+{#                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"#}
+{#                                 class="mr-3 rounded-circle" width="50" height="50"#}
+{#                                 onerror="javascript:this.src='/static/image/unknow.png';">#}
+{#                            <div class="media-body">#}
+{#                                <div class="comment-info">#}
+{#                                    <cite class="c3">#}
+{##}
+{#                                        ${username}#}
+{##}
+{#                                    </cite>#}
+{#                       <i class="fa fa-share fa-fw fa-1x mr-2 c1" aria-hidden="true"></i>#}
+{#                       <cite class="c3"><a href="#div-comment-${pid}" class="text-reset">${fu_username}</a></cite>#}
+{#                                                       </div>#}
+{#                                <div class="comment-meta"><span#}
+{#                                        class="font-weight-light text-muted">${add_time}</span>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <p class="text-break mt-2">${content}</p>#}
+{#                        <a class="btn btn-sm btn-secondary float-right"#}
+{#                           onclick="reply('div-comment-${pk}','${pk}')">回复</a>#}
+{#                    </div>                </li>`#}
+{#                                    console.log(pid)#}
+{#                                    console.log(fu_username)#}
+{#                                    $("[comment_id="+pid+"]").append('<ol class="children">' + zi_comment + '</ol>');#}
+{#                                }#}
+{##}
+{#                            })#}
+{#                        }#}
+{#                      })#}
+{##}
+{#                 })#}
+{##}
+{#            </script>#}
 
 <script src="{% static 'js/api.js' %}"></script>
 {#<script src="{% static 'js/layui.js' %}"></script>#}

@@ -66,9 +66,44 @@ class ArticleView(View):
 
         # 文章分类
         categories = models.Category.objects.all()
+        # 该文章的所有评论
+        comment_obj = models.Comment.objects.filter(article_id=article_id)
+        comment_list = self.build_msg(comment_obj)
+        ret = self.get_comment_list(comment_list)
 
-        return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, })
+        return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, 'ret': ret})
 
+    def get_comment_list(self, comment_list):
+        ret = []
+        comment_dic = {}
+        for comment_obj in comment_list:
+            comment_obj['children'] = []
+            comment_dic[comment_obj['pk']] = comment_obj
+
+        for comment in comment_list:
+            p_obj = comment_dic.get(comment['pid'])
+            if not p_obj:
+                ret.append(comment)
+            else:
+                p_obj['children'].append(comment)
+        return ret
+
+    def build_msg(self, comment_obj):
+        msg = []
+        for comment in comment_obj:
+            data = {}
+            if comment.pid:
+                data['pid'] = comment.pid.id
+                data['fu_username'] = models.Comment.objects.get(pk=comment.pid.id).username
+            else:
+                data['pid'] = None
+                data['fu_username'] = None
+            data['pk'] = comment.pk
+            data['content'] = comment.content
+            data['username'] = comment.username
+            data['add_time'] = comment.add_time.strftime('%Y-%m-%d %H:%M:%S')
+            msg.append(data)
+        return msg
 
 class CategoryView(View):
 
@@ -169,7 +204,7 @@ class CommentTreeView(View):
             data['username'] = comment.username
             data['add_time'] = comment.add_time.strftime('%Y-%m-%d %H:%M:%S')
             msg.append(data)
-        # print(msg)  # print(msg) # 发给Ajax的数据
+        # print(msg)  # 发给Ajax的数据
 
         return JsonResponse(msg, safe=False)
 
