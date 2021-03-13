@@ -269,7 +269,7 @@
         "type": "image",
         "container": [
             {
-                "icon": "<img src=\"//o5mvhz1ad.qnssl.com/face1.jpg\">",
+                "icon": "<img src=\"/static/picture/aini_org.png\">",
                 "text": "face1"
             },
             {

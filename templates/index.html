@@ -145,7 +145,7 @@
                         <ul class="list-group list-group-flush">
                             {% for article in new_articles %}
                             <a class="pl-0 list-group-item text-truncate text-dark " title="{{ article.title }}"
-                               href="note-mongodb.html">
+                               href="{% url 'detail' article.id %}">
                                 <i class="fa  fa-book"></i>
                                 {{ article.title }}
                             </a>
@@ -155,7 +155,7 @@
                     <div class="tab-pane" id="hot" role="tabpanel">
                         <ul class="list-group list-group-flush">
                         {% for article in hot_articles %}
-                            <a class="pl-0 list-group-item text-truncate text-dark " title="{{ article.title }}" href="datail.html">
+                            <a class="pl-0 list-group-item text-truncate text-dark " title="{{ article.title }}" href="{% url 'detail' article.id %}">
                                 <i class="fa  fa-book"></i>
                                 {{ article.title }}
                             </a>
@@ -180,10 +180,10 @@
                     <div class="tab-pane active" id="recentcomment" role="tabpanel">
 
                         <ul class="list-group list-group-flush">
-
+                        {% for comment in new_comments %}
                             <li class="pl-0 list-group-item">
 
-                                <a href="index6.html#div-comment-88" class="text-reset ">
+                                <a href="{% url 'detail' comment.article.id %}#div-comment-{{ comment.id }}" class="text-reset ">
                                     <div class="media pt-3">
 
                                         <img class="mr-2 rounded" width="32" heigh="32"
@@ -192,121 +192,20 @@
                                         <div class="media-body pb-3 mb-0 small">
 
 
-                                            「<strong>li-bingke</strong>」于
-                                            「<strong>6天，1 小时前</strong>」在
-                                            「<strong>留言页面</strong>」中说: <br>
+                                            「<strong>{{ comment.username }}</strong>」于
+                                            「<strong>{{ comment.add_time|date:"Y-m-d" }}</strong>」在
+                                            「<strong>{{ comment.article.title }}页面</strong>」中说: <br>
 
                                             <div style="background-color: #e9ecef;">
                                                 <i class="fa fa-quote-left" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong
-                                                    class="text-break pr-4">你好，关于你的影单和书单是怎么</strong><i
+                                                    class="text-break pr-4">{{ comment.content|safe }}</strong><i
                                                     class="fa fa-quote-right" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </li>
-
-                            <li class="pl-0 list-group-item">
-
-                                <a href="datail.html#div-comment-79" class="text-reset ">
-                                    <div class="media pt-3">
-
-                                        <img class="mr-2 rounded" width="32" heigh="32"
-                                             src="{% static 'picture/g-sdk_obvjuI0rv7HLquMV7kLpFg_100.jpg' %}"
-                                             onerror="javascript:this.src='/static/images/unknow.png';">
-                                        <div class="media-body pb-3 mb-0 small">
-
-
-                                            「<strong>dyp</strong>」于
-                                            「<strong>2月，3 周前</strong>」在
-                                            「<strong>说说我的博客文章页面</strong>」中说: <br>
-
-                                            <div style="background-color: #e9ecef;">
-                                                <i class="fa fa-quote-left" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong
-                                                    class="text-break pr-4">追梦人生的网站打不开了。<img class='biaoqing'
-                                                                                             src='{% static 'picture/erha_org.png' %}'></strong><i
-                                                    class="fa fa-quote-right" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-
-                            <li class="pl-0 list-group-item">
-
-                                <a href="index6.html#div-comment-70" class="text-reset ">
-                                    <div class="media pt-3">
-
-                                        <img class="mr-2 rounded" width="32" heigh="32"
-                                             src="{% static 'picture/g-sdk_ndW7MlLJbfiaappeicE8dwCw_1.jpg' %}"
-                                             onerror="javascript:this.src='/static/images/unknow.png';">
-                                        <div class="media-body pb-3 mb-0 small">
-
-
-                                            「<strong>Daring</strong>」于
-                                            「<strong>3月，1 周前</strong>」在
-                                            「<strong>留言页面</strong>」中说: <br>
-
-                                            <div style="background-color: #e9ecef;">
-                                                <i class="fa fa-quote-left" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong
-                                                    class="text-break pr-4">表情没狗头</strong><i class="fa fa-quote-right"
-                                                                                             aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-
-                            <li class="pl-0 list-group-item">
-
-                                <a href="index6.html#div-comment-69" class="text-reset ">
-                                    <div class="media pt-3">
-
-                                        <img class="mr-2 rounded" width="32" heigh="32"
-                                             src="{% static 'picture/g-sdk_9VCAWnz767YnqdMtFkeWjQ_100.jpg' %}"
-                                             onerror="javascript:this.src='/static/images/unknow.png';">
-                                        <div class="media-body pb-3 mb-0 small">
-
-
-                                            「<strong>giao</strong>」于
-                                            「<strong>3月，2 周前</strong>」在
-                                            「<strong>留言页面</strong>」中说: <br>
-
-                                            <div style="background-color: #e9ecef;">
-                                                <i class="fa fa-quote-left" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong
-                                                    class="text-break pr-4"><img class='biaoqing'
-                                                                                 src='{% static 'picture/erha_org.png' %}'></strong><i
-                                                    class="fa fa-quote-right" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-
-                            <li class="pl-0 list-group-item">
-
-                                <a href="datail.html#div-comment-67" class="text-reset ">
-                                    <div class="media pt-3">
-
-                                        <img class="mr-2 rounded" width="32" heigh="32"
-                                             src="{% static 'picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg' %}"
-                                             onerror="javascript:this.src='/static/images/unknow.png';">
-                                        <div class="media-body pb-3 mb-0 small">
-
-
-                                            「<strong>amelie</strong>」于
-                                            「<strong>4月，1 周前</strong>」在
-                                            「<strong>说说我的博客文章页面</strong>」中说: <br>
-
-                                            <div style="background-color: #e9ecef;">
-                                                <i class="fa fa-quote-left" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong
-                                                    class="text-break pr-4">看起来很不错，从刚刚从追梦人生</strong><i
-                                                    class="fa fa-quote-right" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                        {% endfor %}
 
                         </ul>
                     </div>

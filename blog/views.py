@@ -46,10 +46,12 @@ class Index(View):
         # 最新文章
         new_articles = models.Article.objects.all().order_by('-add_time')[:5]
         # 最热文章
-        hot_articles = models.Article.objects.all().order_by('click_count')[:5]
+        hot_articles = models.Article.objects.all().order_by('-click_count')[:5]
+        # 最新评论
+        new_comments = models.Comment.objects.all().order_by('-add_time')[:5]
 
         return render(request, 'index.html', {'all_articles': all_articles, 'page_html': html_obj.html_page(), 'categories':
-            categories, 'article_count': article_count, 'comment_count': comment_count, 'new_articles': new_articles, 'hot_articles': hot_articles})
+            categories, 'article_count': article_count, 'comment_count': comment_count, 'new_articles': new_articles, 'hot_articles': hot_articles, 'new_comments': new_comments})
 
 
 class ArticleView(View):
