@@ -17,7 +17,7 @@ time = datetime.datetime(year=2099, month=1, day=1)
 
 class Index(View):
 
-    def get(self, request):
+    def get(self, request, cid=None, tag_id=None):
         """首页展示"""
         # 文章总数
         article_count = models.Article.objects.count()
@@ -29,7 +29,7 @@ class Index(View):
         get_data = request.GET.copy()  # 直接调用这个类自己的copy方法或者deepcopy方法或者自己import copy 都可以实现内容允许修改
         # models.Article.objects.filter(is_recommend=1).update(add_time=time)  # <QuerySet [<Article: 太黑的诱惑>]>
         # all_articles = models.Article.objects.all().order_by('-add_time')  # <QuerySet [<Article: 333>]>
-        top_articles = list(models.Article.objects.filter(is_recommend=1))
+        top_articles = list(models.Article.objects.filter(is_recommend=1).order_by('-add_time'))
         articles = list(models.Article.objects.filter(is_recommend=False).order_by('-add_time'))
         all_articles = top_articles + articles
         # 以后直接在settings配置文件中修改即可
@@ -49,9 +49,50 @@ class Index(View):
         hot_articles = models.Article.objects.all().order_by('-click_count')[:5]
         # 最新评论
         new_comments = models.Comment.objects.all().order_by('-add_time')[:5]
+        # 标签云
+        tags = models.Tag.objects.all()
 
-        return render(request, 'index.html', {'all_articles': all_articles, 'page_html': html_obj.html_page(), 'categories':
-            categories, 'article_count': article_count, 'comment_count': comment_count, 'new_articles': new_articles, 'hot_articles': hot_articles, 'new_comments': new_comments})
+
+        if tag_id:
+            # tag_id对应类下的所有文章
+            tags_num = models.Article.objects.filter(tag__pk=tag_id).count()  # 总共记录数
+            tags_top_articles = list(
+                models.Article.objects.filter(tag__pk=tag_id).filter(is_recommend=1).order_by('-add_time'))
+            tags_articles = list(
+                models.Article.objects.filter(tag__pk=tag_id).filter(is_recommend=False).order_by('-add_time'))
+            tags_all_articles = tags_top_articles + tags_articles
+            html_obj = MyPagination(page_id=page_id, num=tags_num, base_url=base_url, get_data=get_data,
+                                    page_count=page_count, record=record)
+            tags_all_articles = tags_all_articles[
+                           (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
+            return render(request, 'tag.html',
+                          {'tags_all_articles': tags_all_articles, 'page_html': html_obj.html_page(),
+                           'categories':
+                               categories, 'article_count': article_count, 'comment_count': comment_count,
+                           'new_articles': new_articles, 'hot_articles':
+                               hot_articles, 'new_comments': new_comments, 'tags': tags, })
+
+        elif cid:
+            # categoriy_id对应类下的所有文章
+            categories_num = models.Article.objects.filter(category_id=cid).all().count()  # 总共记录数
+            categories_top_articles = list(
+                models.Article.objects.filter(category_id=cid).filter(is_recommend=1).order_by('-add_time'))
+            categories_articles = list(
+                models.Article.objects.filter(category_id=cid).filter(is_recommend=False).order_by('-add_time'))
+            categories_all_articles = categories_top_articles + categories_articles
+            html_obj = MyPagination(page_id=page_id, num=categories_num, base_url=base_url, get_data=get_data,
+                                    page_count=page_count, record=record)
+            categories_all_articles = categories_all_articles[
+                                (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
+            return render(request, 'category.html', {'categories_all_articles': categories_all_articles,'page_html': html_obj.html_page(), 'categories':
+                categories, 'article_count': article_count, 'comment_count': comment_count, 'new_articles': new_articles, 'hot_articles':
+                hot_articles, 'new_comments': new_comments, 'tags': tags, })
+        else:
+            return render(request, 'index.html',
+                          {'all_articles': all_articles, 'page_html': html_obj.html_page(), 'categories':
+                              categories, 'article_count': article_count, 'comment_count': comment_count,
+                           'new_articles': new_articles, 'hot_articles':
+                               hot_articles, 'new_comments': new_comments, 'tags': tags, })
 
 
 class ArticleView(View):
@@ -74,6 +115,7 @@ class ArticleView(View):
         return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, 'ret': ret})
 
     def get_comment_list(self, comment_list):
+        # 把msg增加一个chirld键值对，存放它的儿子们
         ret = []
         comment_dic = {}
         for comment_obj in comment_list:
@@ -89,6 +131,7 @@ class ArticleView(View):
         return ret
 
     def build_msg(self, comment_obj):
+        # 把数据造成列表里边套字典的形式
         msg = []
         for comment in comment_obj:
             data = {}
@@ -105,16 +148,15 @@ class ArticleView(View):
             msg.append(data)
         return msg
 
-class CategoryView(View):
+# 文章按标签分
+class TagView(View):
 
-    def get(self, request, cid):
-        # 文章分类
+    def get(self, request, cid, tag_id):
+        # 文章分类，导航栏用
         categories = models.Category.objects.all()
-        # categoriy_id对应类下的所有文章
-        models.Article.objects.filter(is_recommend=1).update(add_time=time)
-        all_articles = models.Article.objects.filter(category_id=cid).order_by('-add_time')
+        tags = models.Tag.objects.all()
 
-        return render(request, 'category.html', {'categories': categories, 'all_articles': all_articles, })
+
 
 
 # 关于我

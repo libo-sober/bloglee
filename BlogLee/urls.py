@@ -28,7 +28,9 @@ urlpatterns = [
     # 文章详情
     re_path(r'^articles/detail/(\d+)/', views.ArticleView.as_view(), name='detail'),
     # 文章分类
-    re_path(r'^articles/category/(\d+)/', views.CategoryView.as_view(), name='category'),
+    re_path(r'^articles/category/(\d+)/', views.Index.as_view(), name='category'),
+    # 文章按标签分
+    re_path(r'^articles/tag/(\d+)/(\d+)/', views.Index.as_view(), name='tag'),
     # 评论
     path('comment/', views.CommentView.as_view(), name='comment'),
     # 评论树

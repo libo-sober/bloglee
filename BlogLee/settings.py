@@ -139,7 +139,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-PAGE_COUNT = 4  # 页数栏显示多少个数
+PAGE_COUNT = 5  # 页数栏显示多少个数,是个奇数
 RECORD = 10  # 每页显示多少条记录
 
 # 服务器邮箱
