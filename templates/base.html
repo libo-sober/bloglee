@@ -22,8 +22,8 @@
 <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 <link rel="stylesheet" href="{% static 'css/hover-min.css' %}">
-<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.min.css' %}">
-<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.preview.css' %}">
+{#<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.min.css' %}">#}
+{#<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.preview.css' %}">#}
 
 
 {% block css %}
@@ -65,45 +65,28 @@
 <!--上小半部分end--->
 
 
-
+{% block content %}
 <!--主内容-start--->
-  <div class="container">
-    <div class="row">
-	<section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
 
 <!--左边内容区-start-->
-{% block content %}
     <p>内容</p>
+<!--左边内容区-end-->
 
-{% endblock %}
-     <!--左边内容区-end-->
-
-
-
-
-
-    <!--分页栏-start-->
-
-{% block pagination %}
-
-
+<!--分页栏-start-->
 <!--分页栏-end-->
 {% endblock %}
-	</section>
 
 
-    <!--侧边栏-start-->
-    {% block aside %}
+{% block aside %}
 
-    <!--侧边栏-end-->
-    {% endblock %}
-    </div>
+<!--侧边栏-start-->
 
-
-  </div>
+<!--侧边栏-end-->
+{% endblock %}
 
 
 <!--主内容-end--->
+
 
 </main>
 
@@ -207,13 +190,9 @@
 <script src="{% static 'js/jquery.form.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
-<script src="{% static 'js/qrcode.min.js' %}"></script>
-<script src="{% static 'js/lazyload.min.js' %}"></script>
-<script src="{% static 'mdeditor/js/editormd.js' %}"></script>
-<script src="{% static 'mdeditor/js/editormd.min.js' %}"></script>
-<script src="{% static 'mdeditor/js/lib/marked.min.js' %}"></script>
-<script src="{% static 'mdeditor/js/lib/prettify.min.js' %}"></script>
-<script src="{% static 'mdeditor/js/lib/flowchart.min.js' %}"></script>
+{#<script src="{% static 'js/qrcode.min.js' %}"></script>#}
+{#<script src="{% static 'js/lazyload.min.js' %}"></script>#}
+
 
 <script type="text/javascript" color="255,69,0" opacity='0.7' zindex="-1" count="100" src="{% static 'js/canvas-nest.min.js' %}"></script>
 

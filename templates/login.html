@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{## 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入#}
+{% block Navigation %}
+    {% navigation categories %}
+{% endblock %}
+
+{% block content %}
+<!--主内容-start--->
+  <div class="container">
+	 <form class="form-signin bg-white" method="post" action="/user/login">
+  <div class="text-center mb-4">
+    <img class="mb-2" src="static/picture/favicon.png" alt="" width="100" height="100">
+    <h1 class="h3 mb-3 font-weight-normal">欢迎登录</h1>
+	<div class="rollContainer">
+	  <p class="rollBlock">友情提示：新注册用户请按照QQ邮箱邮件提示完成激活再登陆，谢谢！</p>
+	</div>
+    <div class="login_error">
+      
+    </div>
+  </div>
+
+  <div class="form-label-group">
+	<input type="text" id="inputUsername" name="username" value="" class="form-control " placeholder="用户名" required="" autofocus="">
+    <label for="inputUsername">用户名或邮箱</label>
+  </div>
+
+  <div class="form-label-group">
+    <input type="password" id="inputPassword" name="password" value="" class="form-control " placeholder="密码" required="">
+    <label for="inputPassword">密码</label>
+  </div>
+  
+  
+  <div class="checkbox mb-3 text-muted">
+    <label>
+      <input type="checkbox" value="remember-me">下次自动登录
+    </label>
+  </div>
+     <input type="hidden" name="next_to" value="/">
+  <button class="btn btn-lg btn-success btn-block" type="submit">登录</button>
+     <input type="hidden" name="csrfmiddlewaretoken" value="LGCNLuG6n0LN8lyfXwqZ7oo5VDz3jI6tPeL4CePjiw16DcGHmjxihZ9CjiU1fJ1U">
+</form>
+<div class="clearfix " style="width: 100%;max-width: 420px;padding: 15px;margin: auto;">
+<p class="float-left"><a class="text-muted " href="index.html">←回到首页</a></p>
+<p class="float-right">
+<a class="text-muted " href="{% url 'register' %}">注册</a>
+|
+<a class="text-muted " href="forget.html">忘记密码</a>
+</p>
+</div>
+  </div>
+
+{% endblock %}

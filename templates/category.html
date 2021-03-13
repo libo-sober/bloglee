@@ -1,6 +1,11 @@
 {% extends 'index.html' %}
 
 {% block content %}
+
+
+      <div class="container">
+    <div class="row">
+    <section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
     {% for article in categories_all_articles %}
         <article class="d-block bg-white hvr-float">
 
@@ -53,5 +58,10 @@
     </div>
  </article>
     {% endfor %}
+        {{ page_html }}
+    </section>
 {% endblock %}
+    </div>
 
+
+  </div>

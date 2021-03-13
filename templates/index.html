@@ -13,6 +13,11 @@
 
 
 {% block content %}
+
+      <div class="container">
+    <div class="row">
+	<section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
+
     {% for article in all_articles %}
         <article class="d-block bg-white hvr-float">
 
@@ -71,11 +76,13 @@
             </div>
         </article>
     {% endfor %}
+
+    {{ page_html }}
+    </section>
+
+
 {% endblock %}
 
-{% block pagination %}
-    {{ page_html }}
-{% endblock %}
 
 {% block aside %}
     <aside class="col-lg-4 col-xl-4 hidden-xs hidden-sm" id="aside">
@@ -244,6 +251,11 @@
         </div>
     </aside>
 {% endblock %}
+
+    </div>
+
+
+  </div>
 
 {% block js %}
 {#    每日一句#}

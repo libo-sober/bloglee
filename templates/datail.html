@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% load static %}
 {% load custom_tag %}
 
@@ -22,15 +22,16 @@
 
     <link rel="stylesheet" href="{% static 'css/tocbot.css' %}">
     <link rel="stylesheet" href="{% static 'css/OwO.min.css' %}">
+{#    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">#}
+
 
 {% endblock %}
 
-{% block Navigation %}
-    {% navigation categories %}
-{% endblock %}
 
 {% block content %}
-
+      <div class="container">
+    <div class="row">
+    	<section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
     <!--左边内容区-start-->
 
     <!--面包屑-start-->
@@ -79,7 +80,7 @@
             <div id="article-content" class="article-content">
 
                 {{ detail_html | custom_markdown | safe }}
-{#                {{ article.content }}#}
+{#                {{ article.content | safe }}#}
             </div>
             <!--文章内容区域-end-->
 
@@ -310,7 +311,7 @@
         </div>
     </div>
 
-
+        </section>
 
 {% endblock %}
 
@@ -340,7 +341,10 @@
     <!--右边内容区域-end-->
 
 {% endblock %}
+    </div>
 
+
+  </div>
 {% block js %}
 {#    js代码要写在body后，否则容易不执行  评论树展示#}
 {#                <script>#}
@@ -431,17 +435,25 @@
 <script src="{% static 'js/api.js' %}"></script>
 {#<script src="{% static 'js/layui.js' %}"></script>#}
 {#<script src="{% static 'js/layui.all.js' %}"></script>#}
-
 <script type="text/javascript" src="{% static 'js/prism.js' %}"></script>
-
 <script src="{% static 'js/tocbot.min.js' %}"></script>
-
-
 <script src="{% static 'js/fancyMorph.min.js' %}"></script>
+
+    <!--引入markdown插件-->
+{#<link rel="stylesheet" href="static/css/vue.css">#}
+{#<script src="{% static 'js/editormd.js' %}"></script>#}
+{#<script src="{% static 'js/marked.min.js' %}"></script>#}
+{#    <!-editormd自带的--->#}
+{#<script src="{% static 'js/flowchart.min.js' %}"></script>#}
+{#<script src="{% static 'js/raphael.min.js' %}"></script>#}
+{#<script src="{% static 'js/jquery.flowchart.min.js' %}"></script>#}
+{#<script src="{% static 'js/underscore.min.js' %}"></script>#}
+{#<script src="{% static 'js/sequence-diagram.min.js' %}"></script>#}
+{#    <script src="{% static 'js/clipboard.min.js' %}"></script>#}
 
 
     <!--引入DoubanBoard组件-->
-    <script src="{% static 'js/DoubanBoard.js'%}"></script>
+{#    <script src="{% static 'js/DoubanBoard.js'%}"></script>#}
 {#    OwO表情#}
     <script src="{% static 'js/OwO.min.js' %}"></script>
         <script>

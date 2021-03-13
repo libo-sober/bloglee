@@ -23,6 +23,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # 首页
     path('', views.Index.as_view(), name='index'),
+    # 登录
+    path('login/', views.LoginView.as_view(), name='login'),
+    # 注册
+    path('register/', views.RegisterView.as_view(), name='register'),
     # 关于
     path('about/', views.About.as_view(), name='about'),
     # 文章详情
@@ -33,8 +37,6 @@ urlpatterns = [
     re_path(r'^articles/tag/(\d+)/(\d+)/', views.Index.as_view(), name='tag'),
     # 评论
     path('comment/', views.CommentView.as_view(), name='comment'),
-    # 评论树
-    path('comment/tree/', views.CommentTreeView.as_view(), name='comment_tree'),
     # mdeditor
     path('mdeditor/', include('mdeditor.urls')),
 

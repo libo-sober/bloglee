@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load custom_tag %}
+{## 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入#}
+{% block Navigation %}
+    {% navigation categories %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	 <form class="form-signin bg-white" method="post" action="/user/register" id="register-form">
+  <div class="text-center mb-4">
+    <img class="mb-2" src="static/picture/favicon.png" alt="" width="100" height="100">
+    <h1 class="h3 mb-3 font-weight-normal">欢迎注册本博客</h1>
+	<div class="rollContainer">
+		<p class="rollBlock">友情提示：推荐使用QQ邮箱完成站点注册，谢谢！</p>
+	</div>
+    <div class="login_error">
+
+    </div>
+  </div>
+
+  <div class="form-label-group">
+	<input type="text" id="inputUsername" name="username" value="" class="form-control " placeholder="用户名" aria-describedby="usernameHelpBlock" required="" autofocus="">
+    <label for="inputEmail">用户名</label>
+    <small id="usernameHelpBlock" class="form-text text-muted">
+        用户名只能包括中文，字母，数字,长度限制在2—15位
+    </small>
+  </div>
+
+  <div class="form-label-group">
+	<input type="email" id="inputEmail" name="email" value="" class="form-control " placeholder="邮箱" aria-describedby="emailHelpBlock" required="">
+    <label for="inputEmail">邮箱</label>
+    <small id="emailHelpBlock" class="form-text text-muted">
+        请输入你的邮箱
+    </small>
+  </div>
+
+  <div class="form-label-group">
+    <input type="password" id="inputPassword" name="password" value="" class="form-control " placeholder="密码" aria-describedby="passwordHelpBlock" required="">
+    <label for="inputPassword">密码</label>
+    <small id="passwordHelpBlock" class="form-text text-muted">
+        密码必须以字母开头，长度在5-18之间，允许包括字母，数字以及.@+-_?&%$这些字符组合
+    </small>
+
+  </div>
+
+  <div class="form-label-group">
+	<input type="password" id="inputPassword" name="repassword" value="" class="form-control " placeholder="密码" aria-describedby="repasswordHelpBlock" required="">
+	<label for="inputPassword">重复密码</label>
+  </div>
+
+    <div class="form-label-group">
+	<input autocomplete="off" id="id_captcha_1" name="captcha_1" type="text" class="form-control" placeholder="验证码" required=""> <input id="id_captcha_0" name="captcha_0" type="hidden" value="f264f52bb57e58eee872dcd9d9da689796df1211">
+
+<img src="static/picture/picture.jpg" alt="captcha" class="captcha">
+        <label for="id_captcha_1">验证码</label>
+        <style>img.captcha{position: absolute;top: 7px;right: 5px;}</style>
+  </div>
+  <small class="form-text text-muted my-3">
+       注册完毕，激活邮件将会发送到您的邮箱，还望查收。
+  </small>
+  <button class="btn btn-lg btn-success btn-block" type="submit">注册</button>
+         <input type="hidden" name="csrfmiddlewaretoken" value="D70AWLTs2P3NzUhh5JVrH5SYbhackcp9xQW0M0Jeh0CrxAaXGMGZN9ch9WawtWM5">
+</form>
+<div class="clearfix " style="width: 100%;max-width: 420px;padding: 15px;margin: auto;">
+<p class="float-left"><a class="text-muted " href="index.html">←回到首页</a></p>
+<p class="float-right">
+<a class="text-muted " href="javascript:;">登录</a>
+|
+<a class="text-muted " href="forget.html">忘记密码</a>
+</p>
+</div>
+  </div>
+
+{% endblock %}

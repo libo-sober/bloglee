@@ -6,10 +6,173 @@
 {% navigation categories %}
 {% endblock %}
 {% block content %}
+  <div class="container col-md-8 offset-md-2" style="min-height:300px;">
+	<nav class="my-2 p-0" aria-label="breadcrumb">
 
-    <p>西游记 （中国古典四大名著之一） 编辑 讨论99+ 上传视频
-《西游记》是中国古代第一部浪漫主义章回体长篇神魔小说。现存明刊百回本《西游记》均无作者署名。清代学者吴玉搢等首先提出《西游记》作者是明代吴承恩。 [1]
-全书主要描写了唐僧师徒四人经历九九八十一难去西天取得真经的故事。该小说以“唐僧取经”这一历史事件为蓝本，通过作者的艺术加工，深刻地描绘了明代社会现实。
-《西游记》是中国神魔小说的经典之作，达到了古代长篇浪漫主义小说的巅峰，与《三国演义》《水浒传》《红楼梦》并称为中国古典四大名著。《西游记》自问世以来在民间广为流传，各式各样的版本层出不穷，明代刊本有六种，清代刊本、抄本也有七种，典籍所记已佚版本十三种。鸦片战争以后，大量中国古典文学作品被译为西文，《西游记》渐渐传入欧美，被译为英、法、德、意、西、手语、世（世界语）、斯（斯瓦西里语）、俄、捷、罗、波、日、朝、越等语言。 [2]</p>
+		  <ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="#" class="">首页</a></li>
+			<li class="breadcrumb-item active" aria-current="page">关于</li>
+		  </ol>
+	</nav>
+    <div class="pb-2" style="background-color: hsla(0,0%,100%,.7);">
+		<div class="py-4">
+            <span class="clearfix"><i class="fa fa-quote-left float-left" aria-hidden="true"></i></span>
+            <span class="d-block text-center" style="font-size: 18px;font-family: STXingkai;">执着于理想，纯粹于当下。</span>
+            <span class="clearfix"><i class="fa fa-quote-right float-right" aria-hidden="true"></i></span>
+		</div>
+            <style>
+                    .introduction {align-items: center;}
+                    .introduction img{
+                        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1), 1px 1px 1px rgba(0, 0, 0,0.1), 1px 1px 1px rgba(0, 0, 0,0.1);
+                        border: 4px solid gainsboro;
+                        width: 100px;
+                        height: 100px;
+                        margin-left: 20px;
+                    }
 
+                    .introduction div{
+                        margin-left: 20px;
+                        font-family: auto;
+                    }
+                    .introduction .list-group-item{
+                        background-color: inherit;
+                    }
+                @media (max-width: 768px) {
+
+                    .introduction {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                }
+            </style>
+            <div class="d-md-flex introduction">
+            <img src="static/picture/avatar.jpg" class="rounded-circle xwcms">
+            <div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><i class="fa fa-address-card fa-lg mr-4" aria-hidden="true"></i>执着于理想，纯粹于当下。</li>
+                  <li class="list-group-item"><i class="fa fa-envelope fa-lg mr-4" aria-hidden="true"></i><a href="mailto:1510043719@qq.com" class="text-reset ">1510043719@qq.com（邮我ˉ﹃ˉ）</a></li>
+                  <li class="list-group-item" style="border-bottom: 1px solid rgba(0,0,0,.125);"><i class="fa fa-qq fa-lg mr-4" aria-hidden="true"></i><a href="javascript:;" class="text-reset ">1510043719(点此私聊我๑乛◡乛๑)</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+
+		<div class="segments px-3 mt-5">
+
+			<div class="segment" style="background-color: hsla(0,0%,100%,.7);">
+				<div class="label"><span class="text-white">关于博主</span></div>
+				<div class="markdown">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;博主惯用昵称<span style="color: rgb(75, 172, 198);">未雨晴空</span>,个人博客站长,<span style="text-decoration: line-through;">LOL玩家</span>,爱折腾,爱搞事,喜欢捣鼓新技术。希望得到结交更多相同爱好的人，以理性看待国内互联网。目前就职于某不知名IT公司，从事java编程开发，python是我个人兴趣所在转而自学，也就是因这个契机目前这个博客才得以搭建成功。平时喜欢写博客、看电影，听音乐，因为代码不是生活的全部。</p>
+				</div>
+			</div>
+
+			<div class="segment" style="background-color: hsla(0,0%,100%,.7);">
+				<div class="label"><span class="text-white">关于本站</span></div>
+				<div class="markdown">
+                    <p>&nbsp; &nbsp; 对于建站,很久之前就有这个动机,19年国庆期间领到一个腾讯云服务器的体验15天，然后就开始了自己建站（折腾）之旅，当时搭建的博客环境跟现在博客的环境一样，也都是基于<strong>python+django+mariadb</strong>,当时前端知识基本为0，为了免困于前端，直接整站爬取了崔大大的<a href="javascript:;" target="_blank" title="静觅博客">静觅博客</a>的站点，然后后台自己尝试用django实现。当时搭建完还算成功部署到了腾讯云服务器上，由于没有域名，只能通过ip地址来访问，最后由于是15天服务器到期了，就此作罢。</p><p>&nbsp;&nbsp;&nbsp;&nbsp;再到2020年初，疫情期间，在家宅着没事，萌生我再建博客网站的想法。其实当时我已经了解到了一些建站第三方，如<span style="color: rgb(75, 172, 198);">WordPress</span>和<span style="color: rgb(75, 172, 198);">Typecho</span>,但是毕竟自己从事编程行业，也可以借助这个建站机会，来多接触点技术。于是乎，目标有了，接下来就是如何建站了。我的搭建的思路是先写出网站页面，然后再写后台。前端方面考虑基于<span style="color: rgb(75, 172, 198);">bootstrap4.0</span>框架来开发，后端考虑基于<span style="color: rgb(75, 172, 198);">django+xadmin</span>框架来开发。开发过程中也遇到了很多问题，但是抱着必须达成目标的心态，也是一点点解决了。最终本地完成测试之后，入手了阿里云服务器，并将博客部署到了服务器上。目前仍在折腾站点<img src="static/picture/i_f10.gif" _src="http://img.baidu.com/hi/jx2/j_0066.gif"> </p><p>&nbsp;&nbsp;&nbsp;&nbsp;很期待与热衷编程的人一起沟通交流。如果有小伙伴也用<span style="color: rgb(75, 172, 198);">django</span>或者<span style="color: rgb(75, 172, 198);">springboot</span>搭建了个人博客，欢迎评论区域留言交换友链呀。</p>
+				</div>
+			</div>
+
+			<div class="segment" style="background-color: hsla(0,0%,100%,.7);">
+				<div class="label"><span class="text-white">本站声明</span></div>
+				<div class="markdown">
+                    <ul class=" list-paddingleft-2" style="list-style-type: square;"><li><p>如果您认为本站的任何内容侵犯您的任何权利，请及时与博主联系，博主将第一时间处理。</p></li><li><p>本站所有信息和内容均为博主个人观点，如有冒犯到，还请见谅。</p></li><li><p>我并不保证本站信息内容皆为原创，若文章涉及他人所创作文章内容，本站会注名原文出处。</p></li><li><p>除另有声明外，本站内容采用<a href="javascript:;" target="_blank" title="知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议" textvalue="知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议"><span style="color: #f89a3a">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</span></a>进行许可。</p></li></ul>
+				</div>
+			</div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+<div id="comments" class="" style="opacity:0.85;">
+
+    <!--评论列表-start-->
+    <ol class="list-group comment-list" id="comments">
+
+    </ol>
+
+        <!--评论表单-start-->
+        <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
+            <a name="comment"></a>
+            <h4>发表评论
+                <a class="btn btn-sm btn-info d-none text-white" id="cancel-reply" onclick="cancelReply();">取消回复</a>
+            </h4>
+            <p class="text-muted">电子邮件地址不会被公开。</p>
+
+            <form id="comment-form" onsubmit="return false;" method="post" action="/comment/add/">
+
+                <div class="form-group">
+                    <textarea class="form-control" id="content" name="content" rows="5" placeholder="居然什么都不说，哼！" autocomplete="off" aria-label="content" aria-describedby="addon-wrapping" required=""></textarea>
+                  <div class="invalid-feedback" id="content-feedback">
+
+                  </div>
+                  <a href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo" rel="external nofollow"><i class="fa fa-smile-o" aria-hidden="true"></i>表情</a>
+                </div>
+                <div class="OwO"></div>
+                <!--评论人信息--->
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text text-center"><i class="fa fa-user"></i></span>
+                  </div>
+                  <input name="username" id="username" type="text" class="form-control" placeholder="昵称(必填)" aria-label="username" aria-describedby="addon-wrapping" required="">
+                  <div class="invalid-feedback" id="username-feedback">
+                  </div>
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text text-center"><i class="fa fa-envelope-o"></i></span>
+                  </div>
+                  <input name="email" type="email" id="email" class="form-control" placeholder="QQ邮箱(必填)" aria-label="email" aria-describedby="addon-wrapping" required="">
+                  <div class="invalid-feedback" id="email-feedback">
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text text-center"><i class="fa fa-link"></i></span>
+                  </div>
+                  <input name="link" id="link" type="text" class="form-control" placeholder="网站(选填)" aria-label="link" aria-describedby="addon-wrapping">
+                  <div class="invalid-feedback">
+                    请输入以http或https开头的URL,格式如:https://oneisall.top
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-info btn-block" id="comment-submit" data-placement="top" data-toggle="tooltip" title="评论需博主审核才会显示">提交评论</button>
+                <input type="hidden" name="article_id" value="0" id="comment_post_ID">
+                <input type="hidden" name="category_id" value="6" id="comment_post_type">
+                <input type="hidden" name="parent_id" id="comment_parent" value="0"><!--为0代表新评论-->
+                <input type="hidden" name="csrfmiddlewaretoken" value="xUgDZqrvANgKFdmErAGHJjZATVLjc0KumSfMq3zVaj8IqlaUHGMZMDn1jyrwkVJH">
+            </form>
+        </div>
+    <!--评论表单-end-->
+
+</div>
+<script src="static/js/owo.js"></script>
+<script>
+var OwO_demo = new OwO({
+    logo:'OωO表情',
+    container:document.getElementsByClassName('OwO')[0],
+    target:document.getElementById('content'),
+    api:window.location.origin+'/emoji',
+    position:'down',
+    width:'100%',
+    maxHeight:'250px'
+});
+</script>
+
+
+
+
+  </div>
 {% endblock %}

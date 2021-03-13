@@ -95,6 +95,7 @@ class Index(View):
                                hot_articles, 'new_comments': new_comments, 'tags': tags, })
 
 
+# 文章详情页
 class ArticleView(View):
 
     def get(self, request, article_id=None):
@@ -108,7 +109,7 @@ class ArticleView(View):
         # 文章分类
         categories = models.Category.objects.all()
         # 该文章的所有评论
-        comment_obj = models.Comment.objects.filter(article_id=article_id)
+        comment_obj = models.Comment.objects.filter(article_id=article_id).order_by('-add_time')
         comment_list = self.build_msg(comment_obj)
         ret = self.get_comment_list(comment_list)
 
@@ -148,16 +149,6 @@ class ArticleView(View):
             msg.append(data)
         return msg
 
-# 文章按标签分
-class TagView(View):
-
-    def get(self, request, cid, tag_id):
-        # 文章分类，导航栏用
-        categories = models.Category.objects.all()
-        tags = models.Tag.objects.all()
-
-
-
 
 # 关于我
 class About(View):
@@ -168,6 +159,7 @@ class About(View):
         return render(request, 'about.html', {'categories': categories, })
 
 
+# 评论校验modelform
 class CommentForm(forms.ModelForm):
 
     class Meta:
@@ -176,6 +168,7 @@ class CommentForm(forms.ModelForm):
         # exclude = ['pid', ]
 
 
+# 评论展示
 class CommentView(View):
 
     def post(self, request):
@@ -226,27 +219,40 @@ class CommentView(View):
         return JsonResponse(msg)
 
 
-class CommentTreeView(View):
+# class CommentTreeView(View):
+#
+#     def get(self, request):
+#         msg = []
+#         article_id = request.GET.get('article_id')
+#         # 该文章的所有评论
+#         comment_obj = models.Comment.objects.filter(article_id=article_id)
+#         for comment in comment_obj:
+#             data = {}
+#             if comment.pid:
+#                 data['pid'] = comment.pid.id
+#                 data['fu_username'] = models.Comment.objects.get(pk=comment.pid.id).username
+#             else:
+#                 data['pid'] = None
+#                 data['fu_username'] = None
+#             data['pk'] = comment.pk
+#             data['content'] = comment.content
+#             data['username'] = comment.username
+#             data['add_time'] = comment.add_time.strftime('%Y-%m-%d %H:%M:%S')
+#             msg.append(data)
+#         # print(msg)  # 发给Ajax的数据
+#
+#         return JsonResponse(msg, safe=False)
+
+
+class LoginView(View):
 
     def get(self, request):
-        msg = []
-        article_id = request.GET.get('article_id')
-        # 该文章的所有评论
-        comment_obj = models.Comment.objects.filter(article_id=article_id)
-        for comment in comment_obj:
-            data = {}
-            if comment.pid:
-                data['pid'] = comment.pid.id
-                data['fu_username'] = models.Comment.objects.get(pk=comment.pid.id).username
-            else:
-                data['pid'] = None
-                data['fu_username'] = None
-            data['pk'] = comment.pk
-            data['content'] = comment.content
-            data['username'] = comment.username
-            data['add_time'] = comment.add_time.strftime('%Y-%m-%d %H:%M:%S')
-            msg.append(data)
-        # print(msg)  # 发给Ajax的数据
 
-        return JsonResponse(msg, safe=False)
+        return render(request, 'login.html')
 
+
+class RegisterView(View):
+
+    def get(self, request):
+
+        return render(request, 'register.html')
