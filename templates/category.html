@@ -2,10 +2,10 @@
 
 {% block content %}
 
-
       <div class="container">
     <div class="row">
-    <section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
+	<section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
+
     {% for article in categories_all_articles %}
         <article class="d-block bg-white hvr-float">
 
@@ -57,11 +57,11 @@
     <!--文章相关参数-end-->
     </div>
  </article>
+
     {% endfor %}
-        {{ page_html }}
+    {{ page_html }}
     </section>
 {% endblock %}
-    </div>
-
-
-  </div>
+{#写上下边的两个div只是不让他显示红色，并不起任何作用，删掉也无所谓#}
+</div>
+</div>

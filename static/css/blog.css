@@ -61,7 +61,7 @@
 span.highlighted { color: #ea6f5a; }
 body{
     word-break: break-all;
-    background:url(../image/bg.gif);
+    background:url(../image/b.jpg);
 }
 [data-theme="dark"] body,[data-theme="dark"] article {
     background: #263238!important;
