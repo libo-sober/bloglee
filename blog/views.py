@@ -1,15 +1,18 @@
 import datetime
 import mistune
+import re
 
+from django.core.exceptions import ValidationError
 from django import forms
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.generic.base import View
 from blog import models
-from BlogLee import settings
 from blog.utils.page_html import MyPagination
 from django.core.mail import send_mail
 from BlogLee import settings
+from blog.utils.hashlib_func import set_md5
+from django.contrib.auth.models import User
 
 # Create your views here.
 time = datetime.datetime(year=2099, month=1, day=1)
@@ -51,6 +54,20 @@ class Index(View):
         new_comments = models.Comment.objects.all().order_by('-add_time')[:5]
         # 标签云
         tags = models.Tag.objects.all()
+        # 登录的用户对象
+        user_id = request.session.get('user_id')
+        if user_id:
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+            qq_number = cur_user_name.email[:-7]
+        else:
+            cur_user_name = None
+            qq_number = None
+
+        qq_url = f'http://q.qlogo.cn/headimg_dl?dst_uin={qq_number}&spec=640&img_type=jpg'
+
+        # 管理员用户对象
+        admin_obj = models.UserInfo.objects.filter(is_admin=True).first()
+        admin_url = 'http://127.0.0.1:8000/static/image/snd51t4nl2osnd51t4nl2o.png'   # 后期改为域名,不指定的话就用qq头像
 
 
         if tag_id:
@@ -70,7 +87,8 @@ class Index(View):
                            'categories':
                                categories, 'article_count': article_count, 'comment_count': comment_count,
                            'new_articles': new_articles, 'hot_articles':
-                               hot_articles, 'new_comments': new_comments, 'tags': tags, })
+                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name,
+                           'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, })
 
         elif cid:
             # categoriy_id对应类下的所有文章
@@ -86,13 +104,13 @@ class Index(View):
                                 (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
             return render(request, 'category.html', {'categories_all_articles': categories_all_articles,'page_html': html_obj.html_page(), 'categories':
                 categories, 'article_count': article_count, 'comment_count': comment_count, 'new_articles': new_articles, 'hot_articles':
-                hot_articles, 'new_comments': new_comments, 'tags': tags, })
+                hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name, 'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, })
         else:
             return render(request, 'index.html',
                           {'all_articles': all_articles, 'page_html': html_obj.html_page(), 'categories':
                               categories, 'article_count': article_count, 'comment_count': comment_count,
                            'new_articles': new_articles, 'hot_articles':
-                               hot_articles, 'new_comments': new_comments, 'tags': tags, })
+                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name, 'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, })
 
 
 # 文章详情页
@@ -113,7 +131,15 @@ class ArticleView(View):
         comment_list = self.build_msg(comment_obj)
         ret = self.get_comment_list(comment_list)
 
-        return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, 'ret': ret})
+        # 登录的用户对象
+        user_id = request.session.get('user_id')
+        if user_id:
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+        else:
+            cur_user_name = None
+
+        return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, 'ret':
+            ret, 'cur_user_name': cur_user_name, })
 
     def get_comment_list(self, comment_list):
         # 把msg增加一个chirld键值对，存放它的儿子们
@@ -146,6 +172,8 @@ class ArticleView(View):
             data['content'] = comment.content
             data['username'] = comment.username
             data['add_time'] = comment.add_time.strftime('%Y-%m-%d %H:%M:%S')
+            data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment.qq_email[:-7]}&spec=640&img_type=jpg'
+
             msg.append(data)
         return msg
 
@@ -156,7 +184,13 @@ class About(View):
     def get(self, request):
         # 文章分类
         categories = models.Category.objects.all()
-        return render(request, 'about.html', {'categories': categories, })
+        # 登录的用户对象
+        user_id = request.session.get('user_id')
+        if user_id:
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+        else:
+            cur_user_name = None
+        return render(request, 'about.html', {'categories': categories, 'cur_user_name': cur_user_name, })
 
 
 # 评论校验modelform
@@ -187,6 +221,8 @@ class CommentView(View):
             data['content'] = comment_obj.content
             data['username'] = comment_obj.username
             data['add_time'] = comment_obj.add_time.strftime('%Y-%m-%d %H:%M:%S')
+            data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment_obj.qq_email[:-7]}&spec=640&img_type=jpg'
+
             # print(comment_obj.pid)
             # # 评论成功，发送邮件提醒
             #             # article_obj = models.Article.objects.filter(pk=article_id).first()
@@ -207,7 +243,7 @@ class CommentView(View):
             msg['data'] = data
 
         else:
-            print(form.errors)
+            # print(form.errors)
             msg['success'] = False
             for field in form.fields.keys():
                 if form.has_error(field):
@@ -247,12 +283,135 @@ class CommentView(View):
 class LoginView(View):
 
     def get(self, request):
+        # 文章分类
+        categories = models.Category.objects.all()
+        # 登录的用户对象
+        user_id = request.session.get('user_id')
+        if user_id:
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+        else:
+            cur_user_name = None
 
-        return render(request, 'login.html')
+        return render(request, 'login.html', {'cur_user_name': cur_user_name, 'categories': categories, })
+
+    def post(self, request):
+        # 初始化返回值
+        res = {"code":500}
+
+        user = request.POST.get('username')
+        pwd = request.POST.get('password')
+        # 判断用户名和密码
+        user_obj = models.UserInfo.objects.filter(username=user, password=set_md5(pwd)).first()
+        if user_obj:
+            res['code'] = 200
+            # 把当前用户id添加到session中
+            request.session['user_id'] = user_obj.id
+
+        return JsonResponse(res)
 
 
+
+# 登出
+class LogoutView(View):
+
+    def get(self, request):
+        request.session.flush()  # 清楚所有的cookie和session
+        return redirect('index')
+
+# 自定义验证规则
+def email_validate(value):
+    email_re = re.compile(r'(.*)@(.*).com$')
+    if not email_re.match(value):
+        raise ValidationError('邮箱格式错误')  # 自定义验证规则的时候，如果不符合你的规则，需要自己发起错误
+
+
+# 注册验证
+class RegisterForm(forms.Form):
+    username = forms.CharField(
+        max_length=16,
+        min_length=6,
+        label='用户名',
+        widget=forms.widgets.TextInput(attrs={'class': 'username', 'autocomplete': 'off', 'placeholder': '用户名', }),
+        error_messages={
+            'required': '用户名不能为空！',
+            'max_length': '用户名不能大于16位！',
+            'min_length': '用户名不能小于6位！',
+        }
+    )
+
+    password = forms.CharField(
+        max_length=32,
+        min_length=6,
+        label='密码',
+        widget=forms.widgets.PasswordInput(attrs={'class': 'password', 'placeholder': '密码', 'oncontextmenu': 'return false', 'onpaste': 'return false', }),
+        error_messages={
+            'required': '密码不能为空！',
+            'max_length': '密码不能大于16位！',
+            'min_length': '密码不能小于6位！',
+        }
+    )
+
+    r_password = forms.CharField(
+        label='确认密码',
+        widget=forms.widgets.PasswordInput(attrs={'class': 'password', 'placeholder': '请再次输入密码', }),
+        error_messages={
+            'required': '密码不能为空！',
+        }
+    )
+
+    # 全局钩子
+    def clean(self):
+        values = self.cleaned_data
+        r_password = values.get('r_password')
+        password = values.get('password')
+        if password == r_password:
+            return values
+        else:
+            self.add_error('r_password', '两次输入的密码不一致！')
+
+    email = forms.EmailField(
+        label='邮箱',
+        error_messages={
+            'invalid': '邮箱格式不对！',
+            'required': '邮箱不能为空！',
+        },
+        widget=forms.widgets.EmailInput(attrs={'class': 'email', 'placeholder': '输入邮箱地址', 'type': 'email'}),
+        validators=[email_validate, ],
+    )
+
+
+# 注册
 class RegisterView(View):
 
     def get(self, request):
+        # 文章分类
+        categories = models.Category.objects.all()
+        # 登录的用户对象
+        user_id = request.session.get('user_id')
+        if user_id:
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+        else:
+            cur_user_name = None
 
-        return render(request, 'register.html')
+        return render(request, 'register.html', {'cur_user_name': cur_user_name, 'categories': categories, })
+
+    def post(self, request):
+        res = {"code": 500, "error": None}
+        print(request.POST.get('r_password'))
+        register_form_obj = RegisterForm(request.POST)
+        if register_form_obj.is_valid():
+            res['code'] = 200
+            print(register_form_obj.cleaned_data)
+            register_form_obj.cleaned_data.pop('r_password')
+            password = register_form_obj.cleaned_data.pop('password')
+            password = set_md5(password)
+            register_form_obj.cleaned_data.update({'password': password})
+            models.UserInfo.objects.create(
+                **register_form_obj.cleaned_data
+            )
+        else:
+            res['error'] = register_form_obj.errors
+            print(register_form_obj.errors)
+
+
+        return JsonResponse(res)

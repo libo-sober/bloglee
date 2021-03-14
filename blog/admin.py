@@ -13,5 +13,6 @@ admin.site.register(models.Category)
 admin.site.register(models.Comment)
 admin.site.register(models.Links)
 admin.site.register(models.Site)
+admin.site.register(models.UserInfo)
 
 

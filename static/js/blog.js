@@ -140,13 +140,15 @@ $(function () {
                 var username = data.data.username
                 var fu_username = data.data.fu_username
                 var pk = data.data.pk
+                var qq_url = data.data.qq_url
+                console.log(qq_url)
 
                 // ajax动态加载评论
                 var gen_comment = `           
                 <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>
                     <div class="clearfix" id="div-comment-${pk}">
                         <div class="media">
-                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
+                            <img src=${qq_url}
                                  class="mr-3 rounded-circle" width="50" height="50"
                                  onerror="javascript:this.src='/static/image/unknow.png';">
                             <div class="media-body">
@@ -172,7 +174,7 @@ $(function () {
                 <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>
                     <div class="clearfix" id="div-comment-${pk}">
                         <div class="media">
-                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
+                            <img src=${qq_url}
                                  class="mr-3 rounded-circle" width="50" height="50"
                                  onerror="javascript:this.src='/static/image/unknow.png';">
                             <div class="media-body">
@@ -209,7 +211,12 @@ $(function () {
                 //触发取消评论按钮点击事件即恢复评论输入框位置，同时隐藏取消评论按钮
                 $("#cancel-reply").trigger("click").addClass("d-none");
                 //页面反馈信息
-                Swal.fire("提交成功");
+                        swal({
+            title: '评论成功！',
+            type: 'success',  //展示成功的图片
+            timer: 1000,  //延时毫秒数
+            showConfirmButton: true  //关闭确认框
+        });
             }
             //恢复提交按钮内容
             $("#comment-submit").html("提交评论");
@@ -759,3 +766,5 @@ function createtime() {
         })
     })
 })(jQuery);
+
+

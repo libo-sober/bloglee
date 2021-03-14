@@ -1,7 +1,8 @@
-4.注册登录
 14.归档
 12.搜索功能
-7.关于我
+17.个人资料修改
+18.博主回复后边加上superuser类
+    把博主的obj_id一直存储于session中，判断is_admin字段
 
 
 
@@ -9,11 +10,11 @@
 
 
 6.友情链接
+7.关于我
 5.站点配置
 11.脚注在线人数
     友盟网站统计
 13.评论支持表情，emoj,和OwO
-
 
 
 
@@ -33,4 +34,14 @@
 10.最新文章和评论
     完成
 15.js动态添加的标签无法在外部做href请求它的id属性值，因为你没有访问这个页面，他就不会生成对应的标签。所以找不到页面的具体位置，只会跳转到哪个页面。
+    完成
+4.注册登录
+    完成
+16.通过qq邮箱拉去qq头像
+    http://q.qlogo.cn/headimg_dl?dst_uin=1570140958&spec=640&img_type=jpg  头像
+    http://users.qzone.qq.com/fcg-bin/cgi_get_portrait.fcg?uins=QQ号码      昵称
+    请求返回结果
+        portraitCallBack({
+	    "1570140958": ["http://qlogo3.store.qq.com/qzone/1570140958/1570140958/100", 14643, -1, 0, 0, 0, "sober", 0]
+        })
     完成

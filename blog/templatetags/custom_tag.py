@@ -29,8 +29,8 @@ def custom_markdown(content):
 
 
 @register.inclusion_tag('navigation.html')
-def navigation(categories):
-    return {'categories': categories, }
+def navigation(categories, cur_user_name):
+    return {'categories': categories, 'cur_user_name': cur_user_name, }
 
 
 def tree_son(comment):
@@ -42,12 +42,14 @@ def tree_son(comment):
         add_time = com['add_time']
         content = com['content']
         fu_username = com['fu_username']
+        qq_url = com['qq_url']
 
         zi_com += f"""
+    <ol class="children">
         <li class="list-group-item comment-{pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id={pk}>
                     <div class="clearfix" id="div-comment-{pk}">
                         <div class="media">
-                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
+                            <img src={qq_url}
                                  class="mr-3 rounded-circle" width="50" height="50"
                                  onerror="javascript:this.src='/static/image/unknow.png';">
                             <div class="media-body">
@@ -72,23 +74,26 @@ def tree_son(comment):
         """
         if com['children'] != []:
             zi_com += tree_son(com['children'])
+        zi_com += '</ol>'
     return zi_com
 
 
 @register.filter(is_safe=True)
 def build_coment_tree(ret):
+
     comment = ''
     for comment_dicts in ret:
         pk = comment_dicts['pk']
         username = comment_dicts['username']
         add_time = comment_dicts['add_time']
         content = comment_dicts['content']
+        qq_url = comment_dicts['qq_url']
 
-        comment += f"""
+        comment += f""" 
                     <li class="list-group-item comment-{pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id={pk}>
                         <div class="clearfix" id="div-comment-{pk}">
                             <div class="media">
-                                <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"
+                                <img src={qq_url}
                                      class="mr-3 rounded-circle" width="50" height="50"
                                      onerror="javascript:this.src='/static/image/unknow.png';">
                                 <div class="media-body">
@@ -108,9 +113,11 @@ def build_coment_tree(ret):
                             <p class="text-break mt-2">{content}</p>
                             <a class="btn btn-sm btn-secondary float-right"
                                onclick="reply('div-comment-{pk}','{pk}')">回复</a>
-                        </div>                </li>
+                        </div>               
                     """
         if comment_dicts['children'] != []:
             comment += tree_son(comment_dicts['children'])
+
+        comment += ' </li>'
 
     return comment

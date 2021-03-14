@@ -5,6 +5,22 @@ from datetime import datetime
 # Create your models here.
 
 
+class UserInfo(models.Model):
+    """用户信息表"""
+    username = models.CharField(max_length=16, verbose_name='姓名')
+    password = models.CharField(max_length=32, verbose_name='密码')
+    email = models.EmailField()
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = '用户信息表'
+
+    def __str__(self):  # __unicode__
+
+        return self.username
+
+
 class Tag(models.Model):
     """
     文章标签
@@ -110,7 +126,7 @@ class Comment(models.Model):
     username = models.CharField(max_length=30, verbose_name='用户名')
     add_time = models.DateTimeField(auto_now_add=True, verbose_name='发布时间')
     article = models.ForeignKey(Article, verbose_name='文章', on_delete=models.CASCADE)
-    qq_email = models.CharField(max_length=100, verbose_name='qq邮箱')
+    qq_email = models.CharField(max_length=100, verbose_name='qq邮箱')  # 应该关联到userinfo表中的email子段
     web_site = models.CharField(max_length=100, blank=True, null=True, verbose_name='网站')
     pid = models.ForeignKey('self', blank=True, null=True, verbose_name='父级评论', on_delete=models.CASCADE)
 

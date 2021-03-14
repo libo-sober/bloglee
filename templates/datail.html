@@ -211,7 +211,7 @@
                     </div>
 
                     <!--评论人信息--->
-
+                    {% if not cur_user_name %}
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text text-center"><i class="fa fa-user"></i></span>
@@ -222,7 +222,6 @@
                         <div class="invalid-feedback" id="username-feedback">
                         </div>
                     </div>
-
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text text-center"><i class="fa fa-envelope-o"></i></span>
@@ -244,6 +243,10 @@
                             请输入以http或https开头的URL,格式如:https://libo_sober.top
                         </div>
                     </div>
+                    {% else %}
+                        <input name="username" id="username" type="hidden" value="{{ cur_user_name.username }}">
+                        <input name="qq_email" type="hidden" id="qq_email" value="{{ cur_user_name.email }}">
+                    {% endif %}
 
                     <button type="submit" class="btn btn-info btn-block" id="comment-submit"
                             data-placement="top" data-toggle="tooltip" title="评论需博主审核才会显示">提交评论

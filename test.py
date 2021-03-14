@@ -92,76 +92,81 @@
 #
 # comment_dict = build_tree(comment_list)
 # print(ret)
-def tree_son(comment):
-    zi_com = ''
-    for com in comment:
-        zi_com += f"daa{com['content']}daad"
-        if com['children'] != []:
-            zi_com += tree_son(com['children'])
-    return zi_com
+# def tree_son(comment):
+#     zi_com = ''
+#     for com in comment:
+#         zi_com += f"daa{com['content']}daad"
+#         if com['children'] != []:
+#             zi_com += tree_son(com['children'])
+#     return zi_com
+#
+# def tree(ret):
+#     comment = ''
+#     for comment_dicts in ret:
+#         # print(comment_dicts)
+#         comment += f"dda{comment_dicts['content']}dada"
+#         # print(comment_dicts['children'])
+#         if comment_dicts['children'] != []:
+#             # print(comment_dicts['children'])
+#             comment += tree_son(comment_dicts['children'])
+#     return comment
+#
+#
+# ret = [{
+# 	'pid': None,
+# 	'fu_username': None,
+# 	'pk': 21,
+# 	'content': '哈哈哈',
+# 	'username': 'libo',
+# 	'add_time': '2021-03-11 12:53:14',
+# 	'children': [{
+# 		'pid': 21,
+# 		'fu_username': 'libo',
+# 		'pk': 29,
+# 		'content': '笑你妈',
+# 		'username': 'h8fanc6o',
+# 		'add_time': '2021-03-11 13:34:41',
+# 		'children': [{
+# 			'pid': 29,
+# 			'fu_username': 'h8fanc6o',
+# 			'pk': 30,
+# 			'content': '你管人家',
+# 			'username': 'gzjuq2rh',
+# 			'add_time': '2021-03-11 13:35:29',
+# 			'children': []
+# 		}]
+# 	}, {
+# 		'pid': 21,
+# 		'fu_username': 'libo',
+# 		'pk': 32,
+# 		'content': '开心吗',
+# 		'username': 'taibai666',
+# 		'add_time': '2021-03-11 13:36:20',
+# 		'children': []
+# 	}, {
+# 		'pid': 21,
+# 		'fu_username': 'libo',
+# 		'pk': 34,
+# 		'content': '<img src="/static/picture/aini_org.png">',
+# 		'username': 'libo',
+# 		'add_time': '2021-03-13 10:52:43',
+# 		'children': []
+# 	}]
+# }, {
+# 	'pid': None,
+# 	'fu_username': None,
+# 	'pk': 31,
+# 	'content': '我来了',
+# 	'username': 'taibai',
+# 	'add_time': '2021-03-11 13:35:49',
+# 	'children': []
+# }]
+#
+#
+#
+# print(tree(ret))
 
-def tree(ret):
-    comment = ''
-    for comment_dicts in ret:
-        # print(comment_dicts)
-        comment += f"dda{comment_dicts['content']}dada"
-        # print(comment_dicts['children'])
-        if comment_dicts['children'] != []:
-            # print(comment_dicts['children'])
-            comment += tree_son(comment_dicts['children'])
-    return comment
+s = '1570140958@qq.com'
+print(s[:-7])
 
 
-ret = [{
-	'pid': None,
-	'fu_username': None,
-	'pk': 21,
-	'content': '哈哈哈',
-	'username': 'libo',
-	'add_time': '2021-03-11 12:53:14',
-	'children': [{
-		'pid': 21,
-		'fu_username': 'libo',
-		'pk': 29,
-		'content': '笑你妈',
-		'username': 'h8fanc6o',
-		'add_time': '2021-03-11 13:34:41',
-		'children': [{
-			'pid': 29,
-			'fu_username': 'h8fanc6o',
-			'pk': 30,
-			'content': '你管人家',
-			'username': 'gzjuq2rh',
-			'add_time': '2021-03-11 13:35:29',
-			'children': []
-		}]
-	}, {
-		'pid': 21,
-		'fu_username': 'libo',
-		'pk': 32,
-		'content': '开心吗',
-		'username': 'taibai666',
-		'add_time': '2021-03-11 13:36:20',
-		'children': []
-	}, {
-		'pid': 21,
-		'fu_username': 'libo',
-		'pk': 34,
-		'content': '<img src="/static/picture/aini_org.png">',
-		'username': 'libo',
-		'add_time': '2021-03-13 10:52:43',
-		'children': []
-	}]
-}, {
-	'pid': None,
-	'fu_username': None,
-	'pk': 31,
-	'content': '我来了',
-	'username': 'taibai',
-	'add_time': '2021-03-11 13:35:49',
-	'children': []
-}]
-
-
-
-print(tree(ret))

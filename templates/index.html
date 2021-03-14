@@ -8,7 +8,7 @@
 
 {## 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入#}
 {% block Navigation %}
-    {% navigation categories %}
+    {% navigation categories cur_user_name %}
 {% endblock %}
 
 
@@ -88,7 +88,7 @@
     <aside class="col-lg-4 col-xl-4 hidden-xs hidden-sm" id="aside">
         <div class="sidebar" id="sidebar">
 
-
+{#            每日一句#}
             <aside>
                 <div class="sentence">
                     <strong>每日一句</strong>
@@ -104,10 +104,20 @@
                 <div class="card-bg"></div>
                 <div class="card-body text-center p-0">
 
+                    {% if cur_user_name %}
+                    <a ><img class="xwcms" src={{ qq_url }} onerror="javascript:this.src='/static/image/unknow.png';"></a>
+                    <a  class=""><h5 class="card-title text-dark mt-2">{{ cur_user_name.username }}</h5></a>
+                                           <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;"></p>
+                        <p>
 
-                    <a href="index7.html"><img class="xwcms" src="{% static 'image/snd51t4nl2osnd51t4nl2o.png' %}"></a>
-                    <a href="index7.html" class=""><h5 class="card-title text-dark mt-2 superuser">大聪明</h5></a>
-                    <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;">执着于理想，纯粹于当下。</p>
+            <a href="{% url 'userinfo' %}" class="text-reset "><i class="fa fa-user-circle"></i>个人资料</a>
+            <a href="{% url 'logout' %}" class="text-reset "><i class="fa fa-sign-out"></i>退出登录</a>
+         </p>
+
+                    {% else %}
+                                            <a href="{% url 'about' %}"><img class="xwcms" src="{{ admin_url }}"></a>
+                    <a href="{% url 'about' %}" class=""><h5 class="card-title text-dark mt-2 superuser">{{ admin_obj.username }}</h5></a>
+ <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;">执着于理想，纯粹于当下。</p>
                     <div class="contact-me text-center">
                         <a id="link_weixin" href="javascript:;" rel="nofollow" data-toggle="popover"
                            data-trigger="hover click" data-html="true" data-title="博主微信"
@@ -126,7 +136,7 @@
                         <span class="about-pn">文章 {{ article_count }}</span>
                         <span class="about-cn">留言 {{ comment_count }}</span>
                     </div>
-
+                    {% endif %}
                 </div>
 
             </aside>
@@ -195,7 +205,7 @@
 
                                         <img class="mr-2 rounded" width="32" heigh="32"
                                              src="{% static 'picture/g-sdk_4I9q5WPD9Rry9mZQsl1WDQ_100.jpg' %}"
-                                             onerror="javascript:this.src='/static/images/unknow.png';">
+                                             onerror="javascript:this.src='/static/image/unknow.png';">
                                         <div class="media-body pb-3 mb-0 small">
 
 

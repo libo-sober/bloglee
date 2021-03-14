@@ -25,6 +25,10 @@ urlpatterns = [
     path('', views.Index.as_view(), name='index'),
     # 登录
     path('login/', views.LoginView.as_view(), name='login'),
+    # 登出
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    # 个人资料
+    path('userinfo/detail/', views.LogoutView.as_view(), name='userinfo'),
     # 注册
     path('register/', views.RegisterView.as_view(), name='register'),
     # 关于
