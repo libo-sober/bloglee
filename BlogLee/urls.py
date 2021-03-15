@@ -42,6 +42,10 @@ urlpatterns = [
     re_path(r'^articles/tag/(\d+)/(\d+)/', views.Index.as_view(), name='tag'),
     # 评论
     path('comment/', views.CommentView.as_view(), name='comment'),
+    # 归档
+    path('archive/', views.ArchiveView.as_view(), name='archive'),
+    # 友情链接
+    path('friends/', views.FriendsView.as_view(), name='friends'),
     # mdeditor
     path('mdeditor/', include('mdeditor.urls')),
 

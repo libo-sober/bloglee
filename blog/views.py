@@ -532,7 +532,7 @@ class UserInfoView(View):
         uname = models.UserInfo.objects.get(id=user_id).username
         register_form_obj = RegisterForm(request.POST)
         if register_form_obj.is_valid():
-            print(register_form_obj.cleaned_data)
+            # print(register_form_obj.cleaned_data)
             username = register_form_obj.cleaned_data['username']
             email = register_form_obj.cleaned_data['email']
             # update方法智能是queryset调用
@@ -541,7 +541,7 @@ class UserInfoView(View):
             cur_user_name = models.UserInfo.objects.get(id=user_id)
             return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, })
         else:
-            print(register_form_obj.errors)
+            # print(register_form_obj.errors)
             cur_user_name = models.UserInfo.objects.get(id=user_id)
             return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'register_form_obj': register_form_obj, })
 
@@ -558,10 +558,27 @@ class ModifyView(View):
         cur_user_name = models.UserInfo.objects.get(id=user_id)
         old_password = request.POST.get('old_password')
         new_password = request.POST.get('new_password')
-        print(old_password)
+        # print(old_password)
         if models.UserInfo.objects.get(id=user_id).password == set_md5(old_password):
             models.UserInfo.objects.filter(id=user_id).update(password=set_md5(new_password))
             return redirect('logout')
         else:
             error = '原密码不正确！'
             return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'error':error})
+
+
+class ArchiveView(View):
+
+    def get(self, request):
+        user_id = request.session.get('user_id')
+        # 文章分类
+        categories = models.Category.objects.all()
+        cur_user_name = models.UserInfo.objects.get(id=user_id)
+        return render(request, 'archive.html', {'cur_user_name': cur_user_name, "categories": categories, })
+
+
+class FriendsView(View):
+
+    def get(self, request):
+
+        return None
