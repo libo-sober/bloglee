@@ -20,7 +20,7 @@
     <img class="mb-2" src="{% static 'image/touxiang.jpg' %}" alt="" width="100" height="100">
     <h1 class="h3 mb-3 font-weight-normal">欢迎注册本博客</h1>
 	<div class="rollContainer">
-		<p class="rollBlock">友情提示：推荐使用QQ邮箱完成站点注册，谢谢！</p>
+		<p class="rollBlock">友情提示：使用qq邮箱会自动拉取您的qq头像，否则使用默认的企鹅图标。</p>
 	</div>
     <div class="login_error">
 
@@ -38,10 +38,10 @@
   </div>
 
   <div class="form-label-group">
-	<input type="email" id="inputEmail" name="email" value="" class="form-control " placeholder="邮箱" aria-describedby="emailHelpBlock" required="">
-    <label for="inputEmail">邮箱</label>
+	<input type="email" id="inputEmail" name="email" value="" class="form-control " placeholder="qq邮箱" aria-describedby="emailHelpBlock" required="">
+    <label for="inputEmail">qq邮箱</label>
     <small id="emailHelpBlock" class="form-text text-muted">
-        请输入你的邮箱
+        请输入你的qq邮箱
     </small>
                               <div class="invalid-feedback" id="username-feedback">
                         </div>
@@ -51,7 +51,7 @@
     <input type="password" id="inputPassword" name="password" value="" class="form-control " placeholder="密码" aria-describedby="passwordHelpBlock" required="">
     <label for="inputPassword">密码</label>
     <small id="passwordHelpBlock" class="form-text text-muted">
-        密码必须以字母开头，长度在5-18之间，允许包括字母，数字以及.@+-_?&%$这些字符组合
+        密码长度在3-16个字符之间，允许包括字母，数字以及.@+-_?&%$这些字符组合
     </small>
                         <div class="invalid-feedback" id="username-feedback">
                         </div>
@@ -59,7 +59,7 @@
 
   <div class="form-label-group">
 	<input type="password" id="inputRPassword" name="repassword" value="" class="form-control " placeholder="重复密码" aria-describedby="repasswordHelpBlock" required="">
-	<label for="inputRPassword"></label>
+	<label for="inputRPassword">重复密码</label>
                               <div class="invalid-feedback" id="username-feedback">
                         </div>
   </div>
@@ -72,9 +72,9 @@
 {#        <label for="id_captcha_1"></label>#}
 {#        <style>img.captcha{position: absolute;top: 7px;right: 5px;}</style>#}
   </div>
-  <small class="form-text text-muted my-3">
-       注册完毕，激活邮件将会发送到您的邮箱，还望查收。
-  </small>
+{#  <small class="form-text text-muted my-3">#}
+{#       使用qq邮箱会自动拉取您的qq头像，否则使用默认的企鹅图标。#}
+{#  </small>#}
 {#  <button class="btn btn-lg btn-success btn-block" type="submit">注册</button>#}
 {#         <input type="hidden" name="csrfmiddlewaretoken" value="D70AWLTs2P3NzUhh5JVrH5SYbhackcp9xQW0M0Jeh0CrxAaXGMGZN9ch9WawtWM5">#}
 </form>
@@ -171,7 +171,7 @@ function Form_Submit() {
             } else {
 
             if (data.error.username) {
-                                    swal({
+                swal({
                     title: data.error.username,
                     type: 'error',  //展示成功的图片
                     timer: 1000,  //延时毫秒数
@@ -181,7 +181,7 @@ function Form_Submit() {
                     //console.log("登录失败");
                     //刷新当前页面
                     window.location.reload();
-                 }
+                  }
                 );
                 }
               if (data.error.r_password) {

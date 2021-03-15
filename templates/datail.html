@@ -191,9 +191,13 @@
                     <a class="btn btn-sm btn-info d-none text-white" id="cancel-reply"
                        onclick="cancelReply();">取消回复</a>
                 </h4>
+            {% if not cur_user_name %}
                 <p class="text-muted">电子邮件地址不会被公开。</p>
+            {% else %}
+                <p class="text-muted">当前登录用户：<span style="color:#2b3af0;">{{ cur_user_name.username }}</span></p>
+            {% endif %}
 
-                <form id="comment-form" onsubmit="return false;" method="post" action="{% url 'comment' %}" novalidate>
+                <form id="comment-form" onsubmit="return false;" method="post" action="{% url 'comment' %}" >
                     {% csrf_token %}
                     <div class="form-group" id="article_content">
                                         <textarea class="form-control OwO-textarea" id="content" name="content" rows="5"
@@ -249,7 +253,7 @@
                     {% endif %}
 
                     <button type="submit" class="btn btn-info btn-block" id="comment-submit"
-                            data-placement="top" data-toggle="tooltip" title="评论需博主审核才会显示">提交评论
+                            data-placement="top" data-toggle="tooltip" title="畅所欲言">提交评论
                     </button>
                                         <input type="hidden" name="article" value="{{ article.id }}" id="comment_post_ID">
                     {#                    <input type="hidden" name="category_id" value="7" id="comment_post_type">#}

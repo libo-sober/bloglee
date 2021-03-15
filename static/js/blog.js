@@ -105,15 +105,15 @@ $(function () {
             if (data.success == false) {
                 if (data.error.username) {
                     $("#username").addClass("is-invalid");
-                    $("#username-feedback").html(data.error.username);
+                    $("#username-feedback").html(data.error.username)
                 }
                 if (data.error.qq_email) {
                     $("#qq_email").addClass("is-invalid");
                     $("#qq_email-feedback").html(data.error.qq_email);
                 }
-                if (data.error.web_site) {
-                    $("#web_site").addClass("is-invalid");
-                }
+                // if (data.error.web_site) {
+                //     $("#web_site").addClass("is-invalid");
+                // }
                 if (data.error.content) {
                     $("#content").addClass("is-invalid");
                     $("#content-feedback").html(data.error.content);

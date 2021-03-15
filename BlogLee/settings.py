@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'blog.utils.usermiddleware.MyUserAuth',  # 不让进外入admin
 ]
 
 ROOT_URLCONF = 'BlogLee.urls'
@@ -139,6 +140,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 PAGE_COUNT = 5  # 页数栏显示多少个数,是个奇数
 RECORD = 10  # 每页显示多少条记录
 
@@ -181,3 +184,5 @@ MDEDITOR_CONFIGS = {
         }
 }
 
+# 管理员头像地址
+ADMIN_IMG = 'http://127.0.0.1:8000/static/image/snd51t4nl2osnd51t4nl2o.png'

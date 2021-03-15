@@ -165,8 +165,14 @@
 #
 #
 # print(tree(ret))
-
-s = '1570140958@qq.com'
-print(s[:-7])
-
-
+import re
+# 自定义验证规则
+# def email_validate(value):
+#     email_re = re.compile(r'(.*)@(.*).com$')
+#     if not email_re.match(value):
+#         return  ('邮箱格式错误')  # 自定义验证规则的时候，如果不符合你的规则，需要自己发起错误
+# print(email_validate('178@.co'))
+path = '/adm/dasdasdsa'
+url_re = re.compile(r'/admin/(.*?)')
+res = url_re.match(path)
+print(res.group())

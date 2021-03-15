@@ -1,6 +1,8 @@
 import re
 from random import randint
 from django import template
+from blog import models
+from BlogLee import settings
 from django.template.defaultfilters import stringfilter
 
 register = template.Library()
@@ -9,6 +11,20 @@ register = template.Library()
 @register.simple_tag()
 def random_num():
     return randint(1, 10)
+
+
+@register.simple_tag()
+def img_url(comment):
+    qq_number = comment.qq_email[:-7]
+    user_obj = models.UserInfo.objects.filter(username=comment.username).first()
+    if user_obj:
+        if user_obj.is_admin:
+            img_url = settings.ADMIN_IMG
+        else:
+            img_url = f'http://q.qlogo.cn/headimg_dl?dst_uin={qq_number}&spec=640&img_type=jpg'
+    else:
+        img_url = f'http://q.qlogo.cn/headimg_dl?dst_uin={qq_number}&spec=640&img_type=jpg'
+    return img_url
 
 
 @register.filter(is_safe=True)
@@ -43,24 +59,53 @@ def tree_son(comment):
         content = com['content']
         fu_username = com['fu_username']
         qq_url = com['qq_url']
+        is_admin = com['is_admin']
+        fu_is_admin = com['fu_is_admin']
+        admin_img = com['admin_img']
+        img = admin_img if is_admin else qq_url
 
         zi_com += f"""
     <ol class="children">
         <li class="list-group-item comment-{pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id={pk}>
                     <div class="clearfix" id="div-comment-{pk}">
                         <div class="media">
-                            <img src={qq_url}
-                                 class="mr-3 rounded-circle" width="50" height="50"
+                            <img src={img}
+                                 class="mr-3 rounded-circle" width="50" height="50 "
                                  onerror="javascript:this.src='/static/image/unknow.png';">
                             <div class="media-body">
                                 <div class="comment-info">
+                """
+        if is_admin:
+            zi_com += f"""
+                                                <cite class="c3">
+
+                                                   <a href="/" class='text-reset superuser'>{username}</a>
+
+                                                </cite>
+                        """
+        else:
+            zi_com +=    f"""
                                     <cite class="c3">
 
                                         {username}
 
                                     </cite>
+            """
+
+        zi_com +=   f"""
                        <i class="fa fa-share fa-fw fa-1x mr-2 c1" aria-hidden="true"></i>
-                       <cite class="c3"><a href="#div-comment-{pid}" class="text-reset">{fu_username}</a></cite>
+                       <cite class="c3"><a href="#div-comment-{pid}" class="text-reset">
+"""
+        if fu_is_admin:
+            zi_com += f"""
+                       <a href="/" class='text-reset superuser'>{fu_username}</a>
+                    """
+        else:
+            zi_com += f"""
+                       {fu_username}
+                    """
+        zi_com += f"""
+                       </a></cite>
                                                        </div>
                                 <div class="comment-meta"><span
                                         class="font-weight-light text-muted">{add_time}</span>
@@ -88,22 +133,36 @@ def build_coment_tree(ret):
         add_time = comment_dicts['add_time']
         content = comment_dicts['content']
         qq_url = comment_dicts['qq_url']
+        is_admin = comment_dicts['is_admin']
+        admin_img = comment_dicts['admin_img']
+        img = admin_img if is_admin else qq_url
+
 
         comment += f""" 
                     <li class="list-group-item comment-{pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id={pk}>
                         <div class="clearfix" id="div-comment-{pk}">
                             <div class="media">
-                                <img src={qq_url}
+                                <img src={img}
                                      class="mr-3 rounded-circle" width="50" height="50"
                                      onerror="javascript:this.src='/static/image/unknow.png';">
                                 <div class="media-body">
                                     <div class="comment-info">
-                                        <cite class="c3">
+                    """
+        if is_admin:
+            comment += f"""               <cite class="c3">
 
-                                            {username}
+                                        <a href="/" class='text-reset superuser'>{username}</a>
 
                                         </cite>
+                    """
+        else:
+            comment += f"""               <cite class="c3">
 
+                                                        {username}
+
+                                                    </cite>
+                                """
+        comment += f"""
                                     </div>
                                     <div class="comment-meta"><span
                                             class="font-weight-light text-muted">{add_time}</span>

@@ -105,6 +105,29 @@
                 <div class="card-body text-center p-0">
 
                     {% if cur_user_name %}
+                        {% if cur_user_name.is_admin %}
+                                 <a href="{% url 'about' %}"><img class="xwcms" src="{{ admin_url }}"></a>
+                    <a href="{% url 'about' %}" class=""><h5 class="card-title text-dark mt-2 superuser">{{ admin_obj.username }}</h5></a>
+ <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;">执着于理想，纯粹于当下。</p>
+                    <div class="contact-me text-center">
+                        <a id="link_weixin" href="javascript:;" rel="nofollow" data-toggle="popover"
+                           data-trigger="hover click" data-html="true" data-title="博主微信"
+                           data-content="<img src='{% static "image/weinxin.jpg" %}' width='150px' height='150px'>"><i
+                                class="fa fa-weixin" aria-hidden="true"></i></a>
+                        <a target="_blank" href="https://github.com/SoberLee/" rel="nofollow"><i class="fa fa-github"
+                                                                                 aria-hidden="true"></i></a>
+                        <a target="_blank" rel="nofollow" href="mailto:libo_sober@163.com"><i class="fa fa-envelope-o"
+                                                                                 aria-hidden="true"></i></a>
+                        <a id="link_qq" href="javascript:;" rel="nofollow" data-toggle="popover" data-title="博主QQ"
+                           data-trigger="hover click" data-html="true"
+                           data-content="<img src='{% static "image/qq.jpg" %}' width='150px' height='150px'>"><i
+                                class="fa fa-qq" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="about-inf">
+                        <span class="about-pn">文章 {{ article_count }}</span>
+                        <span class="about-cn">留言 {{ comment_count }}</span>
+                    </div>
+                            {% else %}
                     <a ><img class="xwcms" src={{ qq_url }} onerror="javascript:this.src='/static/image/unknow.png';"></a>
                     <a  class=""><h5 class="card-title text-dark mt-2">{{ cur_user_name.username }}</h5></a>
                                            <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;"></p>
@@ -112,8 +135,7 @@
 
             <a href="{% url 'userinfo' %}" class="text-reset "><i class="fa fa-user-circle"></i>个人资料</a>
             <a href="{% url 'logout' %}" class="text-reset "><i class="fa fa-sign-out"></i>退出登录</a>
-         </p>
-
+         </p>{% endif %}
                     {% else %}
                                             <a href="{% url 'about' %}"><img class="xwcms" src="{{ admin_url }}"></a>
                     <a href="{% url 'about' %}" class=""><h5 class="card-title text-dark mt-2 superuser">{{ admin_obj.username }}</h5></a>
@@ -204,7 +226,7 @@
                                     <div class="media pt-3">
 
                                         <img class="mr-2 rounded" width="32" heigh="32"
-                                             src="{% static 'picture/g-sdk_4I9q5WPD9Rry9mZQsl1WDQ_100.jpg' %}"
+                                             src="{%  img_url comment  %}"
                                              onerror="javascript:this.src='/static/image/unknow.png';">
                                         <div class="media-body pb-3 mb-0 small">
 

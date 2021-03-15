@@ -1,8 +1,8 @@
 14.归档
 12.搜索功能
 17.个人资料修改
-18.博主回复后边加上superuser类
-    把博主的obj_id一直存储于session中，判断is_admin字段
+19.上一篇下一篇
+
 
 
 
@@ -44,4 +44,9 @@
         portraitCallBack({
 	    "1570140958": ["http://qlogo3.store.qq.com/qzone/1570140958/1570140958/100", 14643, -1, 0, 0, 0, "sober", 0]
         })
+    完成
+18.博主回复后边加上superuser类
+    把博主的obj_id一直存储于session中，判断is_admin字段
+    完成
+20.404
     完成

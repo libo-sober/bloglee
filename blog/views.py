@@ -12,7 +12,7 @@ from blog.utils.page_html import MyPagination
 from django.core.mail import send_mail
 from BlogLee import settings
 from blog.utils.hashlib_func import set_md5
-from django.contrib.auth.models import User
+
 
 # Create your views here.
 time = datetime.datetime(year=2099, month=1, day=1)
@@ -67,7 +67,7 @@ class Index(View):
 
         # 管理员用户对象
         admin_obj = models.UserInfo.objects.filter(is_admin=True).first()
-        admin_url = 'http://127.0.0.1:8000/static/image/snd51t4nl2osnd51t4nl2o.png'   # 后期改为域名,不指定的话就用qq头像
+        admin_url = settings.ADMIN_IMG   # 后期改为域名,不指定的话就用qq头像
 
 
         if tag_id:
@@ -138,6 +138,7 @@ class ArticleView(View):
         else:
             cur_user_name = None
 
+
         return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, 'ret':
             ret, 'cur_user_name': cur_user_name, })
 
@@ -173,6 +174,18 @@ class ArticleView(View):
             data['username'] = comment.username
             data['add_time'] = comment.add_time.strftime('%Y-%m-%d %H:%M:%S')
             data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment.qq_email[:-7]}&spec=640&img_type=jpg'
+            user_obj = models.UserInfo.objects.filter(username=comment.username).first()
+            fu_user_obj = models.UserInfo.objects.filter(username=data['fu_username']).first()
+            # print(user_obj)
+            if user_obj:
+                data['is_admin'] = user_obj.is_admin
+            else:
+                data['is_admin'] = False
+            if fu_user_obj:
+                data['fu_is_admin'] = fu_user_obj.is_admin
+            else:
+                data['fu_is_admin'] = False
+            data['admin_img'] = settings.ADMIN_IMG
 
             msg.append(data)
         return msg
@@ -193,6 +206,14 @@ class About(View):
         return render(request, 'about.html', {'categories': categories, 'cur_user_name': cur_user_name, })
 
 
+# 自定义验证规则
+def email_validate(value):
+    email_re = re.compile(r'(.*)@(.*).com$')
+    if not email_re.match(value):
+        raise ValidationError('邮箱格式错误')  # 自定义验证规则的时候，如果不符合你的规则，需要自己发起错误
+    else:
+        return value
+
 # 评论校验modelform
 class CommentForm(forms.ModelForm):
 
@@ -200,6 +221,33 @@ class CommentForm(forms.ModelForm):
         model = models.Comment
         fields = "__all__"
         # exclude = ['pid', ]
+        error_messages = {
+            'username': {
+                'required': '昵称不能为空！',
+                'invalid': '用户名错误',
+            },
+            'qq_email': {
+                'required': '邮箱不能为空！',
+                'invalid': '邮箱格式错误',
+            },
+            'content': {
+                'required': '内容不能为空！',
+                'invalid': '内容错误',
+            },
+        }
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        user_obj = models.UserInfo.objects.filter(username=username).first()
+        if user_obj:
+            raise forms.ValidationError('昵称已存在！')
+        else:
+            return username
+
+    def clean_qq_email(self):
+        qq_email = self.cleaned_data['qq_email']
+        # print(qq_email)
+        return email_validate(qq_email)
 
 
 # 评论展示
@@ -211,7 +259,8 @@ class CommentView(View):
         data = {}
         form = CommentForm(request.POST)
         pid = request.POST.get('pid')
-        article_id = request.POST.get('article')
+        qq_eamil = request.POST.get('qq_email')
+        print(qq_eamil)
         if form.is_valid():
             msg['success'] = True
             # 保存
@@ -245,12 +294,13 @@ class CommentView(View):
         else:
             # print(form.errors)
             msg['success'] = False
-            for field in form.fields.keys():
-                if form.has_error(field):
-                    error[field] = 'valied'
-                else:
-                    error[field] = 0
-            msg['error'] = error
+            # for field in form.fields.keys():
+            #     if form.has_error(field):
+            #         error[field] = 'valied'
+            #     else:
+            #         error[field] = 0
+            # msg['error'] = error
+            msg['error'] = form.errors
         # print(msg) # 发给AjaxForm的数据
         return JsonResponse(msg)
 
@@ -318,24 +368,20 @@ class LogoutView(View):
         request.session.flush()  # 清楚所有的cookie和session
         return redirect('index')
 
-# 自定义验证规则
-def email_validate(value):
-    email_re = re.compile(r'(.*)@(.*).com$')
-    if not email_re.match(value):
-        raise ValidationError('邮箱格式错误')  # 自定义验证规则的时候，如果不符合你的规则，需要自己发起错误
+
 
 
 # 注册验证
 class RegisterForm(forms.Form):
     username = forms.CharField(
         max_length=16,
-        min_length=6,
+        min_length=3,
         label='用户名',
         widget=forms.widgets.TextInput(attrs={'class': 'username', 'autocomplete': 'off', 'placeholder': '用户名', }),
         error_messages={
             'required': '用户名不能为空！',
             'max_length': '用户名不能大于16位！',
-            'min_length': '用户名不能小于6位！',
+            'min_length': '用户名不能小于3位！',
         }
     )
 
@@ -411,7 +457,19 @@ class RegisterView(View):
             )
         else:
             res['error'] = register_form_obj.errors
-            print(register_form_obj.errors)
-
+            # print(register_form_obj.errors)
 
         return JsonResponse(res)
+
+
+def page_not_found(request, exception):
+    # 文章分类
+    categories = models.Category.objects.all()
+    # 登录的用户对象
+    user_id = request.session.get('user_id')
+    if user_id:
+        cur_user_name = models.UserInfo.objects.get(id=user_id)
+    else:
+        cur_user_name = None
+    print(cur_user_name)
+    return render(request, '404.html', {'cur_user_name': cur_user_name, "categories": categories, })

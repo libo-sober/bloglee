@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from blog import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     # 首页
     path('', views.Index.as_view(), name='index'),
     # 登录
@@ -44,11 +44,16 @@ urlpatterns = [
     # mdeditor
     path('mdeditor/', include('mdeditor.urls')),
 
-
 ]
 # 设置后台名称
 admin.site.site_header = '大聪明博客后台'
 admin.site.site_title = 'Django Blog 后台'
 
+# 404
+handler404 = "blog.views.page_not_found"
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
