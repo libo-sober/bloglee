@@ -98,7 +98,7 @@ $(function () {
 
         $("#comment-submit").html("正在提交评论...");
         $("#comment-form").ajaxSubmit(function (data) {
-            console.log(data);
+            // console.log(data);
             // console.log(data.error.qq_email);
             // console.log(data.error.article);
 
@@ -141,7 +141,7 @@ $(function () {
                 var fu_username = data.data.fu_username
                 var pk = data.data.pk
                 var qq_url = data.data.qq_url
-                console.log(qq_url)
+                // console.log(qq_url)
 
                 // ajax动态加载评论
                 var gen_comment = `           

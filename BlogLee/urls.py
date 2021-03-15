@@ -28,7 +28,8 @@ urlpatterns = [
     # 登出
     path('logout/', views.LogoutView.as_view(), name='logout'),
     # 个人资料
-    path('userinfo/detail/', views.LogoutView.as_view(), name='userinfo'),
+    path('userinfo/detail/', views.UserInfoView.as_view(), name='userinfo'),
+    path('modify/password/', views.ModifyView.as_view(), name='modify'),
     # 注册
     path('register/', views.RegisterView.as_view(), name='register'),
     # 关于

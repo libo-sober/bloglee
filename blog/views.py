@@ -237,6 +237,7 @@ class CommentForm(forms.ModelForm):
         }
 
     def clean_username(self):
+
         username = self.cleaned_data['username']
         user_obj = models.UserInfo.objects.filter(username=username).first()
         if user_obj:
@@ -260,12 +261,24 @@ class CommentView(View):
         form = CommentForm(request.POST)
         pid = request.POST.get('pid')
         qq_eamil = request.POST.get('qq_email')
-        print(qq_eamil)
-        if form.is_valid():
+        # 如果已经登录则不用校验‘
+        user_id = request.session.get('user_id')
+        if user_id:
             msg['success'] = True
-            # 保存
-            # print(form.cleaned_data)
-            comment_obj = form.save()
+            username = request.POST.get('username')
+            content = request.POST.get('content')
+            article = request.POST.get('article')
+            qq_email = request.POST.get('qq_email')
+            web_site = request.POST.get('web_site')
+            pid = request.POST.get('pid')
+            comment_obj = models.Comment.objects.create(
+                username = username,
+                content = content,
+                qq_email = qq_email,
+                article = models.Article.objects.get(id=article),
+                web_site = web_site,
+                pid = pid,
+            )
             data['pk'] = comment_obj.pk
             data['content'] = comment_obj.content
             data['username'] = comment_obj.username
@@ -290,17 +303,41 @@ class CommentView(View):
             else:
                 data['fu_username'] = 0
             msg['data'] = data
-
+            # msg['error'] = None
         else:
-            # print(form.errors)
-            msg['success'] = False
-            # for field in form.fields.keys():
-            #     if form.has_error(field):
-            #         error[field] = 'valied'
-            #     else:
-            #         error[field] = 0
-            # msg['error'] = error
-            msg['error'] = form.errors
+            if form.is_valid():
+                msg['success'] = True
+                # 保存
+                # print(form.cleaned_data)
+                comment_obj = form.save()
+                data['pk'] = comment_obj.pk
+                data['content'] = comment_obj.content
+                data['username'] = comment_obj.username
+                data['add_time'] = comment_obj.add_time.strftime('%Y-%m-%d %H:%M:%S')
+                data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment_obj.qq_email[:-7]}&spec=640&img_type=jpg'
+
+                # print(comment_obj.pid)
+                # # 评论成功，发送邮件提醒
+                #             # article_obj = models.Article.objects.filter(pk=article_id).first()
+                #             # send_mail(
+                #             #     f'您的{article_obj.title}文章被{comment_obj.username}评论',
+                #             #     comment_obj.content,
+                #             #     settings.EMAIL_HOST_USER,
+                #             #     ["1959013723@qq.com",],  # 文章作者邮箱
+                #             # )
+                if comment_obj.pid != None:
+                    # pid = int(comment_obj.pid)
+
+                    fu = models.Comment.objects.get(pk=pid).username
+                    # print(fu)
+                    data['fu_username'] = fu
+                else:
+                    data['fu_username'] = 0
+                msg['data'] = data
+
+            else:
+                msg['success'] = False
+                msg['error'] = form.errors
         # print(msg) # 发给AjaxForm的数据
         return JsonResponse(msg)
 
@@ -366,7 +403,7 @@ class LogoutView(View):
 
     def get(self, request):
         request.session.flush()  # 清楚所有的cookie和session
-        return redirect('index')
+        return redirect('login')
 
 
 
@@ -443,11 +480,11 @@ class RegisterView(View):
 
     def post(self, request):
         res = {"code": 500, "error": None}
-        print(request.POST.get('r_password'))
+        # print(request.POST.get('r_password'))
         register_form_obj = RegisterForm(request.POST)
         if register_form_obj.is_valid():
             res['code'] = 200
-            print(register_form_obj.cleaned_data)
+            # print(register_form_obj.cleaned_data)
             register_form_obj.cleaned_data.pop('r_password')
             password = register_form_obj.cleaned_data.pop('password')
             password = set_md5(password)
@@ -471,5 +508,60 @@ def page_not_found(request, exception):
         cur_user_name = models.UserInfo.objects.get(id=user_id)
     else:
         cur_user_name = None
-    print(cur_user_name)
+
     return render(request, '404.html', {'cur_user_name': cur_user_name, "categories": categories, })
+
+
+class UserInfoView(View):
+
+    def get(self, request):
+        # 文章分类
+        categories = models.Category.objects.all()
+        # 登录的用户对象
+        user_id = request.session.get('user_id')
+
+        cur_user_name = models.UserInfo.objects.get(id=user_id)
+
+        return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, })
+
+    def post(self, request):
+        # 文章分类
+        categories = models.Category.objects.all()
+        # 登录的用户对象
+        user_id = request.session.get('user_id')
+        uname = models.UserInfo.objects.get(id=user_id).username
+        register_form_obj = RegisterForm(request.POST)
+        if register_form_obj.is_valid():
+            print(register_form_obj.cleaned_data)
+            username = register_form_obj.cleaned_data['username']
+            email = register_form_obj.cleaned_data['email']
+            # update方法智能是queryset调用
+            models.Comment.objects.filter(username=uname).update(username=username)
+            models.UserInfo.objects.filter(id=user_id).update(username=username, email=email)
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, })
+        else:
+            print(register_form_obj.errors)
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'register_form_obj': register_form_obj, })
+
+
+
+
+
+class ModifyView(View):
+
+    def post(self, request):
+        user_id = request.session.get('user_id')
+        # 文章分类
+        categories = models.Category.objects.all()
+        cur_user_name = models.UserInfo.objects.get(id=user_id)
+        old_password = request.POST.get('old_password')
+        new_password = request.POST.get('new_password')
+        print(old_password)
+        if models.UserInfo.objects.get(id=user_id).password == set_md5(old_password):
+            models.UserInfo.objects.filter(id=user_id).update(password=set_md5(new_password))
+            return redirect('logout')
+        else:
+            error = '原密码不正确！'
+            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'error':error})
