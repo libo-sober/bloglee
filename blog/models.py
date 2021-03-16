@@ -5,6 +5,7 @@ from datetime import datetime
 # Create your models here.
 
 
+
 class UserInfo(models.Model):
     """用户信息表"""
     username = models.CharField(max_length=16, verbose_name='姓名')
@@ -12,9 +13,7 @@ class UserInfo(models.Model):
     email = models.EmailField()
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False, null=True, blank=True)
-
-    def get_url(self):
-        return self.email[:-7]
+    avatar = models.FileField(upload_to='avatars/', default=None)
 
     class Meta:
         verbose_name_plural = '用户信息表'
@@ -22,6 +21,8 @@ class UserInfo(models.Model):
     def __str__(self):  # __unicode__
 
         return self.username
+
+
 
 
 class Column(models.Model):
@@ -99,8 +100,8 @@ class Article(models.Model):
     """
     title = models.CharField(max_length=50, verbose_name='文章标题')
     desc = models.TextField(max_length=100, verbose_name='文章描述')
-    cover = models.CharField(max_length=200, default='https://image.3001.net/images/20200304/15832956271308.jpg', verbose_name='文章封面')
-
+    # cover = models.CharField(max_length=200, default='https://image.3001.net/images/20200304/15832956271308.jpg', verbose_name='文章封面')
+    cover = models.FileField(upload_to='covers/', default='covers/1P629140610-3.jpg', verbose_name='文章封面')
     content = MDTextField(verbose_name='文章内容')  # 富文本编辑框，要在models中注册mdeditor
     click_count = models.IntegerField(default=0, verbose_name='点击次数')
     is_recommend = models.BooleanField(default=False, verbose_name='是否推荐')  # 置顶
@@ -219,11 +220,14 @@ class Site(models.Model):
 
 class File(models.Model):
 
+    file = models.FileField(upload_to='covers/', default='covers/head.jpg')
+    class Meta:
+        verbose_name = '文件上传'
+        verbose_name_plural = verbose_name
 
-    cover_file = models.FileField(upload_to='covers/', default='covers/head.jpg')
-    cover_img = models.ImageField(upload_to='covers/', default='covers/head.jpg')
+    def __str__(self):
+        return self.file.name
 
-    def get_url(self):
-        return self.cover_file.url + '1111'
+
 
 

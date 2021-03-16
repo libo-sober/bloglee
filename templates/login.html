@@ -20,7 +20,7 @@
     <img class="mb-2" src="{% static 'image/touxiang.jpg' %}" alt="" width="100" height="100">
     <h1 class="h3 mb-3 font-weight-normal">欢迎登录</h1>
 	<div class="rollContainer">
-	  <p class="rollBlock">友情提示：新注册用户请按照QQ邮箱邮件提示完成激活再登陆，谢谢！</p>
+	  <p class="rollBlock">友情提示：推荐使用qq邮箱，会自动拉取qq头像，谢谢！</p>
 	</div>
     <div class="login_error">
       
@@ -30,7 +30,7 @@
   <div class="form-label-group">
       {% csrf_token %}
 	<input type="text" id="inputUsername" name="username" value="" class="form-control " placeholder="" required="" autofocus="">
-    <label for="inputUsername">用户名或邮箱</label>
+    <label for="inputUsername">用户名</label>
   </div>
 
   <div class="form-label-group">

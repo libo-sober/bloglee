@@ -10,7 +10,7 @@
 	<nav class="my-2 p-0" aria-label="breadcrumb">
 
 		  <ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#" class="">首页</a></li>
+			<li class="breadcrumb-item"><a href="/" class="">首页</a></li>
 			<li class="breadcrumb-item active" aria-current="page">关于</li>
 		  </ol>
 	</nav>
@@ -48,12 +48,12 @@
                 }
             </style>
             <div class="d-md-flex introduction">
-            <img src="static/picture/avatar.jpg" class="rounded-circle xwcms">
+            <img src="{{ url }}" class="rounded-circle xwcms">
             <div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"><i class="fa fa-address-card fa-lg mr-4" aria-hidden="true"></i>执着于理想，纯粹于当下。</li>
-                  <li class="list-group-item"><i class="fa fa-envelope fa-lg mr-4" aria-hidden="true"></i><a href="mailto:1510043719@qq.com" class="text-reset ">1510043719@qq.com（邮我ˉ﹃ˉ）</a></li>
-                  <li class="list-group-item" style="border-bottom: 1px solid rgba(0,0,0,.125);"><i class="fa fa-qq fa-lg mr-4" aria-hidden="true"></i><a href="javascript:;" class="text-reset ">1510043719(点此私聊我๑乛◡乛๑)</a></li>
+                  <li class="list-group-item"><i class="fa fa-envelope fa-lg mr-4" aria-hidden="true"></i><a href="mailto:1570140958@qq.com" class="text-reset ">1570140958@qq.com（邮我ˉ﹃ˉ）</a></li>
+                  <li class="list-group-item" style="border-bottom: 1px solid rgba(0,0,0,.125);"><i class="fa fa-qq fa-lg mr-4" aria-hidden="true"></i><a href="tencent://message/?uin=1570140958" class="text-reset ">1570140958(点此私聊我๑乛◡乛๑)</a></li>
                 </ul>
             </div>
         </div>
@@ -65,7 +65,7 @@
 			<div class="segment" style="background-color: hsla(0,0%,100%,.7);">
 				<div class="label"><span class="text-white">关于博主</span></div>
 				<div class="markdown">
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;博主惯用昵称<span style="color: rgb(75, 172, 198);">未雨晴空</span>,个人博客站长,<span style="text-decoration: line-through;">LOL玩家</span>,爱折腾,爱搞事,喜欢捣鼓新技术。希望得到结交更多相同爱好的人，以理性看待国内互联网。目前就职于某不知名IT公司，从事java编程开发，python是我个人兴趣所在转而自学，也就是因这个契机目前这个博客才得以搭建成功。平时喜欢写博客、看电影，听音乐，因为代码不是生活的全部。</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;博主惯用昵称<span style="color: rgb(75, 172, 198);">大聪明</span>,个人博客站长,<span style="text-decoration: line-through;">LOL玩家</span>,爱折腾,爱搞事,喜欢捣鼓新技术。希望得到结交更多相同爱好的人，以理性看待国内互联网。目前就职于某不知名IT公司，从事java编程开发，python是我个人兴趣所在转而自学，也就是因这个契机目前这个博客才得以搭建成功。平时喜欢写博客、看电影，听音乐，因为代码不是生活的全部。</p>
 				</div>
 			</div>
 
@@ -88,89 +88,6 @@
 
 
     </div>
-
-
-
-
-
-
-<div id="comments" class="" style="opacity:0.85;">
-
-    <!--评论列表-start-->
-    <ol class="list-group comment-list" id="comments">
-
-    </ol>
-
-        <!--评论表单-start-->
-        <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
-            <a name="comment"></a>
-            <h4>发表评论
-                <a class="btn btn-sm btn-info d-none text-white" id="cancel-reply" onclick="cancelReply();">取消回复</a>
-            </h4>
-            <p class="text-muted">电子邮件地址不会被公开。</p>
-
-            <form id="comment-form" onsubmit="return false;" method="post" action="/comment/add/">
-
-                <div class="form-group">
-                    <textarea class="form-control" id="content" name="content" rows="5" placeholder="居然什么都不说，哼！" autocomplete="off" aria-label="content" aria-describedby="addon-wrapping" required=""></textarea>
-                  <div class="invalid-feedback" id="content-feedback">
-
-                  </div>
-                  <a href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo" rel="external nofollow"><i class="fa fa-smile-o" aria-hidden="true"></i>表情</a>
-                </div>
-                <div class="OwO"></div>
-                <!--评论人信息--->
-
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text text-center"><i class="fa fa-user"></i></span>
-                  </div>
-                  <input name="username" id="username" type="text" class="form-control" placeholder="昵称(必填)" aria-label="username" aria-describedby="addon-wrapping" required="">
-                  <div class="invalid-feedback" id="username-feedback">
-                  </div>
-                </div>
-
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text text-center"><i class="fa fa-envelope-o"></i></span>
-                  </div>
-                  <input name="email" type="email" id="email" class="form-control" placeholder="QQ邮箱(必填)" aria-label="email" aria-describedby="addon-wrapping" required="">
-                  <div class="invalid-feedback" id="email-feedback">
-                  </div>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text text-center"><i class="fa fa-link"></i></span>
-                  </div>
-                  <input name="link" id="link" type="text" class="form-control" placeholder="网站(选填)" aria-label="link" aria-describedby="addon-wrapping">
-                  <div class="invalid-feedback">
-                    请输入以http或https开头的URL,格式如:https://oneisall.top
-                  </div>
-                </div>
-
-                <button type="submit" class="btn btn-info btn-block" id="comment-submit" data-placement="top" data-toggle="tooltip" title="评论需博主审核才会显示">提交评论</button>
-                <input type="hidden" name="article_id" value="0" id="comment_post_ID">
-                <input type="hidden" name="category_id" value="6" id="comment_post_type">
-                <input type="hidden" name="parent_id" id="comment_parent" value="0"><!--为0代表新评论-->
-                <input type="hidden" name="csrfmiddlewaretoken" value="xUgDZqrvANgKFdmErAGHJjZATVLjc0KumSfMq3zVaj8IqlaUHGMZMDn1jyrwkVJH">
-            </form>
-        </div>
-    <!--评论表单-end-->
-
-</div>
-<script src="static/js/owo.js"></script>
-<script>
-var OwO_demo = new OwO({
-    logo:'OωO表情',
-    container:document.getElementsByClassName('OwO')[0],
-    target:document.getElementById('content'),
-    api:window.location.origin+'/emoji',
-    position:'down',
-    width:'100%',
-    maxHeight:'250px'
-});
-</script>
-
 
 
 

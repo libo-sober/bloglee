@@ -211,7 +211,8 @@ class About(View):
             cur_user_name = models.UserInfo.objects.get(id=user_id)
         else:
             cur_user_name = None
-        return render(request, 'about.html', {'categories': categories, 'cur_user_name': cur_user_name, 'columns': columns, })
+        url = settings.ADMIN_IMG
+        return render(request, 'about.html', {'categories': categories, 'cur_user_name': cur_user_name, 'columns': columns, 'url': url, })
 
 
 # 自定义验证规则
@@ -646,12 +647,64 @@ class MessagesView(View):
         else:
             cur_user_name = None
 
-        fi = models.UserInfo.objects.all().first()
-        print(fi.get_url()) # 1355415988
+        least_users = models.UserInfo.objects.all()[:20]
+        for user in least_users:
+            user.avatar = f'http://q.qlogo.cn/headimg_dl?dst_uin={user.email[:-7]}&spec=640&img_type=jpg'
+
+        # 该文章的所有评论
+        comment_obj = models.Comment.objects.all().order_by('-add_time')[:10]
+        comment_list = self.build_msg(comment_obj)
+        ret = self.get_comment_list(comment_list)
 
         return render(request, 'messages.html',
-                      {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
+                      {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, 'least_users': least_users, 'ret': ret, })
 
 
+    def get_comment_list(self, comment_list):
+        # 把msg增加一个chirld键值对，存放它的儿子们
+        ret = []
+        comment_dic = {}
+        for comment_obj in comment_list:
+            comment_obj['children'] = []
+            comment_dic[comment_obj['pk']] = comment_obj
 
+        for comment in comment_list:
+            p_obj = comment_dic.get(comment['pid'])
+            if not p_obj:
+                ret.append(comment)
+            else:
+                p_obj['children'].append(comment)
+        return ret
+
+    def build_msg(self, comment_obj):
+        # 把数据造成列表里边套字典的形式
+        msg = []
+        for comment in comment_obj:
+            data = {}
+            if comment.pid:
+                data['pid'] = comment.pid.id
+                data['fu_username'] = models.Comment.objects.get(pk=comment.pid.id).username
+            else:
+                data['pid'] = None
+                data['fu_username'] = None
+            data['pk'] = comment.pk
+            data['content'] = comment.content
+            data['username'] = comment.username
+            data['add_time'] = comment.add_time.strftime('%Y-%m-%d %H:%M:%S')
+            data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment.qq_email[:-7]}&spec=640&img_type=jpg'
+            user_obj = models.UserInfo.objects.filter(username=comment.username).first()
+            fu_user_obj = models.UserInfo.objects.filter(username=data['fu_username']).first()
+            # print(user_obj)
+            if user_obj:
+                data['is_admin'] = user_obj.is_admin
+            else:
+                data['is_admin'] = False
+            if fu_user_obj:
+                data['fu_is_admin'] = fu_user_obj.is_admin
+            else:
+                data['fu_is_admin'] = False
+            data['admin_img'] = settings.ADMIN_IMG
+
+            msg.append(data)
+        return msg
 
