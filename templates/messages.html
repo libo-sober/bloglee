@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_tag %}
+
+{## 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入#}
+{% block Navigation %}
+    {% navigation categories cur_user_name columns %}
+{% endblock %}
+
+{% block content %}
+
+<!--主内容-start--->
+<main role="main">
+    <div class="container col-md-8 offset-md-2 message" style="min-height:300px;">
+	    <nav class="my-2 p-0" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#" class="text-decoration-none">首页</a></li>
+			    <li class="breadcrumb-item active" aria-current="page">给我留言</li>
+		    </ol>
+	    </nav>
+        <center><strong>人生如逆旅，我亦是行人。</strong></center>
+        <center><img src="static/picture/hhh.gif" width="auto" height="300"></center>
+
+        <div class="card">
+            <h4 class="link-title">这些人刚刚来看过我</h4>
+
+
+
+            <div class="card-body py-2">
+
+
+                <a class="d-inline-block position-relative" style="width:34px;"><img class="rounded-circle xwcms" src="static/picture/g-sdk_RoDeJic2WP9x0XcYgAywEnA_10.jpg" style="max-width:100%;" onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>
+
+
+
+                <a class="d-inline-block position-relative" style="width:34px;"><img class="rounded-circle xwcms" src="static/picture/g-sdk_iavsC0h2EgXHLnZVbs3CqWQ_10.jpg" style="max-width:100%;" onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+<div id="comments" class="" style="opacity:0.85;">
+
+    <!--评论列表-start-->
+    <ol class="list-group comment-list" id="comments">
+
+
+
+
+
+<li class="list-group-item comment-88 mt-3 px-2 pt-3 pb-2 depth-0">
+    <div class="clearfix" id="div-comment-88">
+        <div class="media">
+          <img src="static/picture/g-sdk_4I9q5WPD9Rry9mZQsl1WDQ_100.jpg" class="mr-3 rounded-circle" width="50" height="50" onerror="javascript:this.src='{% static 'image/unknow.png' %}';">
+          <div class="media-body">
+            <div class="comment-info">
+                <cite class="c3">
+
+                         li-bingke
+
+                </cite>
+
+            </div>
+            <div class="comment-meta"><span class="font-weight-light text-muted">2021-03-01 10:03:02</span></div>
+          </div>
+        </div>
+        <p class="text-break mt-2">你好，关于你的影单和书单是怎么实现起来的呢，很想知道。如果可以的话，希望可以一聊。</p>
+        <a class="btn btn-sm btn-secondary float-right" onclick="reply('div-comment-88','88')">回复</a>
+    </div>
+
+
+
+
+
+     <ol class="children">
+
+
+
+
+<li class="list-group-item comment-89 mt-3 px-2 pt-3 pb-2 depth-1">
+    <div class="clearfix" id="div-comment-89">
+        <div class="media">
+          <img src="static/picture/avatar.jpg" class="mr-3 rounded-circle" width="50" height="50" onerror="javascript:this.src='{% static 'image/unknow.png' %}';">
+          <div class="media-body">
+            <div class="comment-info">
+                <cite class="c3">
+
+                         <a href="index.html" class='text-reset superuser'>admin</a>
+
+                </cite>
+
+                <i class="fa fa-share fa-fw fa-1x mr-2 c1" aria-hidden="true"></i><cite class="c3"><a href="#div-comment-88" class="text-reset">li-bingke</a></cite>
+
+            </div>
+            <div class="comment-meta"><span class="font-weight-light text-muted">2021-03-01 10:03:34</span></div>
+          </div>
+        </div>
+        <p class="text-break mt-2">朋友你好，我的影单和书单页面是在github 上找的一款js插件，至于数据是利用celery-beat实现scrapy定时同步我的豆瓣影单和书单。</p>
+        <a class="btn btn-sm btn-secondary float-right" onclick="reply('div-comment-89','89')">回复</a>
+    </div>
+
+
+
+
+
+
+ </li>
+
+
+
+     </ol>
+
+
+ </li>
+
+
+
+
+<li class="list-group-item comment-84 mt-3 px-2 pt-3 pb-2 depth-0">
+    <div class="clearfix" id="div-comment-84">
+        <div class="media">
+          <img src="static/picture/avatar.jpg" class="mr-3 rounded-circle" width="50" height="50" onerror="javascript:this.src='{% static 'image/unknow.png' %}';">
+          <div class="media-body">
+            <div class="comment-info">
+                <cite class="c3">
+
+                         <a href="index.html" class='text-reset superuser'>admin</a>
+
+                </cite>
+
+            </div>
+            <div class="comment-meta"><span class="font-weight-light text-muted">2021-02-03 13:02:41</span></div>
+          </div>
+        </div>
+        <p class="text-break mt-2"><img class='biaoqing' src='static/picture/tanshou_org.png'></p>
+        <a class="btn btn-sm btn-secondary float-right" onclick="reply('div-comment-84','84')">回复</a>
+    </div>
+
+
+
+
+
+
+ </li>
+
+
+
+
+    </ol>
+
+        <!--评论表单-start-->
+        <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
+            <a name="comment"></a>
+            <h4>发表评论
+                <a class="btn btn-sm btn-info d-none text-white" id="cancel-reply" onclick="cancelReply();">取消回复</a>
+            </h4>
+            <p class="text-muted">电子邮件地址不会被公开。</p>
+
+            <form id="comment-form" onsubmit="return false;" method="post" action="/comment/add/">
+
+                <div class="form-group">
+                    <textarea class="form-control" id="content" name="content" rows="5" placeholder="居然什么都不说，哼！" autocomplete="off" aria-label="content" aria-describedby="addon-wrapping" required=""></textarea>
+                  <div class="invalid-feedback" id="content-feedback">
+
+                  </div>
+                  <a href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo" rel="external nofollow"><i class="fa fa-smile-o" aria-hidden="true"></i>表情</a>
+                </div>
+                <div class="OwO"></div>
+                <!--评论人信息--->
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text text-center"><i class="fa fa-user"></i></span>
+                  </div>
+                  <input name="username" id="username" type="text" class="form-control" placeholder="昵称(必填)" aria-label="username" aria-describedby="addon-wrapping" required="">
+                  <div class="invalid-feedback" id="username-feedback">
+                  </div>
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text text-center"><i class="fa fa-envelope-o"></i></span>
+                  </div>
+                  <input name="email" type="email" id="email" class="form-control" placeholder="QQ邮箱(必填)" aria-label="email" aria-describedby="addon-wrapping" required="">
+                  <div class="invalid-feedback" id="email-feedback">
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text text-center"><i class="fa fa-link"></i></span>
+                  </div>
+                  <input name="link" id="link" type="text" class="form-control" placeholder="网站(选填)" aria-label="link" aria-describedby="addon-wrapping">
+                  <div class="invalid-feedback">
+                    请输入以http或https开头的URL,格式如:https://oneisall.top
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-info btn-block" id="comment-submit" data-placement="top" data-toggle="tooltip" title="评论需博主审核才会显示">提交评论</button>
+                <input type="hidden" name="article_id" value="0" id="comment_post_ID">
+                <input type="hidden" name="category_id" value="5" id="comment_post_type">
+                <input type="hidden" name="parent_id" id="comment_parent" value="0"><!--为0代表新评论-->
+                <input type="hidden" name="csrfmiddlewaretoken" value="JvT4PYq0WpdGv0yB8OYpPKLmYyFXnfeXxmRJJ5HZaMgL2hddKlDpCVl6B8QTKKgw">
+            </form>
+        </div>
+    <!--评论表单-end-->
+
+</div>
+<script src="static/js/owo.js"></script>
+<script>
+var OwO_demo = new OwO({
+    logo:'OωO表情',
+    container:document.getElementsByClassName('OwO')[0],
+    target:document.getElementById('content'),
+    api:window.location.origin+'/emoji',
+    position:'down',
+    width:'100%',
+    maxHeight:'250px'
+});
+</script>
+
+
+
+  </div>
+</main>
+
+{% endblock %}
+

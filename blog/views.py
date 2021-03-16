@@ -128,6 +128,9 @@ class ArticleView(View):
 
         # 文章分类
         categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
         # 该文章的所有评论
         comment_obj = models.Comment.objects.filter(article_id=article_id).order_by('-add_time')
         comment_list = self.build_msg(comment_obj)
@@ -142,7 +145,7 @@ class ArticleView(View):
 
 
         return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, 'ret':
-            ret, 'cur_user_name': cur_user_name, })
+            ret, 'cur_user_name': cur_user_name, 'columns': columns, })
 
     def get_comment_list(self, comment_list):
         # 把msg增加一个chirld键值对，存放它的儿子们
@@ -199,13 +202,16 @@ class About(View):
     def get(self, request):
         # 文章分类
         categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
         # 登录的用户对象
         user_id = request.session.get('user_id')
         if user_id:
             cur_user_name = models.UserInfo.objects.get(id=user_id)
         else:
             cur_user_name = None
-        return render(request, 'about.html', {'categories': categories, 'cur_user_name': cur_user_name, })
+        return render(request, 'about.html', {'categories': categories, 'cur_user_name': cur_user_name, 'columns': columns, })
 
 
 # 自定义验证规则
@@ -279,7 +285,7 @@ class CommentView(View):
                 qq_email = qq_email,
                 article = models.Article.objects.get(id=article),
                 web_site = web_site,
-                pid = pid,
+                pid = models.Comment.objects.filter(id=pid).first(),
             )
             data['pk'] = comment_obj.pk
             data['content'] = comment_obj.content
@@ -374,6 +380,9 @@ class LoginView(View):
     def get(self, request):
         # 文章分类
         categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
         # 登录的用户对象
         user_id = request.session.get('user_id')
         if user_id:
@@ -381,7 +390,7 @@ class LoginView(View):
         else:
             cur_user_name = None
 
-        return render(request, 'login.html', {'cur_user_name': cur_user_name, 'categories': categories, })
+        return render(request, 'login.html', {'cur_user_name': cur_user_name, 'categories': categories, 'columns': columns, })
 
     def post(self, request):
         # 初始化返回值
@@ -471,6 +480,9 @@ class RegisterView(View):
     def get(self, request):
         # 文章分类
         categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
         # 登录的用户对象
         user_id = request.session.get('user_id')
         if user_id:
@@ -478,7 +490,7 @@ class RegisterView(View):
         else:
             cur_user_name = None
 
-        return render(request, 'register.html', {'cur_user_name': cur_user_name, 'categories': categories, })
+        return render(request, 'register.html', {'cur_user_name': cur_user_name, 'categories': categories, 'columns': columns, })
 
     def post(self, request):
         res = {"code": 500, "error": None}
@@ -504,6 +516,9 @@ class RegisterView(View):
 def page_not_found(request, exception):
     # 文章分类
     categories = models.Category.objects.all()
+    # 文章专栏
+    columns = models.Column.objects.all().order_by('-weights')
+
     # 登录的用户对象
     user_id = request.session.get('user_id')
     if user_id:
@@ -511,7 +526,7 @@ def page_not_found(request, exception):
     else:
         cur_user_name = None
 
-    return render(request, '404.html', {'cur_user_name': cur_user_name, "categories": categories, })
+    return render(request, '404.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
 
 
 class UserInfoView(View):
@@ -519,16 +534,22 @@ class UserInfoView(View):
     def get(self, request):
         # 文章分类
         categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
         # 登录的用户对象
         user_id = request.session.get('user_id')
 
         cur_user_name = models.UserInfo.objects.get(id=user_id)
 
-        return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, })
+        return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
 
     def post(self, request):
         # 文章分类
         categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
         # 登录的用户对象
         user_id = request.session.get('user_id')
         uname = models.UserInfo.objects.get(id=user_id).username
@@ -541,11 +562,11 @@ class UserInfoView(View):
             models.Comment.objects.filter(username=uname).update(username=username)
             models.UserInfo.objects.filter(id=user_id).update(username=username, email=email)
             cur_user_name = models.UserInfo.objects.get(id=user_id)
-            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, })
+            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
         else:
             # print(register_form_obj.errors)
             cur_user_name = models.UserInfo.objects.get(id=user_id)
-            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'register_form_obj': register_form_obj, })
+            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'register_form_obj': register_form_obj, 'columns': columns, })
 
 
 
@@ -557,6 +578,9 @@ class ModifyView(View):
         user_id = request.session.get('user_id')
         # 文章分类
         categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
         cur_user_name = models.UserInfo.objects.get(id=user_id)
         old_password = request.POST.get('old_password')
         new_password = request.POST.get('new_password')
@@ -566,7 +590,7 @@ class ModifyView(View):
             return redirect('logout')
         else:
             error = '原密码不正确！'
-            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'error':error})
+            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'error':error, 'columns': columns, })
 
 
 class ArchiveView(View):
@@ -575,16 +599,59 @@ class ArchiveView(View):
         user_id = request.session.get('user_id')
         # 文章分类
         categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
         if user_id:
             cur_user_name = models.UserInfo.objects.get(id=user_id)
         else:
             cur_user_name = None
 
-        return render(request, 'archive.html', {'cur_user_name': cur_user_name, "categories": categories, })
+        dates = models.Article.objects.datetimes('add_time', 'month', order='DESC')
+
+        return render(request, 'archive.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, 'dates': dates, })
 
 
 class FriendsView(View):
 
     def get(self, request):
 
-        return None
+        user_id = request.session.get('user_id')
+        # 文章分类
+        categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
+        if user_id:
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+        else:
+            cur_user_name = None
+
+
+        return render(request, 'friends.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
+
+
+class MessagesView(View):
+
+    def get(self, request):
+
+        user_id = request.session.get('user_id')
+        # 文章分类
+        categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
+        if user_id:
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+        else:
+            cur_user_name = None
+
+        fi = models.UserInfo.objects.all().first()
+        print(fi.get_url()) # 1355415988
+
+        return render(request, 'messages.html',
+                      {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
+
+
+
+

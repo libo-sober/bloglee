@@ -15,5 +15,6 @@ admin.site.register(models.Links)
 admin.site.register(models.Site)
 admin.site.register(models.UserInfo)
 admin.site.register(models.Column)
+admin.site.register(models.File)
 
 

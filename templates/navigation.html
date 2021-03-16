@@ -33,21 +33,11 @@
                     </div>
                 </li>
                     {% else %}
-                     <li class="nav-item dropdown">
-                    <a class="nav-link text-white" id="program" aria-haspopup="true" aria-expanded="false"
-                       data-toggle="dropdown" href="{% url column.url %}">
-                        <i class="fa-fw fa {{ column.icon }}" aria-hidden="true"></i>{{ column.name }}</a>
+                    <li class="nav-item ">
+    <a class="nav-link text-white" href="{% url column.url %}" id="{{ column.url }}" aria-haspopup="true" aria-expanded="false">
+    <i class="fa-fw fa fa-user-secret" aria-hidden="true"></i>{{ column.name }}</a>
 
-{#                    <div class="dropdown-menu text-white" aria-labelledby="program">#}
-{#                        {% for category in categories %}#}
-{#                            {% if category.column.id == column.id %}#}
-{#                            <a class="dropdown-item text-white" href="{% url 'category' category.id %}"><i#}
-{#                                    class="fa {{ category.icon }}"#}
-{#                                    aria-hidden="true"></i>&nbsp;&nbsp;{{ category.name }}</a>#}
-{#                            {% endif %}#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-                </li>
+</li>
                 {% endif %}
             {% endfor %}
 

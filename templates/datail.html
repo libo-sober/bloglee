@@ -206,11 +206,11 @@
                         <div class="invalid-feedback" id="content-feedback">
 
                         </div>
-                        <div class="OwO">
-                            <a href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo"
-                           rel="external nofollow"><i class="fa fa-smile-o"
-                                                      aria-hidden="true"></i>表情</a>
-                        </div>
+                    <div class="OwO">
+{#                            <div href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo OwO"#}
+{#                           rel="external nofollow"><i class="fa fa-smile-o"#}
+{#                                                      aria-hidden="true"></i>表情</div>#}
+{#                        </div>#}
 
                     </div>
 
@@ -465,7 +465,8 @@
     <script src="{% static 'js/OwO.min.js' %}"></script>
         <script>
             var OwO_demo = new OwO({
-                logo: 'OωO表情',
+                {#logo: 'OωO表情',#}
+                logo: '😂表情',
                 container: document.getElementsByClassName('OwO')[0],
                 target: document.getElementById('content'),
                 api: window.location.origin + "{% static 'OwO.json' %}",

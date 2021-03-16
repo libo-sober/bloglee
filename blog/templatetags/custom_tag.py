@@ -4,6 +4,7 @@ from django import template
 from blog import models
 from BlogLee import settings
 from django.template.defaultfilters import stringfilter
+from django.shortcuts import reverse
 
 register = template.Library()
 
@@ -180,3 +181,21 @@ def build_coment_tree(ret):
         comment += ' </li>'
 
     return comment
+
+
+@register.filter(is_safe=True)
+def archive(datetimes):
+
+    archive_html = ''
+    article_obj = models.Article.objects.filter(add_time__year=datetimes.year, add_time__month=datetimes.month).order_by(
+                '-add_time')
+
+
+    for article in article_obj:
+        title = article.title
+        id = article.id
+        date = article.add_time.strftime('%m-%d')
+        archive_html += f"""<li class="list-group-item"><a class="text-reset" href="{reverse('detail', args=(id,))}">{date}：{title}</a></li>"""
+
+
+    return archive_html

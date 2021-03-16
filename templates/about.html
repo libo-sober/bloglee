@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load custom_tag %}
 
-{## 导航条#}
+# 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入
 {% block Navigation %}
-{% navigation categories cur_user_name %}
+    {% navigation categories cur_user_name columns %}
 {% endblock %}
 {% block content %}
   <div class="container col-md-8 offset-md-2" style="min-height:300px;">

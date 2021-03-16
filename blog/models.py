@@ -13,6 +13,9 @@ class UserInfo(models.Model):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False, null=True, blank=True)
 
+    def get_url(self):
+        return self.email[:-7]
+
     class Meta:
         verbose_name_plural = '用户信息表'
 
@@ -28,7 +31,7 @@ class Column(models.Model):
     name = models.CharField(max_length=30, verbose_name='专栏名称')
     url = models.CharField(max_length=10, null=True, blank=True, default='None', verbose_name='路径')
     icon = models.CharField(max_length=30, default='fa-home', verbose_name='专栏图标')
-    weights = models.IntegerField(max_length=10, default=10, null=True, blank=True, verbose_name='排序权重')
+    weights = models.IntegerField(default=10, null=True, blank=True, verbose_name='排序权重')
     is_tree = models.BooleanField(default=False, null=True, blank=True, verbose_name='添加儿子')
 
     class Meta:
@@ -97,6 +100,7 @@ class Article(models.Model):
     title = models.CharField(max_length=50, verbose_name='文章标题')
     desc = models.TextField(max_length=100, verbose_name='文章描述')
     cover = models.CharField(max_length=200, default='https://image.3001.net/images/20200304/15832956271308.jpg', verbose_name='文章封面')
+
     content = MDTextField(verbose_name='文章内容')  # 富文本编辑框，要在models中注册mdeditor
     click_count = models.IntegerField(default=0, verbose_name='点击次数')
     is_recommend = models.BooleanField(default=False, verbose_name='是否推荐')  # 置顶
@@ -212,5 +216,14 @@ class Site(models.Model):
     def __str__(self):
         return self.title
 
+
+class File(models.Model):
+
+
+    cover_file = models.FileField(upload_to='covers/', default='covers/head.jpg')
+    cover_img = models.ImageField(upload_to='covers/', default='covers/head.jpg')
+
+    def get_url(self):
+        return self.cover_file.url + '1111'
 
 

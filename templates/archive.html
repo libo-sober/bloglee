@@ -4,7 +4,7 @@
 
 {## 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入#}
 {% block Navigation %}
-    {% navigation categories cur_user_name %}
+    {% navigation categories cur_user_name columns %}
 {% endblock %}
 
 {% block content %}
@@ -21,273 +21,35 @@
 <div class="article-archive bg-white p-4" id="article-archive">
 
 
+{% regroup dates by year as dates_by_year %}
 
 
-  <div class="item">
-    <div class="article-month" id="heading-1" data-toggle="collapse" data-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+{% for mouth in dates_by_year %}
+    {% for datetimes in mouth.list %}
+          <div class="item">
+    <div class="article-month" id="heading-{{ datetimes | date:'Y-m' }}" data-toggle="collapse" data-target="#collapse-{{ datetimes | date:'Y-m' }}" aria-expanded="true" aria-controls="collapse-{{ datetimes | date:'Y-m' }}">
 
-        <span class="panel">2021年02月</span>
+        <span class="panel">{{ mouth.grouper }}年{{ datetimes.month }}月</span>
 		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
     </div>
 
 
-    <div id="collapse-1" class="collapse" aria-labelledby="heading-1" data-parent="#article-archive">
-
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="note-mongodb.html">02月07日：mongodb学习笔记</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="note-nodeJS.html">02月05日：node.js学习笔记</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="python-decorator.html">02月04日：python的函数装饰器和类装饰器</a></li>
-
+    <div id="collapse-{{ datetimes | date:'Y-m' }}" class="collapse" aria-labelledby="heading-{{ datetimes | date:'Y-m' }}" data-parent="#article-archive">
+         <ul class="list-group list-group-flush">
+{{ datetimes | archive | safe }}
 
 </ul>
-    </div>
-  </div>
 
-  <div class="item">
-    <div class="article-month" id="heading-2" data-toggle="collapse" data-target="#collapse-2" aria-expanded="true" aria-controls="collapse-2">
 
-        <span class="panel">2021年01月</span>
-		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
-    </div>
 
 
-    <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#article-archive">
 
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="install-navicat.html">01月19日：navicat15的安装与破解</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="django-dramatiq.html">01月15日：django集成dramatiq异步任务框架</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="python-dramatiq.html">01月15日：python异步任务框架dramatiq</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="note-docker.html">01月12日：docker学习笔记</a></li>
-
-
-</ul>
-    </div>
-  </div>
-
-  <div class="item">
-    <div class="article-month" id="heading-3" data-toggle="collapse" data-target="#collapse-3" aria-expanded="true" aria-controls="collapse-3">
-
-        <span class="panel">2020年12月</span>
-		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
-    </div>
-
-
-    <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#article-archive">
-
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="test-ueditor.html">12月06日：测试富文本编辑器</a></li>
-
-
-</ul>
-    </div>
-  </div>
-
-  <div class="item">
-    <div class="article-month" id="heading-4" data-toggle="collapse" data-target="#collapse-4" aria-expanded="true" aria-controls="collapse-4">
-
-        <span class="panel">2020年11月</span>
-		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
-    </div>
-
-
-    <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#article-archive">
-
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="custom-image-field.html">11月24日：django自定义field实现多模式插入图片</a></li>
-
-
-</ul>
-    </div>
-  </div>
-
-  <div class="item">
-    <div class="article-month" id="heading-5" data-toggle="collapse" data-target="#collapse-5" aria-expanded="true" aria-controls="collapse-5">
-
-        <span class="panel">2020年09月</span>
-		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
-    </div>
-
-
-    <div id="collapse-5" class="collapse" aria-labelledby="heading-5" data-parent="#article-archive">
-
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="custom-djangoueditor.html">09月22日：DjangoUeditor二次开发和优化</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="django-haystack.html">09月13日：django-haystack使用以及多模型搜索</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="django-forloop.html">09月08日：django中的forloop</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="learn-uwsgi.html">09月08日：uwsgi学习笔记与踩坑</a></li>
-
-
-</ul>
-    </div>
-  </div>
-
-  <div class="item">
-    <div class="article-month" id="heading-6" data-toggle="collapse" data-target="#collapse-6" aria-expanded="true" aria-controls="collapse-6">
-
-        <span class="panel">2020年08月</span>
-		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
-    </div>
-
-
-    <div id="collapse-6" class="collapse" aria-labelledby="heading-6" data-parent="#article-archive">
-
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="blog-cinema.html">08月31日：博客集成影院功能开发完成！！！</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="life-so-decadent-so-lazy.html">08月11日：颓废如斯，懒惰如斯！！！</a></li>
-
-
-</ul>
-    </div>
-  </div>
-
-  <div class="item">
-    <div class="article-month" id="heading-7" data-toggle="collapse" data-target="#collapse-7" aria-expanded="true" aria-controls="collapse-7">
-
-        <span class="panel">2020年07月</span>
-		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
-    </div>
-
-
-    <div id="collapse-7" class="collapse" aria-labelledby="heading-7" data-parent="#article-archive">
-
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="django-filters.html">07月30日：盘点django的过滤器，盘它！</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="install-supervisor.html">07月26日：centos7安装supervisor以及简单使用</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="weathering-with-you.html">07月20日：《天气之子》</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="springboot-druid.html">07月05日：springboot基于配置集成druid连接池</a></li>
-
-
-</ul>
-    </div>
-  </div>
-
-  <div class="item">
-    <div class="article-month" id="heading-8" data-toggle="collapse" data-target="#collapse-8" aria-expanded="true" aria-controls="collapse-8">
-
-        <span class="panel">2020年06月</span>
-		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
-    </div>
-
-
-    <div id="collapse-8" class="collapse" aria-labelledby="heading-8" data-parent="#article-archive">
-
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="instruction-blog.html">06月02日：说说我的博客</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="jquery-ajax.html">06月28日：jquery关于ajax那些事</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="movie-escape-from-pretoria.html">06月22日：观影《逃离比勒陀利亚》爽爆</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="springboot-community.html">06月16日：SpringBoot开发项目《好玩社区》</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="install-redis.html">06月12日：记一次centos7安装redis的踩坑之旅</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="django-scrapy.html">06月06日：django集成scrapy</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="django-celery.html">06月05日：django集成celery</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="python-celery.html">06月03日：python异步任务处理框架celery</a></li>
-
-
-</ul>
-    </div>
-  </div>
-
-  <div class="item">
-    <div class="article-month" id="heading-9" data-toggle="collapse" data-target="#collapse-9" aria-expanded="true" aria-controls="collapse-9">
-
-        <span class="panel">2020年05月</span>
-		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
-    </div>
-
-
-    <div id="collapse-9" class="collapse" aria-labelledby="heading-9" data-parent="#article-archive">
-
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="test-markdown.html">05月31日：测试markdown编辑器</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="install-mariadb.html">05月30日：CentOS系统安装mariadb</a></li>
-
-
-</ul>
-    </div>
-  </div>
-
-  <div class="item">
-    <div class="article-month" id="heading-10" data-toggle="collapse" data-target="#collapse-10" aria-expanded="true" aria-controls="collapse-10">
-
-        <span class="panel">2020年04月</span>
-		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
-    </div>
-
-
-    <div id="collapse-10" class="collapse" aria-labelledby="heading-10" data-parent="#article-archive">
-
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="scrapy-cartoon.html">04月15日：scrapy爬取漫画自定义存储路径</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="install-virtualenvwrapper.html">04月01日：windows和linux下安装virtualenv</a></li>
-
-
-</ul>
-    </div>
-  </div>
-
-  <div class="item">
-    <div class="article-month" id="heading-11" data-toggle="collapse" data-target="#collapse-11" aria-expanded="true" aria-controls="collapse-11">
-
-        <span class="panel">2020年03月</span>
-		<svg viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M21.6 772.8c28.8 28.8 74.4 28.8 103.2 0L512 385.6 899.2 772.8c28.8 28.8 74.4 28.8 103.2 0 28.8-28.8 28.8-74.4 0-103.2l-387.2-387.2-77.6-77.6c-14.4-14.4-37.6-14.4-51.2 0l-77.6 77.6-387.2 387.2c-28.8 28.8-28.8 75.2 0 103.2z"></path></svg>
-    </div>
-
-
-    <div id="collapse-11" class="collapse" aria-labelledby="heading-11" data-parent="#article-archive">
-
-
-<ul class="list-group list-group-flush">
-
-  <li class="list-group-item"><a class="text-reset" href="linux-introduction.html">03月03日：linux入门知识以及操作命令大全</a></li>
-
-  <li class="list-group-item"><a class="text-reset" href="skill-wangyiyun.html">03月01日：如何让网站嵌套网易云音乐？</a></li>
-
-
-</ul>
     </div>
   </div>
 
 
+    {% endfor %}
+{% endfor %}
 
 
 </div>
