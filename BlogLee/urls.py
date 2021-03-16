@@ -46,6 +46,8 @@ urlpatterns = [
     path('archive/', views.ArchiveView.as_view(), name='archive'),
     # 友情链接
     path('friends/', views.FriendsView.as_view(), name='friends'),
+    # 留言
+    path('messages/', views.FriendsView.as_view(), name='messages'),
     # mdeditor
     path('mdeditor/', include('mdeditor.urls')),
 

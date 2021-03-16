@@ -13,130 +13,43 @@
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-white" id="life" aria-haspopup="true" aria-expanded="false"
-                       data-toggle="dropdown">
-                        <i class="fa-fw fa fa-pencil-square-o" aria-hidden="true"></i>笔记</a>
-
-                    <div class="dropdown-menu text-white" aria-labelledby="life">
-
-                        <a class="dropdown-item text-white" href="talk-book.html"><i class="fa-fw fa fa-coffee"
-                                                                                     aria-hidden="true"></i>&nbsp;&nbsp;书评</a>
-
-                        <a class="dropdown-item text-white" href="talk-movie.html"><i class="fa-fw fa fa-coffee"
-                                                                                      aria-hidden="true"></i>&nbsp;&nbsp;影评</a>
-
-                    </div>
-
-                </li>
 
 
+            {% for column in columns %}
+                {% if column.is_tree %}
                 <li class="nav-item dropdown">
                     <a class="nav-link text-white" id="program" aria-haspopup="true" aria-expanded="false"
                        data-toggle="dropdown">
-                        <i class="fa-fw fa fa-list" aria-hidden="true"></i>编程</a>
+                        <i class="fa-fw fa {{ column.icon }}" aria-hidden="true"></i>{{ column.name }}</a>
 
                     <div class="dropdown-menu text-white" aria-labelledby="program">
                         {% for category in categories %}
+                            {% if category.column.id == column.id %}
                             <a class="dropdown-item text-white" href="{% url 'category' category.id %}"><i
                                     class="fa {{ category.icon }}"
                                     aria-hidden="true"></i>&nbsp;&nbsp;{{ category.name }}</a>
+                            {% endif %}
                         {% endfor %}
-
-
                     </div>
-
                 </li>
+                    {% else %}
+                     <li class="nav-item dropdown">
+                    <a class="nav-link text-white" id="program" aria-haspopup="true" aria-expanded="false"
+                       data-toggle="dropdown" href="{% url column.url %}">
+                        <i class="fa-fw fa {{ column.icon }}" aria-hidden="true"></i>{{ column.name }}</a>
 
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-white" id="frame" aria-haspopup="true" aria-expanded="false"
-                       data-toggle="dropdown">
-                        <i class="fa-fw fa fa-university" aria-hidden="true"></i>框架</a>
-
-                    <div class="dropdown-menu text-white" aria-labelledby="frame">
-
-                        <a class="dropdown-item text-white" href="django.html"><i class="fa fa-server"
-                                                                                  aria-hidden="true"></i>&nbsp;&nbsp;django</a>
-
-                        <a class="dropdown-item text-white" href="spring-boot.html"><i class="fa fa-server"
-                                                                                       aria-hidden="true"></i>&nbsp;&nbsp;spring
-                            boot</a>
-
-                    </div>
-
+{#                    <div class="dropdown-menu text-white" aria-labelledby="program">#}
+{#                        {% for category in categories %}#}
+{#                            {% if category.column.id == column.id %}#}
+{#                            <a class="dropdown-item text-white" href="{% url 'category' category.id %}"><i#}
+{#                                    class="fa {{ category.icon }}"#}
+{#                                    aria-hidden="true"></i>&nbsp;&nbsp;{{ category.name }}</a>#}
+{#                            {% endif %}#}
+{#                        {% endfor %}#}
+{#                    </div>#}
                 </li>
-
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-white" id="resource" aria-haspopup="true" aria-expanded="false"
-                       data-toggle="dropdown">
-                        <i class="fa-fw fa fa-share-alt-square" aria-hidden="true"></i>资源</a>
-
-                    <div class="dropdown-menu text-white" aria-labelledby="resource">
-
-                        <a class="dropdown-item text-white" href="skill.html"><i class="fa fa-share-alt"
-                                                                                 aria-hidden="true"></i>&nbsp;&nbsp;插件教程</a>
-
-                        <a class="dropdown-item text-white" href="share-media.html"><i class="fa fa-share-alt"
-                                                                                       aria-hidden="true"></i>&nbsp;&nbsp;资源分享</a>
-
-                    </div>
-
-                </li>
-
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-white" id="page" aria-haspopup="true" aria-expanded="false"
-                       data-toggle="dropdown">
-                        <i class="fa-fw fa fa-bars" aria-hidden="true"></i>媒体</a>
-
-                    <div class="dropdown-menu text-white" aria-labelledby="page">
-
-                        <a class="dropdown-item text-white" href="index1.html"><i class="fa fa-film"
-                                                                                  aria-hidden="true"></i>&nbsp;&nbsp;影单</a>
-
-                        <a class="dropdown-item text-white" href="index2.html"><i class="fa fa-book"
-                                                                                  aria-hidden="true"></i>&nbsp;&nbsp;书单</a>
-
-                        <a class="dropdown-item text-white" href="index3.html"><i class="fa fa-picture-o"
-                                                                                  aria-hidden="true"></i>&nbsp;&nbsp;图集</a>
-
-                    </div>
-
-                </li>
-
-
-                <li class="nav-item ">
-                    <a class="nav-link text-white" href="{% url 'archive' %}" id="archive" aria-haspopup="true"
-                       aria-expanded="false">
-                        <i class="fa fa-archive" aria-hidden="true"></i>归档</a>
-
-                </li>
-
-
-                <li class="nav-item ">
-                    <a class="nav-link text-white" href="{% url 'friends' %}" id="friend" aria-haspopup="true"
-                       aria-expanded="false">
-                        <i class="fa-fw fa fa-chain" aria-hidden="true"></i>友链</a>
-
-                </li>
-
-
-                <li class="nav-item ">
-                    <a class="nav-link text-white" href="index6.html" id="message" aria-haspopup="true"
-                       aria-expanded="false">
-                        <i class="fa-fw fa fa-comments" aria-hidden="true"></i>留言</a>
-
-                </li>
-
-
-                <li class="nav-item ">
-                    <a class="nav-link text-white" href="{% url 'about' %}" id="about" aria-haspopup="true"
-                       aria-expanded="false">
-                        <i class="fa-fw fa fa-user-secret" aria-hidden="true"></i>关于</a>
-
-                </li>
+                {% endif %}
+            {% endfor %}
 
 
             </ul>

@@ -45,6 +45,8 @@ class Index(View):
 
         # 文章分类
         categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
 
         # 最新文章
         new_articles = models.Article.objects.all().order_by('-add_time')[:5]
@@ -88,7 +90,7 @@ class Index(View):
                                categories, 'article_count': article_count, 'comment_count': comment_count,
                            'new_articles': new_articles, 'hot_articles':
                                hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name,
-                           'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, })
+                           'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, 'columns': columns, })
 
         elif cid:
             # categoriy_id对应类下的所有文章
@@ -104,13 +106,13 @@ class Index(View):
                                 (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
             return render(request, 'category.html', {'categories_all_articles': categories_all_articles,'page_html': html_obj.html_page(), 'categories':
                 categories, 'article_count': article_count, 'comment_count': comment_count, 'new_articles': new_articles, 'hot_articles':
-                hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name, 'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, })
+                hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name, 'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, 'columns': columns, })
         else:
             return render(request, 'index.html',
                           {'all_articles': all_articles, 'page_html': html_obj.html_page(), 'categories':
                               categories, 'article_count': article_count, 'comment_count': comment_count,
                            'new_articles': new_articles, 'hot_articles':
-                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name, 'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, })
+                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name, 'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, 'columns': columns, })
 
 
 # 文章详情页
@@ -573,7 +575,11 @@ class ArchiveView(View):
         user_id = request.session.get('user_id')
         # 文章分类
         categories = models.Category.objects.all()
-        cur_user_name = models.UserInfo.objects.get(id=user_id)
+        if user_id:
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+        else:
+            cur_user_name = None
+
         return render(request, 'archive.html', {'cur_user_name': cur_user_name, "categories": categories, })
 
 

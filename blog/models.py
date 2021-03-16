@@ -21,6 +21,24 @@ class UserInfo(models.Model):
         return self.username
 
 
+class Column(models.Model):
+    """
+    文章专栏
+    """
+    name = models.CharField(max_length=30, verbose_name='专栏名称')
+    url = models.CharField(max_length=10, null=True, blank=True, default='None', verbose_name='路径')
+    icon = models.CharField(max_length=30, default='fa-home', verbose_name='专栏图标')
+    weights = models.IntegerField(max_length=10, default=10, null=True, blank=True, verbose_name='排序权重')
+    is_tree = models.BooleanField(default=False, null=True, blank=True, verbose_name='添加儿子')
+
+    class Meta:
+        verbose_name = '专栏'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+
 class Tag(models.Model):
     """
     文章标签
@@ -49,6 +67,7 @@ class Category(models.Model):
     index = models.IntegerField(default=99, verbose_name='分类排序')
     active = models.BooleanField(default=True, verbose_name='是否添加到菜单')
     icon = models.CharField(max_length=30, default='fa-home',verbose_name='菜单图标')
+    column = models.ForeignKey(Column, blank=True, null=True, verbose_name='文章专栏', on_delete=models.CASCADE)
 
     # 统计文章数 并放入后台
     def get_items(self):

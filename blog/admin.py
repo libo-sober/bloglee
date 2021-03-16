@@ -14,5 +14,6 @@ admin.site.register(models.Comment)
 admin.site.register(models.Links)
 admin.site.register(models.Site)
 admin.site.register(models.UserInfo)
+admin.site.register(models.Column)
 
 

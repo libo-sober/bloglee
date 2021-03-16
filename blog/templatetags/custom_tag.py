@@ -45,8 +45,8 @@ def custom_markdown(content):
 
 
 @register.inclusion_tag('navigation.html')
-def navigation(categories, cur_user_name):
-    return {'categories': categories, 'cur_user_name': cur_user_name, }
+def navigation(categories, cur_user_name, columns):
+    return {'categories': categories, 'cur_user_name': cur_user_name, 'columns': columns, }
 
 
 def tree_son(comment):
