@@ -172,10 +172,11 @@ class ArticleView(View):
         else:
             cur_user_name = None
 
-
+        # 管理员用户对象
+        admin_obj = models.UserInfo.objects.filter(is_admin=True).first()
 
         return render(request, 'datail.html', { 'article': curr_article, 'detail_html': output, 'categories': categories, 'ret':
-            ret, 'cur_user_name': cur_user_name, 'columns': columns, 'previous_article': previous_article, 'next_article': next_article, })
+            ret, 'cur_user_name': cur_user_name, 'columns': columns, 'previous_article': previous_article, 'next_article': next_article, 'admin_obj': admin_obj, })
 
     def get_comment_list(self, comment_list):
         # 把msg增加一个chirld键值对，存放它的儿子们
@@ -251,7 +252,8 @@ class About(View):
             cur_user_name = models.UserInfo.objects.get(id=user_id)
         else:
             cur_user_name = None
-        url = settings.ADMIN_IMG
+        admin_obj = models.UserInfo.objects.filter(is_admin=True).first()
+        url = admin_obj.avatar.url
         return render(request, 'about.html', {'categories': categories, 'cur_user_name': cur_user_name, 'columns': columns, 'url': url, })
 
 

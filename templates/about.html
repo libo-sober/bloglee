@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load custom_tag %}
 
-# 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入
+{## 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入#}
 {% block Navigation %}
     {% navigation categories cur_user_name columns %}
 {% endblock %}
@@ -17,7 +18,7 @@
     <div class="pb-2" style="background-color: hsla(0,0%,100%,.7);">
 		<div class="py-4">
             <span class="clearfix"><i class="fa fa-quote-left float-left" aria-hidden="true"></i></span>
-            <span class="d-block text-center" style="font-size: 18px;font-family: STXingkai;">执着于理想，纯粹于当下。</span>
+            <span class="d-block text-center" style="font-size: 18px;font-family: STXingkai;">生前何必久睡，死后自会长眠！</span>
             <span class="clearfix"><i class="fa fa-quote-right float-right" aria-hidden="true"></i></span>
 		</div>
             <style>
@@ -51,7 +52,7 @@
             <img src="{{ url }}" class="rounded-circle xwcms">
             <div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><i class="fa fa-address-card fa-lg mr-4" aria-hidden="true"></i>执着于理想，纯粹于当下。</li>
+                  <li class="list-group-item"><i class="fa fa-address-card fa-lg mr-4" aria-hidden="true"></i>生前何必久睡，死后自会长眠！</li>
                   <li class="list-group-item"><i class="fa fa-envelope fa-lg mr-4" aria-hidden="true"></i><a href="mailto:1570140958@qq.com" class="text-reset ">1570140958@qq.com（邮我ˉ﹃ˉ）</a></li>
                   <li class="list-group-item" style="border-bottom: 1px solid rgba(0,0,0,.125);"><i class="fa fa-qq fa-lg mr-4" aria-hidden="true"></i><a href="tencent://message/?uin=1570140958" class="text-reset ">1570140958(点此私聊我๑乛◡乛๑)</a></li>
                 </ul>
@@ -65,14 +66,16 @@
 			<div class="segment" style="background-color: hsla(0,0%,100%,.7);">
 				<div class="label"><span class="text-white">关于博主</span></div>
 				<div class="markdown">
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;博主惯用昵称<span style="color: rgb(75, 172, 198);">大聪明</span>,个人博客站长,<span style="text-decoration: line-through;">LOL玩家</span>,爱折腾,爱搞事,喜欢捣鼓新技术。希望得到结交更多相同爱好的人，以理性看待国内互联网。目前就职于某不知名IT公司，从事java编程开发，python是我个人兴趣所在转而自学，也就是因这个契机目前这个博客才得以搭建成功。平时喜欢写博客、看电影，听音乐，因为代码不是生活的全部。</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;欢迎大家光临我的小站，我是一名即将毕业的程序员<span style="color: rgb(75, 172, 198);">研究僧</span>，经常出没在<span style="color: rgb(75, 172, 198);">召唤师峡谷</span>，同时也是<span style="color: rgb(75, 172, 198);">csdn博客</span>作者。本人痴迷于编程，如果可以，代码就是我的全部。一个月前，突然萌生了建立个人网站的想法。本着不达目的不罢休的原则，日夜奋战，甚至于都没有去召唤师峡谷看看。皇天不负有心人，终于在今天上线了，也是满满的成就感。在此，也希望能够结识到更多志同道合的朋友，欢迎大家留言和访问。我的CSND博客<a href="https://blog.csdn.net/qq_31910669" target="_blank">大聪明Smart</a>。</p>
 				</div>
 			</div>
 
 			<div class="segment" style="background-color: hsla(0,0%,100%,.7);">
 				<div class="label"><span class="text-white">关于本站</span></div>
 				<div class="markdown">
-                    <p>&nbsp; &nbsp; 对于建站,很久之前就有这个动机,19年国庆期间领到一个腾讯云服务器的体验15天，然后就开始了自己建站（折腾）之旅，当时搭建的博客环境跟现在博客的环境一样，也都是基于<strong>python+django+mariadb</strong>,当时前端知识基本为0，为了免困于前端，直接整站爬取了崔大大的<a href="javascript:;" target="_blank" title="静觅博客">静觅博客</a>的站点，然后后台自己尝试用django实现。当时搭建完还算成功部署到了腾讯云服务器上，由于没有域名，只能通过ip地址来访问，最后由于是15天服务器到期了，就此作罢。</p><p>&nbsp;&nbsp;&nbsp;&nbsp;再到2020年初，疫情期间，在家宅着没事，萌生我再建博客网站的想法。其实当时我已经了解到了一些建站第三方，如<span style="color: rgb(75, 172, 198);">WordPress</span>和<span style="color: rgb(75, 172, 198);">Typecho</span>,但是毕竟自己从事编程行业，也可以借助这个建站机会，来多接触点技术。于是乎，目标有了，接下来就是如何建站了。我的搭建的思路是先写出网站页面，然后再写后台。前端方面考虑基于<span style="color: rgb(75, 172, 198);">bootstrap4.0</span>框架来开发，后端考虑基于<span style="color: rgb(75, 172, 198);">django+xadmin</span>框架来开发。开发过程中也遇到了很多问题，但是抱着必须达成目标的心态，也是一点点解决了。最终本地完成测试之后，入手了阿里云服务器，并将博客部署到了服务器上。目前仍在折腾站点<img src="static/picture/i_f10.gif" _src="http://img.baidu.com/hi/jx2/j_0066.gif"> </p><p>&nbsp;&nbsp;&nbsp;&nbsp;很期待与热衷编程的人一起沟通交流。如果有小伙伴也用<span style="color: rgb(75, 172, 198);">django</span>或者<span style="color: rgb(75, 172, 198);">springboot</span>搭建了个人博客，欢迎评论区域留言交换友链呀。</p>
+                    <p>&nbsp; 关于建立自己的个人网站，我也是尝试了很多次。第一次是学生活动免费试用阿里云服务器，结果几天后就到期啦。只会的一段时间，又碰到一个活动机会，申请了两个月的服务器。当时借助于<span style="color: rgb(75, 172, 198);">WordPress</span>建立了一个博客网站，虽然有很多风格可选择，但是，仍然感觉巨丑。随后，服务器也到期了，便没做他想。到了今天，看到别人的华丽博客后，终于忍不住自己也建立了一个。 </p>
+                    <p>&nbsp;&nbsp;首先，开始选择前端页面。找各种大神的博客做参照，根据他们的样式来做前端。本人设计思想也不出众，只好借助别人设计好的风格，加上<span style="color: rgb(75, 172, 198);">bootstrap</span>快速建立了前端。接下来就是后端交互了，这没有捷径可走。后端所有代码全部是我自己手写，包括<span style="color: rgb(75, 172, 198);">Ajax+Js</span>交互。后端主要是采用<span style="color: rgb(75, 172, 198);">Django+simpleui</span>来开发，数据库使用的<span style="color: rgb(75, 172, 198);">MySQL</span>。这些技术一两句也说不清楚，欢迎大家留言和加我qq或微信交流。最后在部署方面，服务器是阿里云ECS突发性t6，注册一个域名后备案上线,技术方面采用<span style="color: rgb(75, 172, 198);">uWsgi+Nginx+Supervisor</span>。 </p>
+                    <p>&nbsp;&nbsp;再次欢迎大家的到来。如果有朋友也想建立自己的网站，欢迎沟通。可以的话我们互换友链哦~<img src="{% static 'picture/erha_org.png' %}"></p>
 				</div>
 			</div>
 

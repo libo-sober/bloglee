@@ -248,4 +248,13 @@ class File(models.Model):
 
 
 
-
+# class About(models.Model):
+#     me = models.CharField(max_length=30, verbose_name='关于博主')
+#     site = models.CharField(max_length=30, verbose_name='关于本站')
+#     promise = models.CharField(max_length=30, verbose_name='本站声明')
+#     class Meta:
+#         verbose_name = '关于我'
+#         verbose_name_plural = verbose_name
+#
+#     def __str__(self):
+#         return self.me[:10]

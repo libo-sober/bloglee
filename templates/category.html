@@ -43,11 +43,11 @@
                 {% elif article.is_recommend == 0 %}
                 <a href="{% url 'detail' article.id %}"><i class="fa fa-calendar c4"></i>{{ article.add_time | date:"Y-m-d"}}</a>
             {% endif %}
-            <a href="{% url 'detail' article.id %}"><i class="fa fa-comments c5"></i>评论</a>
+            <a href="{% url 'detail' article.id %}"><i class="fa fa-comments c5"></i>{{ article.comments }}评论</a>
             <a href="{% url 'detail' article.id %}"><i class="fa fa-eye c6"></i>{{ article.click_count }}阅读</a>
         </span>
         <span class="visible-xs float-left">
-            <a href="datail.html#post-like"><i class="fa fa-heart c7"></i>4喜欢</a>
+            <a href="datail.html#post-like"><i class="fa fa-heart c7"></i>{{ article.upup }}喜欢</a>
             <a href=""><i class="fa fa-user c8"></i>大聪明</a>
         </span>
         <span class="float-right">
