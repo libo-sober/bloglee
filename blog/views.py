@@ -119,12 +119,41 @@ class Index(View):
 class ArticleView(View):
 
     def get(self, request, article_id=None):
-        article = models.Article.objects.get(pk=article_id)
-        article.viewed()  # 增加阅读数P
+        # 上一页下一页
+        print(article_id)
+        all_article = models.Article.objects.all()
+        previous_index = 0
+        next_index = 0
+        curr_article = None
+        previous_index = 0
+        next_index = 0
+        previous_article = None
+        next_article = None
+        for index, article in enumerate(all_article):
+            if index == 0:
+                previous_index = 0
+                next_index = index + 1
+            elif index == len(all_article) - 1:
+                previous_index = index - 1
+                next_index = index
+            else:
+                previous_index = index - 1
+                next_index = index + 1
+
+            # 通过id判断当前记录;
+            # 接收的article_id是字符串 对象本身的id是int
+            if article.id == int(article_id):
+                curr_article = article
+                previous_article = all_article[previous_index]
+                next_article = all_article[next_index]
+                break
+        # article = models.Article.objects.get(pk=article_id)
+        # print(curr_article)
+        curr_article.viewed()  # 增加阅读数P
         # 为甚么刷新页面会产生两次访问ArticleView
         # 已经解决，因为文章中的请求js或者csss图片等路径为空或出错的，就会自动请求当前路径
         mk = mistune.Markdown()
-        output = mk(article.content)
+        output = mk(curr_article.content)
 
         # 文章分类
         categories = models.Category.objects.all()
@@ -144,8 +173,9 @@ class ArticleView(View):
             cur_user_name = None
 
 
-        return render(request, 'datail.html', {'article': article, 'detail_html': output, 'categories': categories, 'ret':
-            ret, 'cur_user_name': cur_user_name, 'columns': columns, })
+
+        return render(request, 'datail.html', { 'article': curr_article, 'detail_html': output, 'categories': categories, 'ret':
+            ret, 'cur_user_name': cur_user_name, 'columns': columns, 'previous_article': previous_article, 'next_article': next_article, })
 
     def get_comment_list(self, comment_list):
         # 把msg增加一个chirld键值对，存放它的儿子们
@@ -733,3 +763,8 @@ class MessagesView(View):
             msg.append(data)
         return msg
 
+class LoveView(View):
+
+    def post(self, request):
+
+        return JsonResponse('ok')

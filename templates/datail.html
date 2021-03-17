@@ -91,7 +91,7 @@
 
             <!--文章操作区域-start-->
             <div class="text-center py-5 operation btn-group-sm ">
-                <button type="button" class="btn btn-outline-primary" data-id="13" id="post-like"><i
+                <button type="button" class="btn btn-outline-primary" data-id="{{ article.id }}" id="post-like"><i
                         class="fa fa-heart"></i>喜欢
                 </button>
                 <button type="button" id="dashang" class="btn btn-outline-danger" data-toggle="modal"
@@ -103,21 +103,21 @@
                 <!--分享对象组-start-->
                 <div class="text-center share-group mt-2 position-static" style="display:none">
                     <a href="javascript:;" class="d-inline-block"
-                       onclick="share('qq','说说我的博客','博客第四版本已经上线，此次重构在于划分应用模块，充分发挥django的优势，如使用模板缓存、利用信号机制实现信息变更清除缓存、新增【文件上传器应用】来调用django-storage接口来存储文件(方便后期更换存储接口)、优化文章模块，支持两种编辑器，新增文章置顶功能等','/media/2020-12/06/1d38909f489e4d5d957e125ec3d137f6.jpg');"
+                       onclick="share('qq','{{ article.title }}','{{ article.desc }}','{{ article.cover.url }}');"
                        rel="nofollow" data-toggle="tooltip" title="分享到qq">
                         <div class="border border-info rounded-circle">
                             <i class="fa fa-qq text-info"></i>
                         </div>
                     </a>
                     <a href="javascript:;" class="d-inline-block"
-                       onclick="share('qzone','说说我的博客','博客第四版本已经上线，此次重构在于划分应用模块，充分发挥django的优势，如使用模板缓存、利用信号机制实现信息变更清除缓存、新增【文件上传器应用】来调用django-storage接口来存储文件(方便后期更换存储接口)、优化文章模块，支持两种编辑器，新增文章置顶功能等','/media/2020-12/06/1d38909f489e4d5d957e125ec3d137f6.jpg');"
+                      onclick="share('qq','{{ article.title }}','{{ article.desc }}','{{ article.cover.url }}');"
                        rel="nofollow" data-toggle="tooltip" title="分享到qq空间">
                         <div class="border border-primary rounded-circle">
                             <i class="fa fa-star text-primary"></i>
                         </div>
                     </a>
                     <a href="javascript:;" class="d-inline-block"
-                       onclick="share('weibo','说说我的博客','博客第四版本已经上线，此次重构在于划分应用模块，充分发挥django的优势，如使用模板缓存、利用信号机制实现信息变更清除缓存、新增【文件上传器应用】来调用django-storage接口来存储文件(方便后期更换存储接口)、优化文章模块，支持两种编辑器，新增文章置顶功能等','/media/2020-12/06/1d38909f489e4d5d957e125ec3d137f6.jpg');"
+                       onclick="share('qq','{{ article.title }}','{{ article.desc }}','{{ article.cover.url }}');"
                        rel="nofollow" data-toggle="tooltip" title="分享到微博">
                         <div class="border border-danger rounded-circle">
                             <i class="fa fa-weibo text-danger"></i>
@@ -163,10 +163,10 @@
         <div class="clearfix m-2">
 
 
-            <a class="btn btn-outline-primary float-left" href="skill-wangyiyun.html">上一篇</a>
+            <a class="btn btn-outline-primary float-left" href="{% url 'detail' previous_article.id %}">上一篇</a>
 
 
-            <a class="btn btn-outline-success float-right" href="install-virtualenvwrapper.html">下一篇</a>
+            <a class="btn btn-outline-success float-right" href="{% url 'detail' next_article.id %}">下一篇</a>
 
 
         </div>
@@ -442,7 +442,7 @@
 
 <script src="{% static 'js/api.js' %}"></script>
 {#<script src="{% static 'js/layui.js' %}"></script>#}
-{#<script src="{% static 'js/layui.all.js' %}"></script>#}
+<script src="{% static 'js/layui.all.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/prism.js' %}"></script>
 <script src="{% static 'js/tocbot.min.js' %}"></script>
 <script src="{% static 'js/fancyMorph.min.js' %}"></script>
@@ -484,13 +484,20 @@
 
             $("#post-like").on("click", function () {
                 if ($(this).hasClass('have-like')) {
+                    swal({
+            title: '你已经点过赞啦(･∀･)！！',
+            type: 'success',  //展示成功的图片
+            timer: 1000,  //延时毫秒数
+            showConfirmButton: true  //关闭确认框
+        },
+        );
                     layer.msg('你已经点过赞啦(･∀･)！');
                     return false;
                 } else {
                     $(this).addClass('have-like');
                     var id = $(this).data("id");
                     $.ajax({
-                        url: "/article/love",
+                        url: "{% url 'love' %}",
                         type: "POST",
                         data: {"id": id},
                         dataType: "json",

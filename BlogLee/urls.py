@@ -42,6 +42,8 @@ urlpatterns = [
     re_path(r'^articles/tag/(\d+)/(\d+)/', views.Index.as_view(), name='tag'),
     # 评论
     path('comment/', views.CommentView.as_view(), name='comment'),
+    # 点赞
+    path('article/love/', views.LoveView.as_view(), name='love'),
     # 归档
     path('archive/', views.ArchiveView.as_view(), name='archive'),
     # 友情链接

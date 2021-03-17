@@ -104,6 +104,7 @@ class Article(models.Model):
     cover = models.FileField(upload_to='covers/', default='covers/1P629140610-3.jpg', verbose_name='文章封面')
     content = MDTextField(verbose_name='文章内容')  # 富文本编辑框，要在models中注册mdeditor
     click_count = models.IntegerField(default=0, verbose_name='点击次数')
+    upup = models.IntegerField(default=0, verbose_name='点赞次数', null=True, blank=True)
     is_recommend = models.BooleanField(default=False, verbose_name='是否推荐')  # 置顶
     # TODO libo: 几条评论
     add_time = models.DateTimeField(default=datetime.now, verbose_name='发布时间')
