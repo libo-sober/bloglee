@@ -12,6 +12,7 @@ from blog.utils.page_html import MyPagination
 from django.core.mail import send_mail
 from BlogLee import settings
 from blog.utils.hashlib_func import set_md5
+from django.db.models import Q
 
 
 # Create your views here.
@@ -69,7 +70,6 @@ class Index(View):
 
         # 管理员用户对象
         admin_obj = models.UserInfo.objects.filter(is_admin=True).first()
-        admin_url = settings.ADMIN_IMG   # 后期改为域名,不指定的话就用qq头像
 
 
         if tag_id:
@@ -90,7 +90,7 @@ class Index(View):
                                categories, 'article_count': article_count, 'comment_count': comment_count,
                            'new_articles': new_articles, 'hot_articles':
                                hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name,
-                           'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, 'columns': columns, })
+                           'qq_url': qq_url, 'admin_obj': admin_obj, 'columns': columns, })
 
         elif cid:
             # categoriy_id对应类下的所有文章
@@ -106,13 +106,13 @@ class Index(View):
                                 (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
             return render(request, 'category.html', {'categories_all_articles': categories_all_articles,'page_html': html_obj.html_page(), 'categories':
                 categories, 'article_count': article_count, 'comment_count': comment_count, 'new_articles': new_articles, 'hot_articles':
-                hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name, 'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, 'columns': columns, })
+                hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name, 'qq_url': qq_url, 'admin_obj': admin_obj, 'columns': columns, })
         else:
             return render(request, 'index.html',
                           {'all_articles': all_articles, 'page_html': html_obj.html_page(), 'categories':
                               categories, 'article_count': article_count, 'comment_count': comment_count,
                            'new_articles': new_articles, 'hot_articles':
-                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name,'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, 'columns': columns, })
+                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name,'qq_url': qq_url, 'admin_obj': admin_obj, 'columns': columns, })
 
 
 # 文章详情页
@@ -120,7 +120,7 @@ class ArticleView(View):
 
     def get(self, request, article_id=None):
         # 上一页下一页
-        print(article_id)
+        # print(article_id)
         all_article = models.Article.objects.all()
         previous_index = 0
         next_index = 0
@@ -300,7 +300,7 @@ class CommentForm(forms.ModelForm):
         return email_validate(qq_email)
 
 
-# 评论展示
+# 评论添加
 class CommentView(View):
 
     def post(self, request):
@@ -320,6 +320,8 @@ class CommentView(View):
             qq_email = request.POST.get('qq_email')
             web_site = request.POST.get('web_site')
             pid = request.POST.get('pid')
+            models.Article.objects.get(id=article).commented()
+
             comment_obj = models.Comment.objects.create(
                 username = username,
                 content = content,
@@ -356,6 +358,8 @@ class CommentView(View):
         else:
             if form.is_valid():
                 msg['success'] = True
+                article = request.POST.get('article')
+                models.Article.objects.get(id=article).commented()
                 # 保存
                 # print(form.cleaned_data)
                 comment_obj = form.save()
@@ -700,7 +704,7 @@ class MessagesView(View):
         for user in least_users:
             user.avatar = f'http://q.qlogo.cn/headimg_dl?dst_uin={user.email[:-7]}&spec=640&img_type=jpg'
 
-        # 该文章的所有评论
+        # 所有评论
         comment_obj = models.Comment.objects.all().order_by('-add_time')[:10]
         comment_list = self.build_msg(comment_obj)
         ret = self.get_comment_list(comment_list)
@@ -763,8 +767,85 @@ class MessagesView(View):
             msg.append(data)
         return msg
 
+
 class LoveView(View):
 
-    def post(self, request):
+    def get(self, request):
+        msg = {}
+        msg['status'] = 'success'
+        id = request.GET.get('id')
+        models.Article.objects.get(id=id).upuped()
 
-        return JsonResponse('ok')
+        return JsonResponse(msg)
+
+
+class SearchView(View):
+
+    def get(self, request):
+
+        # 文章总数
+        article_count = models.Article.objects.count()
+        # 评论总数
+        comment_count = models.Comment.objects.count()
+        page_id = request.GET.get('page')  # 获取get请求中的page数据
+
+        base_url = request.path  # 请求路径
+        get_data = request.GET.copy()  # 直接调用这个类自己的copy方法或者deepcopy方法或者自己import copy 都可以实现内容允许修改
+        # models.Article.objects.filter(is_recommend=1).update(add_time=time)  # <QuerySet [<Article: 太黑的诱惑>]>
+        # all_articles = models.Article.objects.all().order_by('-add_time')  # <QuerySet [<Article: 333>]>
+        top_articles = list(models.Article.objects.filter(is_recommend=1).order_by('-add_time'))
+        articles = list(models.Article.objects.filter(is_recommend=False).order_by('-add_time'))
+        all_articles = top_articles + articles
+        # 以后直接在settings配置文件中修改即可
+        page_count = settings.PAGE_COUNT  # 页数栏显示多少个数
+        record = settings.RECORD  # 每页显示多少条记录
+
+        # 文章分类
+        categories = models.Category.objects.all()
+        # 文章专栏
+        columns = models.Column.objects.all().order_by('-weights')
+
+        # 最新文章
+        new_articles = models.Article.objects.all().order_by('-add_time')[:5]
+        # 最热文章
+        hot_articles = models.Article.objects.all().order_by('-click_count')[:5]
+        # 最新评论
+        new_comments = models.Comment.objects.all().order_by('-add_time')[:5]
+        # 标签云
+        tags = models.Tag.objects.all()
+        # 登录的用户对象
+        user_id = request.session.get('user_id')
+        if user_id:
+            cur_user_name = models.UserInfo.objects.get(id=user_id)
+            qq_number = cur_user_name.email[:-7]
+        else:
+            cur_user_name = None
+            qq_number = None
+
+        qq_url = f'http://q.qlogo.cn/headimg_dl?dst_uin={qq_number}&spec=640&img_type=jpg'
+
+        # 管理员用户对象
+        admin_obj = models.UserInfo.objects.filter(is_admin=True).first()
+
+        q = request.GET.get('q')
+        if q:
+            search_all_articles = models.Article.objects.filter(Q(title__icontains=q) | Q(content__icontains=q))
+            num = len(search_all_articles)
+            html_obj = MyPagination(page_id=page_id, num=num, base_url=base_url, get_data=get_data,
+                                    page_count=page_count,
+                                    record=record)
+            # all_articles = articles | top_articles  # 合并两个queryset
+            all_articles = all_articles[
+                           (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
+            return render(request, 'search.html',
+                          {'all_articles': search_all_articles, 'page_html': html_obj.html_page(),
+                           'categories':
+                               categories, 'article_count': article_count, 'comment_count': comment_count,
+                           'new_articles': new_articles, 'hot_articles':
+                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name,
+                           'qq_url': qq_url, 'admin_obj': admin_obj, 'columns': columns, })
+
+
+        else:
+            return redirect('index')
+

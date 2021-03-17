@@ -50,6 +50,8 @@ urlpatterns = [
     path('friends/', views.FriendsView.as_view(), name='friends'),
     # 留言
     path('messages/', views.MessagesView.as_view(), name='messages'),
+    # 搜索
+    path('article/search/', views.SearchView.as_view(), name='search'),
     # mdeditor
     path('mdeditor/', include('mdeditor.urls')),
 

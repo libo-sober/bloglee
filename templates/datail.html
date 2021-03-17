@@ -57,9 +57,9 @@
                        style="color: pink;"></i> {{ article.update_time | date:"Y-m-d" }}
                     <i class="fa fa-user" style="color: #f0c674;"></i>大聪明
                     <a href="#comment" class="mr-auto"><i class="fa fa-comments"
-                                                          style="color: yellowgreen;"></i>9评论</a>
+                                                          style="color: yellowgreen;"></i>{{ article.comments }}评论</a>
                     <i class="fa fa-eye" style="color: lightskyblue;"></i>{{ article.click_count }}
-                    <i class="fa fa-heart" style="color: #FF6767;"></i><span id="like-count">4</span>喜欢
+                    <i class="fa fa-heart" style="color: #FF6767;"></i><span id="like-count">{{ article.upup }}</span>喜欢
                     <!--移动端和平板端会被隐藏-->
                     <span class="hd hidden-sm">
                             <!--文章内容操作功能如：开启阅读模式-->
@@ -491,24 +491,27 @@
             showConfirmButton: true  //关闭确认框
         },
         );
-                    layer.msg('你已经点过赞啦(･∀･)！');
                     return false;
                 } else {
                     $(this).addClass('have-like');
                     var id = $(this).data("id");
                     $.ajax({
                         url: "{% url 'love' %}",
-                        type: "POST",
+                        type: "get",
                         data: {"id": id},
                         dataType: "json",
-                        beforeSend: function (xhr, settings) {
-                            xhr.setRequestHeader("X-CSRFToken", "13fuPwPJplNcsC9wTDaYPs3KK5qS6W6u9HTA2NaMmjdDkHlqCcSdMO92BzDF0BIs");
-                        },
                         success: function (data) {
                             console.log(data);
                             if (data.status == "success") {
                                 $("#like-count").html(parseInt($("#like-count").html()) + 1);
-                                layer.msg('୧(๑•̀⌄•́๑)૭感谢你喜欢我的文章！');
+                                 swal({
+            title: '୧(๑•̀⌄•́๑)૭感谢你喜欢我的文章！',
+            type: 'success',  //展示成功的图片
+            timer: 1000,  //延时毫秒数
+            showConfirmButton: true  //关闭确认框
+        },
+        );
+
                             } else {
                                 layer.msg(data.msg);
                             }
