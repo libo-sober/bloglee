@@ -112,7 +112,7 @@ class Index(View):
                           {'all_articles': all_articles, 'page_html': html_obj.html_page(), 'categories':
                               categories, 'article_count': article_count, 'comment_count': comment_count,
                            'new_articles': new_articles, 'hot_articles':
-                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name, 'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, 'columns': columns, })
+                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name,'qq_url': qq_url, 'admin_obj': admin_obj, 'admin_url': admin_url, 'columns': columns, })
 
 
 # 文章详情页
@@ -184,15 +184,25 @@ class ArticleView(View):
             # print(user_obj)
             if user_obj:
                 data['is_admin'] = user_obj.is_admin
+                if user_obj.avatar:
+                    data['avatar'] = user_obj.avatar.url
+                else:
+                    data['avatar'] = None
+
             else:
                 data['is_admin'] = False
+                data['avatar'] = None
+
             if fu_user_obj:
                 data['fu_is_admin'] = fu_user_obj.is_admin
             else:
                 data['fu_is_admin'] = False
             data['admin_img'] = settings.ADMIN_IMG
 
+
             msg.append(data)
+
+        # print(msg)
         return msg
 
 
@@ -554,14 +564,23 @@ class UserInfoView(View):
         # 登录的用户对象
         user_id = request.session.get('user_id')
         uname = models.UserInfo.objects.get(id=user_id).username
+
+        avatar_obj = request.FILES.get('avatar')
+        print(avatar_obj.size)
+        print(avatar_obj.name)
+        path = 'uploads'+ '/' +'avatars' + '/' + avatar_obj.name
+        with open(path, mode='wb') as fp:
+            for img in avatar_obj:
+                fp.write(img)
+        url = 'avatars' + '/' + avatar_obj.name
         register_form_obj = RegisterForm(request.POST)
         if register_form_obj.is_valid():
-            # print(register_form_obj.cleaned_data)
+            print(register_form_obj.cleaned_data)
             username = register_form_obj.cleaned_data['username']
             email = register_form_obj.cleaned_data['email']
             # update方法智能是queryset调用
             models.Comment.objects.filter(username=uname).update(username=username)
-            models.UserInfo.objects.filter(id=user_id).update(username=username, email=email)
+            models.UserInfo.objects.filter(id=user_id).update(username=username, email=email, avatar=url)
             cur_user_name = models.UserInfo.objects.get(id=user_id)
             return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
         else:
@@ -697,8 +716,14 @@ class MessagesView(View):
             # print(user_obj)
             if user_obj:
                 data['is_admin'] = user_obj.is_admin
+                if user_obj.avatar:
+                    data['avatar'] = user_obj.avatar.url
+                else:
+                    data['avatar'] = None
+
             else:
                 data['is_admin'] = False
+                data['avatar'] = None
             if fu_user_obj:
                 data['fu_is_admin'] = fu_user_obj.is_admin
             else:

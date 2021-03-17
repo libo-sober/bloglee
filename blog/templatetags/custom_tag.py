@@ -63,7 +63,12 @@ def tree_son(comment):
         is_admin = com['is_admin']
         fu_is_admin = com['fu_is_admin']
         admin_img = com['admin_img']
-        img = admin_img if is_admin else qq_url
+        avatar = com['avatar']
+        if avatar:
+            img = avatar
+        else:
+            img = qq_url
+        # img = admin_img if is_admin else qq_url
 
         zi_com += f"""
     <ol class="children">
@@ -136,7 +141,12 @@ def build_coment_tree(ret):
         qq_url = comment_dicts['qq_url']
         is_admin = comment_dicts['is_admin']
         admin_img = comment_dicts['admin_img']
-        img = admin_img if is_admin else qq_url
+        avatar = comment_dicts['avatar']
+        if avatar:
+            img = avatar
+        else:
+            img = qq_url
+        # img = admin_img if is_admin else qq_url
 
 
         comment += f""" 

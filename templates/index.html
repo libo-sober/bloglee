@@ -23,7 +23,7 @@
 
             <div class="media d-block">
                 <!--左上文章封面图-start-->
-                <div class="article-thumb"><a href="{% url 'detail' article.id %}"><img src="/media/{{ article.cover }}"
+                <div class="article-thumb"><a href="{% url 'detail' article.id %}"><img src="{{ article.cover.url }}"
                                                                                         class="mr-3"></a></div>
                 <!--左上文章封面图-end-->
 
@@ -106,8 +106,9 @@
 
                     {% if cur_user_name %}
                         {% if cur_user_name.is_admin %}
-                                 <a href="{% url 'about' %}"><img class="xwcms" src="{{ admin_url }}"></a>
-                    <a href="{% url 'about' %}" class=""><h5 class="card-title text-dark mt-2 superuser">{{ admin_obj.username }}</h5></a>
+
+                                 <a href="{% url 'about' %}"><img class="xwcms" src="/media/{{ cur_user_name.avatar }}"></a>
+                    <a href="{% url 'about' %}" class=""><h5 class="card-title text-dark mt-2 superuser">{{ cur_user_name.username }}</h5></a>
  <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;">执着于理想，纯粹于当下。</p>
                     <div class="contact-me text-center">
                         <a id="link_weixin" href="javascript:;" rel="nofollow" data-toggle="popover"
@@ -128,7 +129,11 @@
                         <span class="about-cn">留言 {{ comment_count }}</span>
                     </div>
                             {% else %}
-                    <a ><img class="xwcms" src={{ qq_url }} onerror="javascript:this.src='/static/image/unknow.png';"></a>
+                            {% if cur_user_name.avatar %}
+                    <a ><img class="xwcms" src="/media/{{ cur_user_name.avatar }}" onerror="javascript:this.src='{% static 'image/unknow.png' %}';"></a>
+                                {% else %}
+                                <a href="{% url 'about' %}"><img class="xwcms" src="{{ qq_url}}"></a>
+                                {% endif %}
                     <a  class=""><h5 class="card-title text-dark mt-2">{{ cur_user_name.username }}</h5></a>
                                            <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;"></p>
                         <p>
