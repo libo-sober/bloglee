@@ -17,7 +17,7 @@
 {% endblock %}
 
 <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
-<link rel="shortcut icon" type="image/ico" href="{% static 'image/favicon.png' %}">
+<link rel="shortcut icon" type="image/ico" href="{% static 'image/favicon.ico' %}">
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
@@ -225,7 +225,21 @@
 
     setInterval("createtime()",250);
 
-    document.body.oncopy = function(){Swal.fire({allowOutsideClick:false,type:'success',title: '复制成功,如转载请注明出处！',showConfirmButton: false,timer: 2000});};
+    document.body.oncopy = function(){
+        swal({
+                    title: '复制成功,如转载请注明出处！',
+                    type: 'success',  //展示成功的图片
+                    timer: 1000,  //延时毫秒数
+                    showConfirmButton: false  //关闭确认框
+                 },
+                  {#  function () {#}
+                  {#  //console.log("登录失败");#}
+                  {#  //刷新当前页面#}
+                  {#  window.location.reload();#}
+                  {#}#}
+                );
+        {#Swal.fire({allowOutsideClick:false,type:'success',title: '复制成功,如转载请注明出处！',showConfirmButton: false,timer: 2000});#}
+    };
     //document.body.oncopy = function() {layer.msg('复制成功,若要转载请务必保留原文链接！', function(){});};
     loadNeedTime();
 </script>

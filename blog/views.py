@@ -592,38 +592,35 @@ class UserInfoView(View):
         return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
 
     def post(self, request):
-        # 文章分类
-        categories = models.Category.objects.all()
-        # 文章专栏
-        columns = models.Column.objects.all().order_by('-weights')
+
 
         # 登录的用户对象
         user_id = request.session.get('user_id')
         uname = models.UserInfo.objects.get(id=user_id).username
 
-        avatar_obj = request.FILES.get('avatar')
-        print(avatar_obj.size)
-        print(avatar_obj.name)
-        path = 'uploads'+ '/' +'avatars' + '/' + avatar_obj.name
-        with open(path, mode='wb') as fp:
-            for img in avatar_obj:
-                fp.write(img)
-        url = 'avatars' + '/' + avatar_obj.name
         register_form_obj = RegisterForm(request.POST)
+
+        msg = {'code': 500, 'error': None}
+
         if register_form_obj.is_valid():
-            print(register_form_obj.cleaned_data)
+            msg['code'] = 200
+            avatar_obj = request.FILES.get('avatar')
+            path = 'uploads' + '/' + 'avatars' + '/' + avatar_obj.name
+            with open(path, mode='wb') as fp:
+                for img in avatar_obj:
+                    fp.write(img)
+            url = 'avatars' + '/' + avatar_obj.name
+
+            # print(register_form_obj.cleaned_data)
             username = register_form_obj.cleaned_data['username']
             email = register_form_obj.cleaned_data['email']
             # update方法智能是queryset调用
             models.Comment.objects.filter(username=uname).update(username=username)
             models.UserInfo.objects.filter(id=user_id).update(username=username, email=email, avatar=url)
-            cur_user_name = models.UserInfo.objects.get(id=user_id)
-            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
-        else:
-            # print(register_form_obj.errors)
-            cur_user_name = models.UserInfo.objects.get(id=user_id)
-            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'register_form_obj': register_form_obj, 'columns': columns, })
 
+        else:
+            msg['error'] = register_form_obj.errors
+        return JsonResponse(msg)
 
 
 
@@ -631,22 +628,23 @@ class UserInfoView(View):
 class ModifyView(View):
 
     def post(self, request):
+        msg = {'code': 500, 'error': None}
+        # 登录的用户对象
         user_id = request.session.get('user_id')
-        # 文章分类
-        categories = models.Category.objects.all()
-        # 文章专栏
-        columns = models.Column.objects.all().order_by('-weights')
-
-        cur_user_name = models.UserInfo.objects.get(id=user_id)
+        # cur_user_name = models.UserInfo.objects.get(id=user_id)
+        # print(user_id)
         old_password = request.POST.get('old_password')
         new_password = request.POST.get('new_password')
         # print(old_password)
         if models.UserInfo.objects.get(id=user_id).password == set_md5(old_password):
+            msg['code'] = 200
             models.UserInfo.objects.filter(id=user_id).update(password=set_md5(new_password))
-            return redirect('logout')
         else:
-            error = '原密码不正确！'
-            return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'error':error, 'columns': columns, })
+            error = {'password': '原密码不正确！'}
+            msg['error'] = error
+        return JsonResponse(msg)
+
+
 
 
 class ArchiveView(View):
@@ -668,6 +666,28 @@ class ArchiveView(View):
         return render(request, 'archive.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, 'dates': dates, })
 
 
+class FriendsForm(forms.ModelForm):
+    class Meta:
+        model = models.Links
+        fields = "__all__"
+        exclude = ['desc', ]
+        error_messages = {
+            'title': {
+                'required': '昵称不能为空！',
+                'invalid': '用户名错误',
+            },
+            'url': {
+                'required': '地址不能为空！',
+                'invalid': '地址格式错误',
+            },
+            'image': {
+                'required': '头像不能为空！',
+                'invalid': '头像格式错误',
+            },
+        }
+
+
+
 class FriendsView(View):
 
     def get(self, request):
@@ -683,8 +703,25 @@ class FriendsView(View):
         else:
             cur_user_name = None
 
+        frieds_obj = models.Links.objects.filter(is_disply=True)
 
-        return render(request, 'friends.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
+
+        return render(request, 'friends.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, 'frieds_obj': frieds_obj, })
+
+    def post(self, request):
+        msg = {'code': 500, 'error': None}
+        form = FriendsForm(request.POST)
+        if form.is_valid():
+            # print(form.cleaned_data)
+            msg['code'] = 200
+            form.save()
+        else:
+            msg['error'] = form.errors
+
+
+
+
+        return JsonResponse(msg)
 
 
 class MessagesView(View):

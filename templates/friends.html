@@ -9,80 +9,187 @@
 
 {% block content %}
 
-<!--主内容-start--->
-<main role="main">
-  <div class="container col-md-8 offset-md-2">
-	<nav class="my-2 p-0" aria-label="breadcrumb">
-		  <ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/">首页</a></li>
-			<li class="breadcrumb-item active" aria-current="page">友链</li>
-		  </ol>
-	</nav>
-	<div class="link-related">
-		<div class="card">
-			<h4 class="link-title">我的友链</h4>
-			<div class="card-body py-0">
-				<ul class="list-group list-group-flush">
-				  <li class="list-group-item">名称：大聪明</li>
-				  <li class="list-group-item">主页：http://www.liboer.top</li>
-				  <li class="list-group-item">头像：https://www.liboer.top/static/image/touxiang.jpg</li>
-				  <li class="list-group-item">描述：生前何必久睡，死后自会长眠！</li>
-				</ul>
-			</div>
-		</div>
-		<div class="card">
-			<h4 class="link-title">友链申请格式</h4>
-			<div class="card-body py-0">
-				<ul class="list-group list-group-flush">
-				  <li class="list-group-item">名称：</li>
-				  <li class="list-group-item">主页：</li>
-				  <li class="list-group-item">头像：</li>
-				  <li class="list-group-item">描述：</li>
-				</ul>
-			</div>
-		</div>
-        <div class="card">
-			<h4 class="link-title text-danger">注意事项</h4>
-			<div class="card-body py-0">
-				<p>1.站点为个人博客且非盈利性目的；</p>
-                <p>2.文章有一定程度的更新（添加后有无更新无妨）；</p>
-                <p>3.站点不涉及可能引起版权纠纷的内容，不涉及与政治话题有关的内容；</p>
-                <p>4.请确保主页以及头像的地址正常访问；</p>
-				<p style="text-align: center;color: red">不定期会移除无法访问的友链,如有误删，请联系博主，谢谢</p>
-			</div>
-		</div>
+    <!--主内容-start--->
+    <main role="main">
+        <div class="container col-md-8 offset-md-2">
+            <nav class="my-2 p-0" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">首页</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">友链</li>
+                </ol>
+            </nav>
+            <div class="link-related">
+                <div class="card">
+                    <h4 class="link-title">我的友链</h4>
+                    <div class="card-body py-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">名称：大聪明</li>
+                            <li class="list-group-item">主页：http://www.liboer.top</li>
+                            <li class="list-group-item">头像：https://www.liboer.top/static/image/touxiang.jpg</li>
+                            <li class="list-group-item">描述：生前何必久睡，死后自会长眠！</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4 class="link-title">友链申请格式</h4>
+                    <div class="card-body py-0">
+                        <ul class="list-group list-group-flush">
+                            <form>
+                                {% csrf_token %}
+                                <div class="form-group row">
+                                    <label for="title" class="col-sm-2 col-form-label">名称：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="title" name="title" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="url" class="col-sm-2 col-form-label">主页：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="url" name="url" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="image" class="col-sm-2 col-form-label">头像：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="image" name="image" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="desc" class="col-sm-2 col-form-label">描述：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="desc" name="desc" required="">
+                                    </div>
+                                </div>
 
-        <div class="card">
-			<h4 class="link-title text-danger">邻居们</h4>
-			<div class="card-body py-0 friend">
+                                {% if register_form_obj %}
+                                    <div class="form-group row">
+                                        <label for="link" class="col-sm-2 col-form-label">出错</label>
+                                        <div class="col-sm-10">
+                                            {{ register_form_obj.errors }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if error %}
+                                    <div class="form-group row">
+                                        <label for="inputPassword2" class="col-sm-2 col-form-label">错误</label>
+                                        <div class="col-sm-10">
+                                            {{ error }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <button type="button" class="btn btn-success btn-block dianji" id="friends">提交</button>
+
+                            </form>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4 class="link-title text-danger">注意事项</h4>
+                    <div class="card-body py-0">
+                        <p>1.站点为个人博客且非盈利性目的；</p>
+                        <p>2.文章有一定程度的更新（添加后有无更新无妨）；</p>
+                        <p>3.站点不涉及可能引起版权纠纷的内容，不涉及与政治话题有关的内容；</p>
+                        <p>4.请确保主页以及头像的地址正常访问；</p>
+                        <p style="text-align: center;color: red">不定期会移除无法访问的友链,如有误删，请联系博主，谢谢</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 class="link-title text-danger">邻居们</h4>
+                    <div class="card-body py-0 friend">
 
 
+                        <ul class="px-2 py-2 position-relative;">
+                            {% for friend in frieds_obj %}
+                            <li class="px-0 hvr-sweep-to-right">
+                                <a href="{{ friend.url }}"
+                                   class="text-decoration-none w-100% text-center" rel="nofollow" target="_blank">
+                                    <div class="text-center">
+                                        <img src="{{ friend.image }}"
+                                             class="mr-3 rounded-circle xwcms " alt="" width="64px" height="64px"
+                                             onerror="javascript:this.src='{% static 'image/unknow.png' %}';">
+                                        <h3>{{ friend.title }}</h3>
+                                    </div>
 
-            <ul class="px-2 py-2 position-relative;">
+                                </a>
+                            </li>
+                            {% endfor %}
 
-                <li class="px-0 hvr-sweep-to-right">
-                    <a href="javascript:;" class="text-decoration-none w-100% text-center" rel="nofollow" target="_blank">
-                        <div class="text-center">
-                            <img src="https://blog.csdn.net/qq_31910669" class="mr-3 rounded-circle xwcms " alt="" width="64px" height="64px" onerror="javascript:this.src='{% static 'image/unknow.png' %}';">
-                            <h3>大聪明Smart</h3>
-                        </div>
-
-                    </a>
-                </li>
-
-
-
-
-            </ul>
-
-
-			</div>
-		</div>
+                        </ul>
 
 
-	</div>
-  </div>
-</main>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </main>
 
 {% endblock %}
 
+{% block js %}
+    <script>
+        $('.dianji').click(function () {
+            var title = $('#title').val().trim();
+            var url = $('#url').val().trim();
+            var image = $('#image').val().trim();
+            var desc = $('#desc').val().trim();
+            var csrf = $("[name=csrfmiddlewaretoken]").val();
+
+            $.ajax({
+                url: "{% url 'friends' %}",
+                type: "post",
+                data: {
+                    title: title,
+                    desc: desc,
+                    image: image,
+                    url: url,
+                    csrfmiddlewaretoken: csrf,
+                },
+                success: function (data) {
+                    console.log(data)
+                    if (data.code != 200) {
+                        if (data.error.title) {
+                            swal({
+                                    title: data.error.title,
+                                    type: 'error',  //展示成功的图片
+                                    timer: 1000,  //延时毫秒数
+                                    showConfirmButton: false  //关闭确认框
+                                },
+                            );
+                        }
+                        if (data.error.image) {
+                            swal({
+                                    title: data.error.image,
+                                    type: 'error',  //展示成功的图片
+                                    timer: 1000,  //延时毫秒数
+                                    showConfirmButton: false  //关闭确认框
+                                },
+                            );
+                        }
+                        if (data.error.url) {
+                            swal({
+                                    title: data.error.url,
+                                    type: 'error',  //展示成功的图片
+                                    timer: 1000,  //延时毫秒数
+                                    showConfirmButton: false  //关闭确认框
+                                },
+                            );
+                        }
+                    } else {
+                        swal({
+                                title: '提交成功！请耐心等待站长审核',
+                                type: 'success',  //展示成功的图片
+                                timer: 1000,  //延时毫秒数
+                                showConfirmButton: false  //关闭确认框
+                            },
+                        );
+                    }
+                }
+            })
+        })
+    </script>
+
+{% endblock %}

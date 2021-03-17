@@ -7,99 +7,222 @@
     {% navigation categories cur_user_name columns %}
 {% endblock %}
 
+{% block css %}
+    <style>
+        #avatar_img{
+            margin-left: 150px;
+        }
+    #avatar{
+        display: none;
+    }
+
+    </style>
+{% endblock %}
+
 {% block content %}
-<!--主内容-start--->
+    <!--主内容-start--->
 
 
 
 
     <div class="container col-md-6">
-  <h4 class="card-header my-2 border-bottom-0">设置用户信息</h4>
-  <div class="bg-white tab-6">
-<ul class="nav nav-tabs" role="tablist">
-  <li class="nav-item" style="width:50%;">
-    <a class="nav-link border-0 text-center text-reset active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">修改资料</a>
-  </li>
-  <li class="nav-item" style="width:50%;">
-    <a class="nav-link border-0 text-center text-reset" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">修改密码</a>
-  </li>
-</ul>
+        <h4 class="card-header my-2 border-bottom-0">设置用户信息</h4>
+        <div class="bg-white tab-6">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" style="width:50%;">
+                    <a class="nav-link border-0 text-center text-reset active" id="one-tab" data-toggle="tab"
+                       href="#one" role="tab" aria-controls="one" aria-selected="true">修改资料</a>
+                </li>
+                <li class="nav-item" style="width:50%;">
+                    <a class="nav-link border-0 text-center text-reset" id="two-tab" data-toggle="tab" href="#two"
+                       role="tab" aria-controls="two" aria-selected="false">修改密码</a>
+                </li>
+            </ul>
 
-<div class="tab-content" id="">
-    <div class="tab-pane p-2 fade show active" id="one" role="tabpanel" aria-labelledby="one-tab">
-     <div class="login_error">
+            <div class="tab-content" id="">
+                <div class="tab-pane p-2 fade show active" id="one" role="tabpanel" aria-labelledby="one-tab">
+                    <div class="login_error">
 
-     </div>
-  <form method="post" action="{% url 'userinfo' %}" enctype="multipart/form-data">
-{% csrf_token %}
-    <div class="form-group row">
-    <label for="email" class="col-sm-2 col-form-label">QQ邮箱</label>
-    <div class="col-sm-10">
-      <input type="text"  class="form-control" id="email" name="email" value="{{ cur_user_name.email }}" required="">
+                    </div>
+                    <form>
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-2 col-form-label">QQ邮箱</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="email" name="email"
+                                       value="{{ cur_user_name.email }}" required="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="username" class="col-sm-2 col-form-label">用户名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="username" name="username"
+                                       value="{{ cur_user_name.username }}" required="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="avatar" class="col-sm-2 col-form-label">头像
+                             <img src="{{ cur_user_name.avatar.url }}" width="120" height="120" id="avatar_img">
+
+                            <div class="col-sm-10">
+
+                            </div>
+                                </label>
+                             <input type="file" class="form-control" id="avatar" name="avatar"
+                                        required="">
+                        </div>
+
+                        <input type="hidden" value="{{ cur_user_name.password }}" name="password">
+                        <input type="hidden" value="{{ cur_user_name.password }}" name="r_password">
+
+                        <button type="button" class="btn btn-success btn-block dianji">提交</button>
+
+                    </form>
+
+                </div>
+                <div class="tab-pane p-2 fade" id="two" role="tabpanel" aria-labelledby="two-tab">
+                    <div class="login_error">
+
+                    </div>
+                    <form>
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <label for="inputPassword1" class="col-sm-2 col-form-label">原密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="old_password" name="old_password"
+                                       value="" required="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword2" class="col-sm-2 col-form-label">新密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="new_password" name="new_password"
+                                       value="" required="">
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-success btn-block dianjipwd">提交</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-    <div class="form-group row">
-    <label for="username" class="col-sm-2 col-form-label">用户名</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="username" name="username" value="{{ cur_user_name.username }}" required="">
-    </div>
-  </div>
-      <div class="form-group row">
-    <label for="avatar" class="col-sm-2 col-form-label">头像</label>
-    <div class="col-sm-10">
-      <input type="file" class="form-control" id="avatar" name="avatar" value="{{ cur_user_name.avatar }}" required="">
-    </div>
-  </div>
-{% if register_form_obj %}
-  <div class="form-group row">
-    <label for="link" class="col-sm-2 col-form-label">出错</label>
-    <div class="col-sm-10">
-      {{ register_form_obj.errors }}
-    </div>
-  </div>
-   {% endif %}
-   {% if error %}
-        <div class="form-group row">
-    <label for="inputPassword2" class="col-sm-2 col-form-label" >错误</label>
-    <div class="col-sm-10">
-      {{ error }}
-    </div>
-  </div>
-      {% endif %}
-      <input type="hidden" value="{{ cur_user_name.password }}" name="password">
-      <input type="hidden" value="{{ cur_user_name.password }}" name="r_password">
 
-	<button type="submit" class="btn btn-success btn-block">提交</button>
 
-</form>
+{% endblock %}
 
-  </div>
-  <div class="tab-pane p-2 fade" id="two" role="tabpanel" aria-labelledby="two-tab">
- <div class="login_error">
+{% block js %}
+    <script>
+    $('#avatar').change(function () {
+        // 获取用户选中的文件对象
+        var file_obj = $(this)[0].files[0];
+        // 获取文件对象的路径
+        var reader =new FileReader();
+        reader.readAsDataURL(file_obj);
+        reader.onload = function(){
+             //修改img的src
+        $('#avatar_img').attr('src', reader.result)
+        };
 
-  </div>
-  <form method="post" action="{% url 'modify' %}">
-      {% csrf_token %}
-  <div class="form-group row">
-    <label for="inputPassword1" class="col-sm-2 col-form-label" >原密码</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="oldpassword" name="old_password" value="" required="">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inputPassword2" class="col-sm-2 col-form-label" >新密码</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="newpassword" name="new_password" value="" required="">
-    </div>
-  </div>
+    })
 
-  <button type="submit" class="btn btn-success btn-block">提交</button>
+    </script>
 
-</form>
-  </div>
-</div>
-</div>
-  </div>
+
+    <script>
+        $('.dianji').click(function () {
+            var formdata = new FormData();
+            formdata.append('email', $('#email').val());
+            formdata.append('username', $('#username').val());
+            formdata.append('password', $('#passwordpassword').val());
+            formdata.append('r_password', $('#r_password').val());
+            formdata.append('csrfmiddlewaretoken', $("[name=csrfmiddlewaretoken]").val());
+            formdata.append('avatar', $('#avatar')[0].files[0]);
+
+            $.ajax({
+                url: "{% url 'userinfo' %}",
+                type: "post",
+                contentType:false,
+                processData:false,
+                data: formdata,
+                success: function (data) {
+                    {#console.log(data)#}
+                    if (data.code != 200) {
+                        if (data.error.username) {
+                            swal({
+                                    title: data.error.username,
+                                    type: 'error',  //展示成功的图片
+                                    timer: 1000,  //延时毫秒数
+                                    showConfirmButton: false  //关闭确认框
+                                },
+                            );
+                        }
+                        if (data.error.email) {
+                            swal({
+                                    title: data.error.email,
+                                    type: 'error',  //展示成功的图片
+                                    timer: 1000,  //延时毫秒数
+                                    showConfirmButton: false  //关闭确认框
+                                },
+                            );
+                        }
+                    } else {
+                        swal({
+                                title: '修改成功！',
+                                type: 'success',  //展示成功的图片
+                                timer: 1000,  //延时毫秒数
+                                showConfirmButton: false  //关闭确认框
+                            },
+                        );
+                    }
+                }
+            })
+        })
+    </script>
+
+        <script>
+        $('.dianjipwd').click(function () {
+
+            var new_password = $('#new_password').val()
+            var old_password = $('#old_password').val()
+            var csrf = $("[name=csrfmiddlewaretoken]").val()
+
+            $.ajax({
+                url: "{% url 'modify' %}",
+                type: "post",
+                data: {
+                    new_password:new_password,
+                    old_password:old_password,
+                    csrfmiddlewaretoken:csrf,
+                },
+                success: function (data) {
+                    {#console.log(data)#}
+                    if (data.code != 200) {
+                        if (data.error.password) {
+                            swal({
+                                    title: data.error.password,
+                                    type: 'error',  //展示成功的图片
+                                    timer: 1000,  //延时毫秒数
+                                    showConfirmButton: false  //关闭确认框
+                                },
+                            );
+                        }
+                    } else {
+                        swal({
+                                title: '密码修改成功！',
+                                type: 'success',  //展示成功的图片
+                                timer: 1000,  //延时毫秒数
+                                showConfirmButton: false  //关闭确认框
+                            },function () {
+                                window.location.href = {% url 'logout' %}
+                            }
+                        );
+                    }
+                }
+            })
+        })
+    </script>
 
 
 {% endblock %}

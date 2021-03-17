@@ -186,8 +186,9 @@ class Links(models.Model):
     """
     title = models.CharField(max_length=50, verbose_name='标题')
     url = models.URLField(verbose_name='地址')
-    desc = models.TextField(verbose_name='描述', max_length=250)
-    image = models.URLField(default='https://image.3001.net/images/20190330/1553875722169.jpg', verbose_name='头像')
+    desc = models.TextField(verbose_name='描述', max_length=250, null=True, blank=True)
+    image = models.URLField(default='/media/avatas/head.jpg', verbose_name='头像')
+    is_disply = models.BooleanField(default=False, null=True, blank=True)
 
     def avatar_data(self):
         return format_html(
@@ -248,13 +249,13 @@ class File(models.Model):
 
 
 
-# class About(models.Model):
-#     me = models.CharField(max_length=30, verbose_name='关于博主')
-#     site = models.CharField(max_length=30, verbose_name='关于本站')
-#     promise = models.CharField(max_length=30, verbose_name='本站声明')
-#     class Meta:
-#         verbose_name = '关于我'
-#         verbose_name_plural = verbose_name
-#
-#     def __str__(self):
-#         return self.me[:10]
+class About(models.Model):
+    me = models.CharField(max_length=30, verbose_name='关于博主')
+    site = models.CharField(max_length=30, verbose_name='关于本站')
+    promise = models.CharField(max_length=30, verbose_name='本站声明')
+    class Meta:
+        verbose_name = '关于我'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.me[:10]

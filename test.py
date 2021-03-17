@@ -178,3 +178,6 @@ import datetime
 # print(res.group())
 print(datetime.datetime.now().strftime('%m-%d'))
 
+# Markdown插入视频
+# https://www.jianshu.com/p/3525536f9dcd
+
