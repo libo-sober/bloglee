@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'blog.utils.usermiddleware.MyUserAuth',  # 不让非管理员用户进admin,不登陆不可以查看个人资料
+    'blog.utils.usermiddleware.MyUserAuth',  # 不让非管理员用户进admin,不登陆不可以查看个人资料
 ]
 
 ROOT_URLCONF = 'BlogLee.urls'
