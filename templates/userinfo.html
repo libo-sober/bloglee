@@ -9,12 +9,13 @@
 
 {% block css %}
     <style>
-        #avatar_img{
+        #avatar_img {
             margin-left: 150px;
         }
-    #avatar{
-        display: none;
-    }
+
+        #avatar {
+            display: none;
+        }
 
     </style>
 {% endblock %}
@@ -63,17 +64,17 @@
                         <div class="form-group row">
                             <label for="avatar" class="col-sm-2 col-form-label">头像
                                 {% if cur_user_name.avatar %}
-                             <img src="{{ cur_user_name.avatar.url }}" width="120" height="120" id="avatar_img">
+                                    <img src="{{ cur_user_name.avatar.url }}" width="120" height="120" id="avatar_img">
                                 {% else %}
-                                <img src="{% static 'image/unknow.png' %}" width="120" height="120" id="avatar_img">
+                                    <img src="{% static 'image/unknow.png' %}" width="120" height="120" id="avatar_img">
                                 {% endif %}
 
-                            <div class="col-sm-10">
+                                <div class="col-sm-10">
 
-                            </div>
-                                </label>
-                             <input type="file" class="form-control" id="avatar" name="avatar"
-                                        required="">
+                                </div>
+                            </label>
+                            <input type="file" class="form-control" id="avatar" name="avatar"
+                                   required="">
                         </div>
 
                         <input type="hidden" value="{{ cur_user_name.password }}" name="password">
@@ -118,18 +119,18 @@
 
 {% block js %}
     <script>
-    $('#avatar').change(function () {
-        // 获取用户选中的文件对象
-        var file_obj = $(this)[0].files[0];
-        // 获取文件对象的路径
-        var reader =new FileReader();
-        reader.readAsDataURL(file_obj);
-        reader.onload = function(){
-             //修改img的src
-        $('#avatar_img').attr('src', reader.result)
-        };
+        $('#avatar').change(function () {
+            // 获取用户选中的文件对象
+            var file_obj = $(this)[0].files[0];
+            // 获取文件对象的路径
+            var reader = new FileReader();
+            reader.readAsDataURL(file_obj);
+            reader.onload = function () {
+                //修改img的src
+                $('#avatar_img').attr('src', reader.result)
+            };
 
-    })
+        })
 
     </script>
 
@@ -147,8 +148,8 @@
             $.ajax({
                 url: "{% url 'userinfo' %}",
                 type: "post",
-                contentType:false,
-                processData:false,
+                contentType: false,
+                processData: false,
                 data: formdata,
                 success: function (data) {
                     {#console.log(data)#}
@@ -185,7 +186,7 @@
         })
     </script>
 
-        <script>
+    <script>
         $('.dianjipwd').click(function () {
 
             var new_password = $('#new_password').val()
@@ -196,9 +197,9 @@
                 url: "{% url 'modify' %}",
                 type: "post",
                 data: {
-                    new_password:new_password,
-                    old_password:old_password,
-                    csrfmiddlewaretoken:csrf,
+                    new_password: new_password,
+                    old_password: old_password,
+                    csrfmiddlewaretoken: csrf,
                 },
                 success: function (data) {
                     {#console.log(data)#}
@@ -218,8 +219,9 @@
                                 type: 'success',  //展示成功的图片
                                 timer: 1000,  //延时毫秒数
                                 showConfirmButton: false  //关闭确认框
-                            },function () {
-                                window.location.href = {% url 'logout' %}
+                            }, function () {
+                                window.location.href =
+                                {% url 'logout' %}
                             }
                         );
                     }

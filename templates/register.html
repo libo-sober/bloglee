@@ -13,251 +13,254 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-	 <form class="form-signin bg-white" method="post" action="/user/register" id="register-form">
-         {% csrf_token %}
-  <div class="text-center mb-4">
-    <img class="mb-2" src="{% static 'image/touxiang.jpg' %}" alt="" width="100" height="100">
-    <h1 class="h3 mb-3 font-weight-normal">欢迎注册本博客</h1>
-	<div class="rollContainer">
-		<p class="rollBlock">友情提示：使用qq邮箱会自动拉取您的qq头像，否则使用默认的企鹅图标。</p>
-	</div>
-    <div class="login_error">
+    <div class="container">
+        <form class="form-signin bg-white" method="post" action="/user/register" id="register-form">
+            {% csrf_token %}
+            <div class="text-center mb-4">
+                <img class="mb-2" src="{% static 'image/touxiang.jpg' %}" alt="" width="100" height="100">
+                <h1 class="h3 mb-3 font-weight-normal">欢迎注册本博客</h1>
+                <div class="rollContainer">
+                    <p class="rollBlock">友情提示：使用qq邮箱会自动拉取您的qq头像，否则使用默认的企鹅图标。</p>
+                </div>
+                <div class="login_error">
 
+                </div>
+            </div>
+
+            <div class="form-label-group">
+                <input type="text" id="inputUsername" name="username" value="" class="form-control " placeholder="用户名"
+                       aria-describedby="usernameHelpBlock" required="" autofocus="">
+                <label for="inputUsername">用户名</label>
+                <small id="usernameHelpBlock" class="form-text text-muted">
+                    用户名只能包括中文，字母，数字,长度限制在2—15位
+                </small>
+                <div class="invalid-feedback" id="username-feedback">
+                </div>
+            </div>
+
+            <div class="form-label-group">
+                <input type="email" id="inputEmail" name="email" value="" class="form-control " placeholder="qq邮箱"
+                       aria-describedby="emailHelpBlock" required="">
+                <label for="inputEmail">qq邮箱</label>
+                <small id="emailHelpBlock" class="form-text text-muted">
+                    请输入你的qq邮箱
+                </small>
+                <div class="invalid-feedback" id="username-feedback">
+                </div>
+            </div>
+
+            <div class="form-label-group">
+                <input type="password" id="inputPassword" name="password" value="" class="form-control "
+                       placeholder="密码" aria-describedby="passwordHelpBlock" required="">
+                <label for="inputPassword">密码</label>
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    密码长度在6-16个字符之间，允许包括特殊字符
+                </small>
+                <div class="invalid-feedback" id="username-feedback">
+                </div>
+            </div>
+
+            <div class="form-label-group">
+                <input type="password" id="inputRPassword" name="repassword" value="" class="form-control "
+                       placeholder="重复密码" aria-describedby="repasswordHelpBlock" required="">
+                <label for="inputRPassword">重复密码</label>
+                <div class="invalid-feedback" id="username-feedback">
+                </div>
+            </div>
+
+            <div class="form-label-group">
+                <div id="mpanel_register"></div>
+                {#	<input autocomplete="off" id="id_captcha_1" name="captcha_1" type="text" class="form-control" placeholder="验证码" required=""> <input id="id_captcha_0" name="captcha_0" type="hidden" value="f264f52bb57e58eee872dcd9d9da689796df1211">#}
+
+                {#<img src="{% static 'picture/picture.jpg' %}" alt="captcha" class="captcha">#}
+                {#        <label for="id_captcha_1"></label>#}
+                {#        <style>img.captcha{position: absolute;top: 7px;right: 5px;}</style>#}
+            </div>
+            {#  <small class="form-text text-muted my-3">#}
+            {#       使用qq邮箱会自动拉取您的qq头像，否则使用默认的企鹅图标。#}
+            {#  </small>#}
+            {#  <button class="btn btn-lg btn-success btn-block" type="submit">注册</button>#}
+            {#         <input type="hidden" name="csrfmiddlewaretoken" value="D70AWLTs2P3NzUhh5JVrH5SYbhackcp9xQW0M0Jeh0CrxAaXGMGZN9ch9WawtWM5">#}
+        </form>
+        <div class="clearfix " style="width: 100%;max-width: 420px;padding: 15px;margin: auto;">
+            <p class="float-left"><a class="text-muted " href="/">←回到首页</a></p>
+            <p class="float-right">
+                <a class="text-muted " href="{% url 'login' %}">登录</a>
+                |
+                <a class="text-muted " href="forget.html">忘记密码</a>
+            </p>
+        </div>
     </div>
-  </div>
-
-  <div class="form-label-group">
-	<input type="text" id="inputUsername" name="username" value="" class="form-control " placeholder="用户名" aria-describedby="usernameHelpBlock" required="" autofocus="">
-    <label for="inputUsername">用户名</label>
-    <small id="usernameHelpBlock" class="form-text text-muted">
-        用户名只能包括中文，字母，数字,长度限制在2—15位
-    </small>
-                              <div class="invalid-feedback" id="username-feedback">
-                        </div>
-  </div>
-
-  <div class="form-label-group">
-	<input type="email" id="inputEmail" name="email" value="" class="form-control " placeholder="qq邮箱" aria-describedby="emailHelpBlock" required="">
-    <label for="inputEmail">qq邮箱</label>
-    <small id="emailHelpBlock" class="form-text text-muted">
-        请输入你的qq邮箱
-    </small>
-                              <div class="invalid-feedback" id="username-feedback">
-                        </div>
-  </div>
-
-  <div class="form-label-group">
-    <input type="password" id="inputPassword" name="password" value="" class="form-control " placeholder="密码" aria-describedby="passwordHelpBlock" required="">
-    <label for="inputPassword">密码</label>
-    <small id="passwordHelpBlock" class="form-text text-muted">
-        密码长度在3-16个字符之间，允许包括字母，数字以及.@+-_?&%$这些字符组合
-    </small>
-                        <div class="invalid-feedback" id="username-feedback">
-                        </div>
-  </div>
-
-  <div class="form-label-group">
-	<input type="password" id="inputRPassword" name="repassword" value="" class="form-control " placeholder="重复密码" aria-describedby="repasswordHelpBlock" required="">
-	<label for="inputRPassword">重复密码</label>
-                              <div class="invalid-feedback" id="username-feedback">
-                        </div>
-  </div>
-
-    <div class="form-label-group" >
-        <div id="mpanel_register"></div>
-{#	<input autocomplete="off" id="id_captcha_1" name="captcha_1" type="text" class="form-control" placeholder="验证码" required=""> <input id="id_captcha_0" name="captcha_0" type="hidden" value="f264f52bb57e58eee872dcd9d9da689796df1211">#}
-
-{#<img src="{% static 'picture/picture.jpg' %}" alt="captcha" class="captcha">#}
-{#        <label for="id_captcha_1"></label>#}
-{#        <style>img.captcha{position: absolute;top: 7px;right: 5px;}</style>#}
-  </div>
-{#  <small class="form-text text-muted my-3">#}
-{#       使用qq邮箱会自动拉取您的qq头像，否则使用默认的企鹅图标。#}
-{#  </small>#}
-{#  <button class="btn btn-lg btn-success btn-block" type="submit">注册</button>#}
-{#         <input type="hidden" name="csrfmiddlewaretoken" value="D70AWLTs2P3NzUhh5JVrH5SYbhackcp9xQW0M0Jeh0CrxAaXGMGZN9ch9WawtWM5">#}
-</form>
-<div class="clearfix " style="width: 100%;max-width: 420px;padding: 15px;margin: auto;">
-<p class="float-left"><a class="text-muted " href="/">←回到首页</a></p>
-<p class="float-right">
-<a class="text-muted " href="{% url 'login' %}">登录</a>
-|
-<a class="text-muted " href="forget.html">忘记密码</a>
-</p>
-</div>
-  </div>
 
 {% endblock %}
 
 {% block js %}
     <script src="{% static 'js/verify.js' %}"></script>
-{#    <script src="{% static 'js/sweetalert-dev.js'%}"></script>#}
-{#    不要加载.min.js这个js，会出错#}
-{#    <script src="{% static 'js/verify.min.js' %}"></script>#}
-{##}
+    {#    <script src="{% static 'js/sweetalert-dev.js'%}"></script>#}
+    {#    不要加载.min.js这个js，会出错#}
+    {#    <script src="{% static 'js/verify.min.js' %}"></script>#}
+    {##}
 
     <script>
-    // 表单提交
-function Form_Submit() {
-    let csrf = $("[name=csrfmiddlewaretoken]").val();
-    let username = $('#inputUsername').val().trim();
-    let email = $('#inputEmail').val().trim();
-    let password = $('#inputPassword').val().trim();
-    let r_password = $('#inputRPassword').val().trim();
+        // 表单提交
+        function Form_Submit() {
+            let csrf = $("[name=csrfmiddlewaretoken]").val();
+            let username = $('#inputUsername').val().trim();
+            let email = $('#inputEmail').val().trim();
+            let password = $('#inputPassword').val().trim();
+            let r_password = $('#inputRPassword').val().trim();
 
-    //let code = $('#code').val();
-    //判断input不能为空
-    if (username.length == 0) {
-        swal({
-            title: '用户名不能为空！',
-            type: 'error',  //展示成功的图片
-            timer: 1000,  //延时毫秒数
-            showConfirmButton: false  //关闭确认框
-        }, function () {
-            //刷新当前页面
-            window.location.reload();
-        });
-        return false
-    }
-    if (email.length == 0) {
-        swal({
-            title: '邮箱不能为空！',
-            type: 'error',  //展示成功的图片
-            timer: 1000,  //延时毫秒数
-            showConfirmButton: false  //关闭确认框
-        }, function () {
-            //刷新当前页面
-            window.location.reload();
-        });
-        return false
-    }
-    if (password.length == 0) {
-        swal({
-            title: '密码不能为空！',
-            type: 'error',  //展示成功的图片
-            timer: 1000,  //延时毫秒数
-            showConfirmButton: false  //关闭确认框
-        }, function () {
-            //刷新当前页面
-            window.location.reload();
-        });
-        return false
-    }
-
-    //发送ajax请求
-    $.ajax({
-        url: "{% url 'register' %}",
-        type: "post",
-        data: {
-            username: username,
-            email: email,
-            password: password,
-            r_password: r_password,
-            csrfmiddlewaretoken: csrf,
-        },
-        success: function (data) {
-            {#console.log(data);#}
-            //console.log(arg.status);
-            if (data.code == "200") { //判断http 状态
+            //let code = $('#code').val();
+            //判断input不能为空
+            if (username.length == 0) {
                 swal({
-                    title: '注册成功！',
-                    type: 'success',  //展示成功的图片
-                    timer: 500,  //延时500毫秒
+                    title: '用户名不能为空！',
+                    type: 'error',  //展示成功的图片
+                    timer: 1000,  //延时毫秒数
                     showConfirmButton: false  //关闭确认框
                 }, function () {
-                    window.location.href = "{% url 'login' %}";  //跳转后台首页
+                    //刷新当前页面
+                    window.location.reload();
                 });
-            } else {
-
-            if (data.error.username) {
-                swal({
-                    title: data.error.username,
-                    type: 'error',  //展示成功的图片
-                    timer: 1000,  //延时毫秒数
-                    showConfirmButton: false  //关闭确认框
-                 },
-                    function () {
-                    //console.log("登录失败");
-                    //刷新当前页面
-                    window.location.reload();
-                  }
-                );
-                }
-              if (data.error.r_password) {
-                                    swal({
-                    title: data.error.r_password,
-                    type: 'error',  //展示成功的图片
-                    timer: 1000,  //延时毫秒数
-                    showConfirmButton: false  //关闭确认框
-                 },
-                    function () {
-                    //console.log("登录失败");
-                    //刷新当前页面
-                    window.location.reload();
-                 }
-                );
-                }
-               if (data.error.email) {
-                                    swal({
-                    title: data.error.email,
-                    type: 'error',  //展示成功的图片
-                    timer: 1000,  //延时毫秒数
-                    showConfirmButton: false  //关闭确认框
-                 },
-                    function () {
-                    //console.log("登录失败");
-                    //刷新当前页面
-                    window.location.reload();
-                 }
-                );
-                }
-
+                return false
             }
-        },
-        {#error: function (data) {#}
-        {#    //console.log("失败data",data);#}
-        {#    swal({#}
-        {#        text: '网络请求不可达',#}
-        {#        title: '登录失败',#}
-        {#        type: 'error',#}
-        {#    });#}
-        {#    //刷新当前页面#}
-            {#window.location.reload();#}
-        {# }#}
-    });
-}
+            if (email.length == 0) {
+                swal({
+                    title: '邮箱不能为空！',
+                    type: 'error',  //展示成功的图片
+                    timer: 1000,  //延时毫秒数
+                    showConfirmButton: false  //关闭确认框
+                }, function () {
+                    //刷新当前页面
+                    window.location.reload();
+                });
+                return false
+            }
+            if (password.length == 0) {
+                swal({
+                    title: '密码不能为空！',
+                    type: 'error',  //展示成功的图片
+                    timer: 1000,  //延时毫秒数
+                    showConfirmButton: false  //关闭确认框
+                }, function () {
+                    //刷新当前页面
+                    window.location.reload();
+                });
+                return false
+            }
+
+            //发送ajax请求
+            $.ajax({
+                url: "{% url 'register' %}",
+                type: "post",
+                data: {
+                    username: username,
+                    email: email,
+                    password: password,
+                    r_password: r_password,
+                    csrfmiddlewaretoken: csrf,
+                },
+                success: function (data) {
+                    {#console.log(data);#}
+                    //console.log(arg.status);
+                    if (data.code == "200") { //判断http 状态
+                        swal({
+                            title: '注册成功！',
+                            type: 'success',  //展示成功的图片
+                            timer: 500,  //延时500毫秒
+                            showConfirmButton: false  //关闭确认框
+                        }, function () {
+                            window.location.href = "{% url 'login' %}";  //跳转后台首页
+                        });
+                    } else {
+
+                        if (data.error.username) {
+                            swal({
+                                    title: data.error.username,
+                                    type: 'error',  //展示成功的图片
+                                    timer: 1000,  //延时毫秒数
+                                    showConfirmButton: false  //关闭确认框
+                                },
+                                function () {
+                                    //console.log("登录失败");
+                                    //刷新当前页面
+                                    window.location.reload();
+                                }
+                            );
+                        }
+                        if (data.error.r_password) {
+                            swal({
+                                    title: data.error.r_password,
+                                    type: 'error',  //展示成功的图片
+                                    timer: 1000,  //延时毫秒数
+                                    showConfirmButton: false  //关闭确认框
+                                },
+                                function () {
+                                    //console.log("登录失败");
+                                    //刷新当前页面
+                                    window.location.reload();
+                                }
+                            );
+                        }
+                        if (data.error.email) {
+                            swal({
+                                    title: data.error.email,
+                                    type: 'error',  //展示成功的图片
+                                    timer: 1000,  //延时毫秒数
+                                    showConfirmButton: false  //关闭确认框
+                                },
+                                function () {
+                                    //console.log("登录失败");
+                                    //刷新当前页面
+                                    window.location.reload();
+                                }
+                            );
+                        }
+
+                    }
+                },
+                {#error: function (data) {#}
+                {#    //console.log("失败data",data);#}
+                {#    swal({#}
+                {#        text: '网络请求不可达',#}
+                {#        title: '登录失败',#}
+                {#        type: 'error',#}
+                {#    });#}
+                {#    //刷新当前页面#}
+                {#window.location.reload();#}
+                {# }#}
+            });
+        }
 
 
+        $('#mpanel_register').slideVerify({
+            type: 2,   //类型
+            vOffset: 5,  //误差量，根据需求自行调整
+            vSpace: 5, //间隔
+            imgName: ['1.jpg', '2.jpg'],
+            imgSize: {
+                width: '400px',
+                height: '200px',
+            },
+            blockSize: {
+                width: '40px',
+                height: '40px',
+            },
+            barSize: {
+                width: '400px',
+                height: '40px',
+            },
+            ready: function () {
+            },
+            success: function () {
+                {#alert('验证成功，添加你自己的代码！');#}
+                //......后续操作;
+                Form_Submit()
+            },
+            error: function () {
+                //              alert('验证失败！');
+            }
 
-    $('#mpanel_register').slideVerify({
-    type : 2,   //类型
-    vOffset : 5,  //误差量，根据需求自行调整
-    vSpace : 5, //间隔
-    imgName : ['1.jpg', '2.jpg'],
-    imgSize : {
-      width: '400px',
-      height: '200px',
-    },
-    blockSize : {
-      width: '40px',
-      height: '40px',
-    },
-    barSize : {
-      width : '400px',
-      height : '40px',
-    },
-    ready : function() {
-    },
-    success : function() {
-      {#alert('验证成功，添加你自己的代码！');#}
-      //......后续操作;
-        Form_Submit()
-    },
-    error : function() {
-    //              alert('验证失败！');
-    }
-
-});
+        });
     </script>
 {% endblock %}

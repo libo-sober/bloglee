@@ -133,24 +133,29 @@ class ArticleView(View):
         next_index = 0
         previous_article = None
         next_article = None
-        for index, article in enumerate(all_article):
-            if index == 0:
-                previous_index = 0
-                next_index = index + 1
-            elif index == len(all_article) - 1:
-                previous_index = index - 1
-                next_index = index
-            else:
-                previous_index = index - 1
-                next_index = index + 1
+        print(article_id)
+        obj = models.Article.objects.all()
+        if obj.count() == 1:
+            curr_article = obj.first()
+        else:
+            for index, article in enumerate(all_article):
+                if index == 0:
+                    previous_index = 0
+                    next_index = index + 1
+                elif index == len(all_article) - 1:
+                    previous_index = index - 1
+                    next_index = index
+                else:
+                    previous_index = index - 1
+                    next_index = index + 1
 
-            # 通过id判断当前记录;
-            # 接收的article_id是字符串 对象本身的id是int
-            if article.id == int(article_id):
-                curr_article = article
-                previous_article = all_article[previous_index]
-                next_article = all_article[next_index]
-                break
+                # 通过id判断当前记录;
+                # 接收的article_id是字符串 对象本身的id是int
+                if article.id == int(article_id):
+                    curr_article = article
+                    previous_article = all_article[previous_index]
+                    next_article = all_article[next_index]
+                    break
         # article = models.Article.objects.get(pk=article_id)
         # print(curr_article)
         curr_article.viewed()  # 增加阅读数P
