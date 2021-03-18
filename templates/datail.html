@@ -17,51 +17,52 @@
 
     <!-- Required meta tags -->
     <link rel="stylesheet" href="{% static 'css/BlackMac.css' %}">
-{#    <link rel="stylesheet" href="{% static 'css/layui.css' %}">#}
-{#    <link rel="stylesheet" href="{% static 'css/layui.mobile.css' %}">#}
+    {#    <link rel="stylesheet" href="{% static 'css/layui.css' %}">#}
+    {#    <link rel="stylesheet" href="{% static 'css/layui.mobile.css' %}">#}
 
     <link rel="stylesheet" href="{% static 'css/tocbot.css' %}">
     <link rel="stylesheet" href="{% static 'css/OwO.min.css' %}">
-{#    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">#}
+    {#    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">#}
 
 
 {% endblock %}
 
 
 {% block content %}
-      <div class="container">
+    <div class="container">
     <div class="row">
-    	<section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
-    <!--左边内容区-start-->
+    <section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
+        <!--左边内容区-start-->
 
-    <!--面包屑-start-->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item" style="color: #0056b3;">分类</li>
-            <li class="breadcrumb-item" aria-current="page">{{ article.category.name }}</li>
-        </ol>
+        <!--面包屑-start-->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item" style="color: #0056b3;">分类</li>
+                <li class="breadcrumb-item" aria-current="page">{{ article.category.name }}</li>
+            </ol>
 
-    </nav>
-    <!--面包屑-end-->
+        </nav>
+        <!--面包屑-end-->
 
-    <!--文章-start-->
-    <article>
-        <div class="article px-2 pt-3 pb-2 bg-white">
-            <!--文章相关参数-start-->
-            <header class="text-center">
-                <!--文章标题-->
-                <h2 class="article-title">{{ article.title }}</h2>
-                <!--文章相关参数以及操作-->
-                <div class="article-relative-meta">
-                    <i class="fa fa-calendar"
-                       style="color: pink;"></i> {{ article.update_time | date:"Y-m-d" }}
-                    <i class="fa fa-user" style="color: #f0c674;"></i>{{ admin_obj.username }}
-                    <a href="#comment" class="mr-auto"><i class="fa fa-comments"
-                                                          style="color: yellowgreen;"></i>{{ article.comments }}评论</a>
-                    <i class="fa fa-eye" style="color: lightskyblue;"></i>{{ article.click_count }}
-                    <i class="fa fa-heart" style="color: #FF6767;"></i><span id="like-count">{{ article.upup }}</span>喜欢
-                    <!--移动端和平板端会被隐藏-->
-                    <span class="hd hidden-sm">
+        <!--文章-start-->
+        <article>
+            <div class="article px-2 pt-3 pb-2 bg-white">
+                <!--文章相关参数-start-->
+                <header class="text-center">
+                    <!--文章标题-->
+                    <h2 class="article-title">{{ article.title }}</h2>
+                    <!--文章相关参数以及操作-->
+                    <div class="article-relative-meta">
+                        <i class="fa fa-calendar"
+                           style="color: pink;"></i> {{ article.update_time | date:"Y-m-d" }}
+                        <i class="fa fa-user" style="color: #f0c674;"></i>{{ admin_obj.username }}
+                        <a href="#comment" class="mr-auto"><i class="fa fa-comments"
+                                                              style="color: yellowgreen;"></i>{{ article.comments }}评论</a>
+                        <i class="fa fa-eye" style="color: lightskyblue;"></i>{{ article.click_count }}
+                        <i class="fa fa-heart" style="color: #FF6767;"></i><span
+                            id="like-count">{{ article.upup }}</span>喜欢
+                        <!--移动端和平板端会被隐藏-->
+                        <span class="hd hidden-sm">
                             <!--文章内容操作功能如：开启阅读模式-->
                             <a data-morphing="" id="morphing" data-src="#morphing-content" href="javascript:;"
                                class=" mr-0">
@@ -72,254 +73,254 @@
                             <a href="javascript:;" class="show-sidebar" style="display: none;"><i
                                     class="fa fa-toggle-on" style="color:#28a745;"></i>显示边栏</a>
                         </span>
+                    </div>
+
+                </header>
+
+                <!--文章内容区域-start-->
+                <div id="article-content" class="article-content">
+
+                    {{ detail_html | custom_markdown | safe }}
+                    {#                {{ article.content | safe }}#}
+                </div>
+                <!--文章内容区域-end-->
+
+                <!--版权申明-->
+                <div class="breadcrumb d-block text-center my-2">
+                    © 著作权归作者所有,欢迎转载，转载请说明出处：<a href="/" class="">大聪明</a>,谢谢理解！
                 </div>
 
-            </header>
+                <!--文章操作区域-start-->
+                <div class="text-center py-5 operation btn-group-sm ">
+                    <button type="button" class="btn btn-outline-primary" data-id="{{ article.id }}" id="post-like"><i
+                            class="fa fa-heart"></i>喜欢
+                    </button>
+                    <button type="button" id="dashang" class="btn btn-outline-danger" data-toggle="modal"
+                            data-target="#modal-dashang"><i class="fa fa-usd"></i>打赏
+                    </button>
+                    <button type="button" class="btn btn-outline-success" id="share"><i
+                            class="fa fa-share-alt"></i>分享
+                    </button>
+                    <!--分享对象组-start-->
+                    <div class="text-center share-group mt-2 position-static" style="display:none">
+                        <a href="javascript:;" class="d-inline-block"
+                           onclick="share('qq','{{ article.title }}','{{ article.desc }}','{{ article.cover.url }}');"
+                           rel="nofollow" data-toggle="tooltip" title="分享到qq">
+                            <div class="border border-info rounded-circle">
+                                <i class="fa fa-qq text-info"></i>
+                            </div>
+                        </a>
+                        <a href="javascript:;" class="d-inline-block"
+                           onclick="share('qq','{{ article.title }}','{{ article.desc }}','{{ article.cover.url }}');"
+                           rel="nofollow" data-toggle="tooltip" title="分享到qq空间">
+                            <div class="border border-primary rounded-circle">
+                                <i class="fa fa-star text-primary"></i>
+                            </div>
+                        </a>
+                        <a href="javascript:;" class="d-inline-block"
+                           onclick="share('qq','{{ article.title }}','{{ article.desc }}','{{ article.cover.url }}');"
+                           rel="nofollow" data-toggle="tooltip" title="分享到微博">
+                            <div class="border border-danger rounded-circle">
+                                <i class="fa fa-weibo text-danger"></i>
+                            </div>
+                        </a>
 
-            <!--文章内容区域-start-->
-            <div id="article-content" class="article-content">
+                        <a href="javascript:;" class="d-inline-block" rel="nofollow" id="weixin">
+                            <div class="border border-success rounded-circle">
+                                <i class="fa fa-weixin text-success"></i>
+                            </div>
+                        </a>
+                        <a href="javascript:;" class="d-inline-block" rel="nofollow" data-toggle="tooltip"
+                           title="生成分享图">
+                            <div class="border border-dark rounded-circle">
+                                <i class="fa fa-camera"></i>
+                            </div>
+                        </a>
+                    </div>
+                    <!--分享对象组-end-->
 
-                {{ detail_html | custom_markdown | safe }}
-{#                {{ article.content | safe }}#}
-            </div>
-            <!--文章内容区域-end-->
-
-            <!--版权申明-->
-            <div class="breadcrumb d-block text-center my-2">
-                © 著作权归作者所有,欢迎转载，转载请说明出处：<a href="/" class="">大聪明</a>,谢谢理解！
-            </div>
-
-            <!--文章操作区域-start-->
-            <div class="text-center py-5 operation btn-group-sm ">
-                <button type="button" class="btn btn-outline-primary" data-id="{{ article.id }}" id="post-like"><i
-                        class="fa fa-heart"></i>喜欢
-                </button>
-                <button type="button" id="dashang" class="btn btn-outline-danger" data-toggle="modal"
-                        data-target="#modal-dashang"><i class="fa fa-usd"></i>打赏
-                </button>
-                <button type="button" class="btn btn-outline-success" id="share"><i
-                        class="fa fa-share-alt"></i>分享
-                </button>
-                <!--分享对象组-start-->
-                <div class="text-center share-group mt-2 position-static" style="display:none">
-                    <a href="javascript:;" class="d-inline-block"
-                       onclick="share('qq','{{ article.title }}','{{ article.desc }}','{{ article.cover.url }}');"
-                       rel="nofollow" data-toggle="tooltip" title="分享到qq">
-                        <div class="border border-info rounded-circle">
-                            <i class="fa fa-qq text-info"></i>
-                        </div>
-                    </a>
-                    <a href="javascript:;" class="d-inline-block"
-                      onclick="share('qq','{{ article.title }}','{{ article.desc }}','{{ article.cover.url }}');"
-                       rel="nofollow" data-toggle="tooltip" title="分享到qq空间">
-                        <div class="border border-primary rounded-circle">
-                            <i class="fa fa-star text-primary"></i>
-                        </div>
-                    </a>
-                    <a href="javascript:;" class="d-inline-block"
-                       onclick="share('qq','{{ article.title }}','{{ article.desc }}','{{ article.cover.url }}');"
-                       rel="nofollow" data-toggle="tooltip" title="分享到微博">
-                        <div class="border border-danger rounded-circle">
-                            <i class="fa fa-weibo text-danger"></i>
-                        </div>
-                    </a>
-
-                    <a href="javascript:;" class="d-inline-block" rel="nofollow" id="weixin">
-                        <div class="border border-success rounded-circle">
-                            <i class="fa fa-weixin text-success"></i>
-                        </div>
-                    </a>
-                    <a href="javascript:;" class="d-inline-block" rel="nofollow" data-toggle="tooltip"
-                       title="生成分享图">
-                        <div class="border border-dark rounded-circle">
-                            <i class="fa fa-camera"></i>
-                        </div>
-                    </a>
-                </div>
-                <!--分享对象组-end-->
-
-
-            </div>
-            <!--文章操作区域-end-->
-
-            <!--文章脚部-start-->
-            <div class="article-footer clearfix">
-                <!--文章标签-->
-                <div class="float-left tags">
-                    <i class="fa fa-tags"></i>
-
-                    <a class="btn btn-sm border rounded-pill m-0" href="#">博客</a>
 
                 </div>
-                <!--文章编辑时间-->
-                <div class="float-right mt-2 pull-date">
-                    <span class="mt-2 text-muted">最后编辑：{{ article.update_time| date:"Y-m-d" }}</span>
+                <!--文章操作区域-end-->
+
+                <!--文章脚部-start-->
+                <div class="article-footer clearfix">
+                    <!--文章标签-->
+                    <div class="float-left tags">
+                        <i class="fa fa-tags"></i>
+
+                        <a class="btn btn-sm border rounded-pill m-0" href="#">博客</a>
+
+                    </div>
+                    <!--文章编辑时间-->
+                    <div class="float-right mt-2 pull-date">
+                        <span class="mt-2 text-muted">最后编辑：{{ article.update_time| date:"Y-m-d" }}</span>
+                    </div>
                 </div>
+                <!--文章脚部-end-->
             </div>
-            <!--文章脚部-end-->
-        </div>
 
-        <!--文章翻页操作-start-->
-        <div class="clearfix m-2">
+            <!--文章翻页操作-start-->
+            <div class="clearfix m-2">
 
 
-            <a class="btn btn-outline-primary float-left" href="{% url 'detail' previous_article.id %}">上一篇</a>
+                <a class="btn btn-outline-primary float-left" href="{% url 'detail' previous_article.id %}">上一篇</a>
 
 
-            <a class="btn btn-outline-success float-right" href="{% url 'detail' next_article.id %}">下一篇</a>
+                <a class="btn btn-outline-success float-right" href="{% url 'detail' next_article.id %}">下一篇</a>
 
 
-        </div>
-        <!--文章翻页操作-end-->
+            </div>
+            <!--文章翻页操作-end-->
 
 
-        <!--评论模块-start-->
+            <!--评论模块-start-->
 
 
-        <div id="comments" class="" style="opacity:0.85;">
+            <div id="comments" class="" style="opacity:0.85;">
 
-            <!--评论列表-start-->
+                <!--评论列表-start-->
 
-        <ol class="list-group comment-list" id="comments">
-            {{ ret | build_coment_tree | safe }}
-        </ol>
+                <ol class="list-group comment-list" id="comments">
+                    {{ ret | build_coment_tree | safe }}
+                </ol>
 
-            <!--评论表单-start-->
-            <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
-                <a name="comment"></a>
-                <h4>发表评论
-                    <a class="btn btn-sm btn-info d-none text-white" id="cancel-reply"
-                       onclick="cancelReply();">取消回复</a>
-                </h4>
-            {% if not cur_user_name %}
-                <p class="text-muted">电子邮件地址不会被公开。</p>
-            {% else %}
-                <p class="text-muted">当前登录用户：<span style="color:#2b3af0;">{{ cur_user_name.username }}</span></p>
-            {% endif %}
+                <!--评论表单-start-->
+                <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
+                    <a name="comment"></a>
+                    <h4>发表评论
+                        <a class="btn btn-sm btn-info d-none text-white" id="cancel-reply"
+                           onclick="cancelReply();">取消回复</a>
+                    </h4>
+                    {% if not cur_user_name %}
+                        <p class="text-muted">电子邮件地址不会被公开。</p>
+                    {% else %}
+                        <p class="text-muted">当前登录用户：<span style="color:#2b3af0;">{{ cur_user_name.username }}</span>
+                        </p>
+                    {% endif %}
 
-                <form id="comment-form" onsubmit="return false;" method="post" action="{% url 'comment' %}" >
-                    {% csrf_token %}
-                    <div class="form-group" id="article_content">
+                    <form id="comment-form" onsubmit="return false;" method="post" action="{% url 'comment' %}">
+                        {% csrf_token %}
+                        <div class="form-group" id="article_content">
                                         <textarea class="form-control OwO-textarea" id="content" name="content" rows="5"
                                                   placeholder="居然什么都不说，哼！" autocomplete="off" aria-label="content"
                                                   aria-describedby="addon-wrapping" required=""></textarea>
-                        <div class="invalid-feedback" id="content-feedback">
+                            <div class="invalid-feedback" id="content-feedback">
+
+                            </div>
+                            <div class="OwO">
+                                {#                            <div href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo OwO"#}
+                                {#                           rel="external nofollow"><i class="fa fa-smile-o"#}
+                                {#                                                      aria-hidden="true"></i>表情</div>#}
+                            </div>
 
                         </div>
-                    <div class="OwO">
-{#                            <div href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo OwO"#}
-{#                           rel="external nofollow"><i class="fa fa-smile-o"#}
-{#                                                      aria-hidden="true"></i>表情</div>#}
-                        </div>
 
-                    </div>
+                        <!--评论人信息--->
+                        {% if not cur_user_name %}
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-center"><i class="fa fa-user"></i></span>
+                                </div>
+                                <input name="username" id="username" type="text" class="form-control"
+                                       placeholder="昵称(必填)" aria-label="username"
+                                       aria-describedby="addon-wrapping" required="">
+                                <div class="invalid-feedback" id="username-feedback">
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-center"><i class="fa fa-envelope-o"></i></span>
+                                </div>
+                                <input name="qq_email" type="email" id="qq_email" class="form-control"
+                                       placeholder="QQ邮箱(必填)" aria-label="email"
+                                       aria-describedby="addon-wrapping" required="">
+                                <div class="invalid-feedback" id="qq_email-feedback">
+                                    请输入正确格式的qq邮箱
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-center"><i class="fa fa-link"></i></span>
+                                </div>
+                                <input name="link" id="web_site" type="text" class="form-control"
+                                       placeholder="网站(选填)" aria-label="link" aria-describedby="addon-wrapping">
+                                <div class="invalid-feedback">
+                                    请输入以http或https开头的URL,格式如:https://libo_sober.top
+                                </div>
+                            </div>
+                        {% else %}
+                            <input name="username" id="username" type="hidden" value="{{ cur_user_name.username }}">
+                            <input name="qq_email" type="hidden" id="qq_email" value="{{ cur_user_name.email }}">
+                        {% endif %}
 
-                    <!--评论人信息--->
-                    {% if not cur_user_name %}
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text text-center"><i class="fa fa-user"></i></span>
-                        </div>
-                        <input name="username" id="username" type="text" class="form-control"
-                               placeholder="昵称(必填)" aria-label="username"
-                               aria-describedby="addon-wrapping" required="">
-                        <div class="invalid-feedback" id="username-feedback">
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text text-center"><i class="fa fa-envelope-o"></i></span>
-                        </div>
-                        <input name="qq_email" type="email" id="qq_email" class="form-control"
-                               placeholder="QQ邮箱(必填)" aria-label="email"
-                               aria-describedby="addon-wrapping" required="">
-                        <div class="invalid-feedback" id="qq_email-feedback">
-                            请输入正确格式的qq邮箱
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text text-center"><i class="fa fa-link"></i></span>
-                        </div>
-                        <input name="link" id="web_site" type="text" class="form-control"
-                               placeholder="网站(选填)" aria-label="link" aria-describedby="addon-wrapping">
-                        <div class="invalid-feedback">
-                            请输入以http或https开头的URL,格式如:https://libo_sober.top
-                        </div>
-                    </div>
-                    {% else %}
-                        <input name="username" id="username" type="hidden" value="{{ cur_user_name.username }}">
-                        <input name="qq_email" type="hidden" id="qq_email" value="{{ cur_user_name.email }}">
-                    {% endif %}
+                        <button type="submit" class="btn btn-info btn-block" id="comment-submit"
+                                data-placement="top" data-toggle="tooltip" title="畅所欲言">提交评论
+                        </button>
+                        <input type="hidden" name="article" value="{{ article.id }}" id="comment_post_ID">
+                        {#                    <input type="hidden" name="category_id" value="7" id="comment_post_type">#}
+                        {#                                        <input type="hidden" name="pid" id="pid" value="{{  }}"><!--为0代表新评论-->#}
+                        {#                    <input type="hidden" name="csrfmiddlewaretoken"#}
+                        {#                           value="13fuPwPJplNcsC9wTDaYPs3KK5qS6W6u9HTA2NaMmjdDkHlqCcSdMO92BzDF0BIs">#}
+                    </form>
 
-                    <button type="submit" class="btn btn-info btn-block" id="comment-submit"
-                            data-placement="top" data-toggle="tooltip" title="畅所欲言">提交评论
-                    </button>
-                                        <input type="hidden" name="article" value="{{ article.id }}" id="comment_post_ID">
-                    {#                    <input type="hidden" name="category_id" value="7" id="comment_post_type">#}
-{#                                        <input type="hidden" name="pid" id="pid" value="{{  }}"><!--为0代表新评论-->#}
-                    {#                    <input type="hidden" name="csrfmiddlewaretoken"#}
-                    {#                           value="13fuPwPJplNcsC9wTDaYPs3KK5qS6W6u9HTA2NaMmjdDkHlqCcSdMO92BzDF0BIs">#}
-                </form>
+                </div>
+                <!--评论表单-end-->
 
             </div>
-            <!--评论表单-end-->
 
+
+            <!--评论模块-end-->
+
+
+        </article>
+        <!--文章-end-->
+
+        <!--左边内容区-end-->
+
+        <!---开启阅读模式-->
+        <div style="display:none;" id="morphing-content">
+            <h1 class="text-center my-0 p-0">{{ article.title }}</h1>
+            <div class="text-muted text-center">
+                <span class="byline">大聪明</span>&nbsp;•&nbsp;
+                <time class="date">{{ article.update_time | date:"Y-m-d H:i:s" }}</time>
+            </div>
+            <div class="article-content">
+                {{ detail_html | custom_markdown | safe }}
+            </div>
         </div>
 
 
-
-
-        <!--评论模块-end-->
-
-
-    </article>
-    <!--文章-end-->
-
-    <!--左边内容区-end-->
-
-<!---开启阅读模式-->
-    <div style="display:none;" id="morphing-content">
-        <h1 class="text-center my-0 p-0">{{ article.title }}</h1>
-        <div class="text-muted text-center">
-            <span class="byline">大聪明</span>&nbsp;•&nbsp;
-            <time class="date">{{ article.update_time | date:"Y-m-d H:i:s" }}</time>
-        </div>
-        <div class="article-content">
-            {{ detail_html | custom_markdown | safe }}
-        </div>
-    </div>
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="modal-dashang" tabindex="-1" role="dialog" aria-labelledby="modal-dashang-title"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-info">
-                    <h5 class="modal-title" id="modal-dashang-title">用金钱砸我吧，我挺得住！！！</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center bg-light">
-                    <figure class="figure">
-                        <img src="{% static 'picture/pay-weixin.png' %}" class="figure-img img-fluid rounded" alt="..."
-                             style="max-width: 130px;width: 130px;">
-                        <figcaption class="figure-caption text-center">微信</figcaption>
-                    </figure>
-                    <figure class="figure">
-                        <img src="{% static 'picture/pay-zhifubao.png' %}" class="figure-img img-fluid rounded"
-                             alt="..."
-                             style="max-width: 130px;width: 130px;">
-                        <figcaption class="figure-caption text-center">支付宝</figcaption>
-                    </figure>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-dashang" tabindex="-1" role="dialog" aria-labelledby="modal-dashang-title"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-info">
+                        <h5 class="modal-title" id="modal-dashang-title">用金钱砸我吧，我挺得住！！！</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center bg-light">
+                        <figure class="figure">
+                            <img src="{% static 'picture/pay-weixin.png' %}" class="figure-img img-fluid rounded"
+                                 alt="..."
+                                 style="max-width: 130px;width: 130px;">
+                            <figcaption class="figure-caption text-center">微信</figcaption>
+                        </figure>
+                        <figure class="figure">
+                            <img src="{% static 'picture/pay-zhifubao.png' %}" class="figure-img img-fluid rounded"
+                                 alt="..."
+                                 style="max-width: 130px;width: 130px;">
+                            <figcaption class="figure-caption text-center">支付宝</figcaption>
+                        </figure>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-        </section>
+    </section>
 
 {% endblock %}
 
@@ -349,135 +350,135 @@
     <!--右边内容区域-end-->
 
 {% endblock %}
-    </div>
+</div>
 
 
-  </div>
+</div>
 {% block js %}
-{#    js代码要写在body后，否则容易不执行  评论树展示#}
-{#                <script>#}
-{#                $(".dianji").click(function (){#}
-{#                    $.ajax({#}
-{#                        url: "/comment/tree/",#}
-{#                        type: "get",#}
-{#                        data: {#}
-{#                            article_id: "{{ article.id }}",#}
-{#                        },#}
-{#                        success:function (data){#}
-{#                            console.log(data)#}
-{#                            $.each(data, function (index, coment_obj){#}
-{#                                var pid = coment_obj.pid#}
-{#                                var add_time = coment_obj.add_time#}
-{#                                var content = coment_obj.content#}
-{#                                var pk = coment_obj.pk#}
-{#                                var username = coment_obj.username#}
-{#                                var fu_username = coment_obj.fu_username#}
-{#                                if(!pid){#}
-{#                                     var gen_comment =#}
-{#                                `#}
-{#                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>#}
-{#                    <div class="clearfix" id="div-comment-${pk}">#}
-{#                        <div class="media">#}
-{#                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"#}
-{#                                 class="mr-3 rounded-circle" width="50" height="50"#}
-{#                                 onerror="javascript:this.src='/static/image/unknow.png';">#}
-{#                            <div class="media-body">#}
-{#                                <div class="comment-info">#}
-{#                                    <cite class="c3">#}
-{##}
-{#                                        ${username}#}
-{##}
-{#                                    </cite>#}
-{##}
-{#                                </div>#}
-{#                                <div class="comment-meta"><span#}
-{#                                        class="font-weight-light text-muted">${add_time}</span>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <p class="text-break mt-2">${content}</p>#}
-{#                        <a class="btn btn-sm btn-secondary float-right"#}
-{#                           onclick="reply('div-comment-${pk}','${pk}')">回复</a>#}
-{#                    </div>                </li>`#}
-{#                                    $(".comment-list").append(gen_comment);#}
-{#                                }else {#}
-{#                                                                var zi_comment = `#}
-{#                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>#}
-{#                    <div class="clearfix" id="div-comment-${pk}">#}
-{#                        <div class="media">#}
-{#                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"#}
-{#                                 class="mr-3 rounded-circle" width="50" height="50"#}
-{#                                 onerror="javascript:this.src='/static/image/unknow.png';">#}
-{#                            <div class="media-body">#}
-{#                                <div class="comment-info">#}
-{#                                    <cite class="c3">#}
-{##}
-{#                                        ${username}#}
-{##}
-{#                                    </cite>#}
-{#                       <i class="fa fa-share fa-fw fa-1x mr-2 c1" aria-hidden="true"></i>#}
-{#                       <cite class="c3"><a href="#div-comment-${pid}" class="text-reset">${fu_username}</a></cite>#}
-{#                                                       </div>#}
-{#                                <div class="comment-meta"><span#}
-{#                                        class="font-weight-light text-muted">${add_time}</span>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <p class="text-break mt-2">${content}</p>#}
-{#                        <a class="btn btn-sm btn-secondary float-right"#}
-{#                           onclick="reply('div-comment-${pk}','${pk}')">回复</a>#}
-{#                    </div>                </li>`#}
-{#                                    console.log(pid)#}
-{#                                    console.log(fu_username)#}
-{#                                    $("[comment_id="+pid+"]").append('<ol class="children">' + zi_comment + '</ol>');#}
-{#                                }#}
-{##}
-{#                            })#}
-{#                        }#}
-{#                      })#}
-{##}
-{#                 })#}
-{##}
-{#            </script>#}
+    {#    js代码要写在body后，否则容易不执行  评论树展示#}
+    {#                <script>#}
+    {#                $(".dianji").click(function (){#}
+    {#                    $.ajax({#}
+    {#                        url: "/comment/tree/",#}
+    {#                        type: "get",#}
+    {#                        data: {#}
+    {#                            article_id: "{{ article.id }}",#}
+    {#                        },#}
+    {#                        success:function (data){#}
+    {#                            console.log(data)#}
+    {#                            $.each(data, function (index, coment_obj){#}
+    {#                                var pid = coment_obj.pid#}
+    {#                                var add_time = coment_obj.add_time#}
+    {#                                var content = coment_obj.content#}
+    {#                                var pk = coment_obj.pk#}
+    {#                                var username = coment_obj.username#}
+    {#                                var fu_username = coment_obj.fu_username#}
+    {#                                if(!pid){#}
+    {#                                     var gen_comment =#}
+    {#                                `#}
+    {#                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>#}
+    {#                    <div class="clearfix" id="div-comment-${pk}">#}
+    {#                        <div class="media">#}
+    {#                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"#}
+    {#                                 class="mr-3 rounded-circle" width="50" height="50"#}
+    {#                                 onerror="javascript:this.src='/static/image/unknow.png';">#}
+    {#                            <div class="media-body">#}
+    {#                                <div class="comment-info">#}
+    {#                                    <cite class="c3">#}
+    {##}
+    {#                                        ${username}#}
+    {##}
+    {#                                    </cite>#}
+    {##}
+    {#                                </div>#}
+    {#                                <div class="comment-meta"><span#}
+    {#                                        class="font-weight-light text-muted">${add_time}</span>#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                        <p class="text-break mt-2">${content}</p>#}
+    {#                        <a class="btn btn-sm btn-secondary float-right"#}
+    {#                           onclick="reply('div-comment-${pk}','${pk}')">回复</a>#}
+    {#                    </div>                </li>`#}
+    {#                                    $(".comment-list").append(gen_comment);#}
+    {#                                }else {#}
+    {#                                                                var zi_comment = `#}
+    {#                <li class="list-group-item comment-${pk} mt-3 px-2 pt-3 pb-2 depth-0" comment_id=${pk}>#}
+    {#                    <div class="clearfix" id="div-comment-${pk}">#}
+    {#                        <div class="media">#}
+    {#                            <img src="/static/picture/g-sdk_cFeAJq3pic4ekYTaQMJSx4Q_10.jpg"#}
+    {#                                 class="mr-3 rounded-circle" width="50" height="50"#}
+    {#                                 onerror="javascript:this.src='/static/image/unknow.png';">#}
+    {#                            <div class="media-body">#}
+    {#                                <div class="comment-info">#}
+    {#                                    <cite class="c3">#}
+    {##}
+    {#                                        ${username}#}
+    {##}
+    {#                                    </cite>#}
+    {#                       <i class="fa fa-share fa-fw fa-1x mr-2 c1" aria-hidden="true"></i>#}
+    {#                       <cite class="c3"><a href="#div-comment-${pid}" class="text-reset">${fu_username}</a></cite>#}
+    {#                                                       </div>#}
+    {#                                <div class="comment-meta"><span#}
+    {#                                        class="font-weight-light text-muted">${add_time}</span>#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                        <p class="text-break mt-2">${content}</p>#}
+    {#                        <a class="btn btn-sm btn-secondary float-right"#}
+    {#                           onclick="reply('div-comment-${pk}','${pk}')">回复</a>#}
+    {#                    </div>                </li>`#}
+    {#                                    console.log(pid)#}
+    {#                                    console.log(fu_username)#}
+    {#                                    $("[comment_id="+pid+"]").append('<ol class="children">' + zi_comment + '</ol>');#}
+    {#                                }#}
+    {##}
+    {#                            })#}
+    {#                        }#}
+    {#                      })#}
+    {##}
+    {#                 })#}
+    {##}
+    {#            </script>#}
 
-<script src="{% static 'js/api.js' %}"></script>
-{#<script src="{% static 'js/layui.js' %}"></script>#}
-<script src="{% static 'js/layui.all.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/prism.js' %}"></script>
-<script src="{% static 'js/tocbot.min.js' %}"></script>
-<script src="{% static 'js/fancyMorph.min.js' %}"></script>
+    <script src="{% static 'js/api.js' %}"></script>
+    {#<script src="{% static 'js/layui.js' %}"></script>#}
+    <script src="{% static 'js/layui.all.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/prism.js' %}"></script>
+    <script src="{% static 'js/tocbot.min.js' %}"></script>
+    <script src="{% static 'js/fancyMorph.min.js' %}"></script>
 
     <!--引入markdown插件-->
-{#<link rel="stylesheet" href="static/css/vue.css">#}
-{#<script src="{% static 'js/editormd.js' %}"></script>#}
-{#<script src="{% static 'js/marked.min.js' %}"></script>#}
-{#    <!-editormd自带的--->#}
-{#<script src="{% static 'js/flowchart.min.js' %}"></script>#}
-{#<script src="{% static 'js/raphael.min.js' %}"></script>#}
-{#<script src="{% static 'js/jquery.flowchart.min.js' %}"></script>#}
-{#<script src="{% static 'js/underscore.min.js' %}"></script>#}
-{#<script src="{% static 'js/sequence-diagram.min.js' %}"></script>#}
-{#    <script src="{% static 'js/clipboard.min.js' %}"></script>#}
+    {#<link rel="stylesheet" href="static/css/vue.css">#}
+    {#<script src="{% static 'js/editormd.js' %}"></script>#}
+    {#<script src="{% static 'js/marked.min.js' %}"></script>#}
+    {#    <!-editormd自带的--->#}
+    {#<script src="{% static 'js/flowchart.min.js' %}"></script>#}
+    {#<script src="{% static 'js/raphael.min.js' %}"></script>#}
+    {#<script src="{% static 'js/jquery.flowchart.min.js' %}"></script>#}
+    {#<script src="{% static 'js/underscore.min.js' %}"></script>#}
+    {#<script src="{% static 'js/sequence-diagram.min.js' %}"></script>#}
+    {#    <script src="{% static 'js/clipboard.min.js' %}"></script>#}
 
 
     <!--引入DoubanBoard组件-->
-{#    <script src="{% static 'js/DoubanBoard.js'%}"></script>#}
-{#    OwO表情#}
+    {#    <script src="{% static 'js/DoubanBoard.js'%}"></script>#}
+    {#    OwO表情#}
     <script src="{% static 'js/OwO.min.js' %}"></script>
-        <script>
-            var OwO_demo = new OwO({
-                {#logo: 'OωO表情',#}
-                logo: '😂表情',
-                container: document.getElementsByClassName('OwO')[0],
-                target: document.getElementById('content'),
-                api: window.location.origin + "{% static 'OwO.json' %}",
-                position: 'down',
-                width: '100%',
-                maxHeight: '250px'
-            });
-        </script>
+    <script>
+        var OwO_demo = new OwO({
+            {#logo: 'OωO表情',#}
+            logo: '😂表情',
+            container: document.getElementsByClassName('OwO')[0],
+            target: document.getElementById('content'),
+            api: window.location.origin + "{% static 'OwO.json' %}",
+            position: 'down',
+            width: '100%',
+            maxHeight: '250px'
+        });
+    </script>
 
-        <script>
+    <script>
 
         {#小心心点赞#}
         $(function () {
@@ -485,12 +486,12 @@
             $("#post-like").on("click", function () {
                 if ($(this).hasClass('have-like')) {
                     swal({
-            title: '你已经点过赞啦(･∀･)！！',
-            type: 'success',  //展示成功的图片
-            timer: 1000,  //延时毫秒数
-            showConfirmButton: true  //关闭确认框
-        },
-        );
+                            title: '你已经点过赞啦(･∀･)！！',
+                            type: 'success',  //展示成功的图片
+                            timer: 1000,  //延时毫秒数
+                            showConfirmButton: true  //关闭确认框
+                        },
+                    );
                     return false;
                 } else {
                     $(this).addClass('have-like');
@@ -504,13 +505,13 @@
                             console.log(data);
                             if (data.status == "success") {
                                 $("#like-count").html(parseInt($("#like-count").html()) + 1);
-                                 swal({
-            title: '୧(๑•̀⌄•́๑)૭感谢你喜欢我的文章！',
-            type: 'success',  //展示成功的图片
-            timer: 1000,  //延时毫秒数
-            showConfirmButton: true  //关闭确认框
-        },
-        );
+                                swal({
+                                        title: '୧(๑•̀⌄•́๑)૭感谢你喜欢我的文章！',
+                                        type: 'success',  //展示成功的图片
+                                        timer: 1000,  //延时毫秒数
+                                        showConfirmButton: true  //关闭确认框
+                                    },
+                                );
 
                             } else {
                                 layer.msg(data.msg);
@@ -534,37 +535,33 @@
         highlightCodeForMDArticle();
 
 
-
-
-
         setTimeout(function () {
             $("#morphing-content .article-content").html($("#article-content").html());
         }, 2000);
     </script>
-{#    给文章的h标签添加id值#}
+    {#    给文章的h标签添加id值#}
     <script>
         var headerEl = 'h1,h2,h3,h4',  //headers
-    content = '.article-content',//文章容器
-    idArr = {};  //标题数组以确定是否增加索引id
-//add #id
+            content = '.article-content',//文章容器
+            idArr = {};  //标题数组以确定是否增加索引id
+        //add #id
 
-$(content).children(headerEl).each(function () {
-    //去除空格以及多余标点
-    var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
+        $(content).children(headerEl).each(function () {
+            //去除空格以及多余标点
+            var headerId = $(this).text().replace(/[\s|\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\：|\，|\。]/g, '');
 
-    headerId = headerId.toLowerCase();
-    if (idArr[headerId]) {
-        //id已经存在
-        $(this).attr('id', headerId + '-' + idArr[headerId]);
-        idArr[headerId]++;
-    }
-    else {
-        //id未存在
-        idArr[headerId] = 1;
-        $(this).attr('id', headerId);
-    }
-});
-tocbot.init({
+            headerId = headerId.toLowerCase();
+            if (idArr[headerId]) {
+                //id已经存在
+                $(this).attr('id', headerId + '-' + idArr[headerId]);
+                idArr[headerId]++;
+            } else {
+                //id未存在
+                idArr[headerId] = 1;
+                $(this).attr('id', headerId);
+            }
+        });
+        tocbot.init({
             {#添加到哪里#}
             tocSelector: '.tocContainer',
             {#针对那个id标签#}
@@ -575,6 +572,6 @@ tocbot.init({
             {#// 需要解析的标题#}
             headingSelector: headerEl,
         });
-controlSidebar();
+        controlSidebar();
     </script>
 {% endblock %}

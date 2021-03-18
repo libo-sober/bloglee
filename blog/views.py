@@ -14,7 +14,6 @@ from BlogLee import settings
 from blog.utils.hashlib_func import set_md5
 from django.db.models import Q
 
-
 # Create your views here.
 time = datetime.datetime(year=2099, month=1, day=1)
 
@@ -39,7 +38,8 @@ class Index(View):
         # 以后直接在settings配置文件中修改即可
         page_count = settings.PAGE_COUNT  # 页数栏显示多少个数
         record = settings.RECORD  # 每页显示多少条记录
-        html_obj = MyPagination(page_id=page_id, num=num, base_url=base_url, get_data=get_data, page_count=page_count, record=record)
+        html_obj = MyPagination(page_id=page_id, num=num, base_url=base_url, get_data=get_data, page_count=page_count,
+                                record=record)
         # all_articles = articles | top_articles  # 合并两个queryset
         all_articles = all_articles[
                        (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
@@ -71,7 +71,6 @@ class Index(View):
         # 管理员用户对象
         admin_obj = models.UserInfo.objects.filter(is_admin=True).first()
 
-
         if tag_id:
             # tag_id对应类下的所有文章
             tags_num = models.Article.objects.filter(tag__pk=tag_id).count()  # 总共记录数
@@ -83,7 +82,7 @@ class Index(View):
             html_obj = MyPagination(page_id=page_id, num=tags_num, base_url=base_url, get_data=get_data,
                                     page_count=page_count, record=record)
             tags_all_articles = tags_all_articles[
-                           (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
+                                (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
             return render(request, 'tag.html',
                           {'tags_all_articles': tags_all_articles, 'page_html': html_obj.html_page(),
                            'categories':
@@ -103,16 +102,21 @@ class Index(View):
             html_obj = MyPagination(page_id=page_id, num=categories_num, base_url=base_url, get_data=get_data,
                                     page_count=page_count, record=record)
             categories_all_articles = categories_all_articles[
-                                (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
-            return render(request, 'category.html', {'categories_all_articles': categories_all_articles,'page_html': html_obj.html_page(), 'categories':
-                categories, 'article_count': article_count, 'comment_count': comment_count, 'new_articles': new_articles, 'hot_articles':
-                hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name, 'qq_url': qq_url, 'admin_obj': admin_obj, 'columns': columns, })
+                                      (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
+            return render(request, 'category.html',
+                          {'categories_all_articles': categories_all_articles, 'page_html': html_obj.html_page(),
+                           'categories':
+                               categories, 'article_count': article_count, 'comment_count': comment_count,
+                           'new_articles': new_articles, 'hot_articles':
+                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name,
+                           'qq_url': qq_url, 'admin_obj': admin_obj, 'columns': columns, })
         else:
             return render(request, 'index.html',
                           {'all_articles': all_articles, 'page_html': html_obj.html_page(), 'categories':
                               categories, 'article_count': article_count, 'comment_count': comment_count,
                            'new_articles': new_articles, 'hot_articles':
-                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name,'qq_url': qq_url, 'admin_obj': admin_obj, 'columns': columns, })
+                               hot_articles, 'new_comments': new_comments, 'tags': tags, 'cur_user_name': cur_user_name,
+                           'qq_url': qq_url, 'admin_obj': admin_obj, 'columns': columns, })
 
 
 # 文章详情页
@@ -175,8 +179,10 @@ class ArticleView(View):
         # 管理员用户对象
         admin_obj = models.UserInfo.objects.filter(is_admin=True).first()
 
-        return render(request, 'datail.html', { 'article': curr_article, 'detail_html': output, 'categories': categories, 'ret':
-            ret, 'cur_user_name': cur_user_name, 'columns': columns, 'previous_article': previous_article, 'next_article': next_article, 'admin_obj': admin_obj, })
+        return render(request, 'datail.html',
+                      {'article': curr_article, 'detail_html': output, 'categories': categories, 'ret':
+                          ret, 'cur_user_name': cur_user_name, 'columns': columns, 'previous_article': previous_article,
+                       'next_article': next_article, 'admin_obj': admin_obj, })
 
     def get_comment_list(self, comment_list):
         # 把msg增加一个chirld键值对，存放它的儿子们
@@ -228,8 +234,7 @@ class ArticleView(View):
                 data['fu_is_admin'] = fu_user_obj.is_admin
             else:
                 data['fu_is_admin'] = False
-            data['admin_img'] = settings.ADMIN_IMG
-
+            # data['admin_img'] = settings.ADMIN_IMG
 
             msg.append(data)
 
@@ -254,7 +259,12 @@ class About(View):
             cur_user_name = None
         admin_obj = models.UserInfo.objects.filter(is_admin=True).first()
         url = admin_obj.avatar.url
-        return render(request, 'about.html', {'categories': categories, 'cur_user_name': cur_user_name, 'columns': columns, 'url': url, })
+
+        about = models.About.objects.all().first()
+
+        return render(request, 'about.html',
+                      {'categories': categories, 'cur_user_name': cur_user_name, 'columns': columns, 'url': url,
+                       'about': about, })
 
 
 # 自定义验证规则
@@ -265,9 +275,9 @@ def email_validate(value):
     else:
         return value
 
+
 # 评论校验modelform
 class CommentForm(forms.ModelForm):
-
     class Meta:
         model = models.Comment
         fields = "__all__"
@@ -325,12 +335,12 @@ class CommentView(View):
             models.Article.objects.get(id=article).commented()
 
             comment_obj = models.Comment.objects.create(
-                username = username,
-                content = content,
-                qq_email = qq_email,
-                article = models.Article.objects.get(id=article),
-                web_site = web_site,
-                pid = models.Comment.objects.filter(id=pid).first(),
+                username=username,
+                content=content,
+                qq_email=qq_email,
+                article=models.Article.objects.get(id=article),
+                web_site=web_site,
+                pid=models.Comment.objects.filter(id=pid).first(),
             )
             data['pk'] = comment_obj.pk
             data['content'] = comment_obj.content
@@ -369,7 +379,8 @@ class CommentView(View):
                 data['content'] = comment_obj.content
                 data['username'] = comment_obj.username
                 data['add_time'] = comment_obj.add_time.strftime('%Y-%m-%d %H:%M:%S')
-                data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment_obj.qq_email[:-7]}&spec=640&img_type=jpg'
+                data[
+                    'qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment_obj.qq_email[:-7]}&spec=640&img_type=jpg'
 
                 # print(comment_obj.pid)
                 # # 评论成功，发送邮件提醒
@@ -437,11 +448,12 @@ class LoginView(View):
         else:
             cur_user_name = None
 
-        return render(request, 'login.html', {'cur_user_name': cur_user_name, 'categories': categories, 'columns': columns, })
+        return render(request, 'login.html',
+                      {'cur_user_name': cur_user_name, 'categories': categories, 'columns': columns, })
 
     def post(self, request):
         # 初始化返回值
-        res = {"code":500}
+        res = {"code": 500}
 
         user = request.POST.get('username')
         pwd = request.POST.get('password')
@@ -455,15 +467,12 @@ class LoginView(View):
         return JsonResponse(res)
 
 
-
 # 登出
 class LogoutView(View):
 
     def get(self, request):
         request.session.flush()  # 清楚所有的cookie和session
         return redirect('login')
-
-
 
 
 # 注册验证
@@ -484,7 +493,9 @@ class RegisterForm(forms.Form):
         max_length=32,
         min_length=6,
         label='密码',
-        widget=forms.widgets.PasswordInput(attrs={'class': 'password', 'placeholder': '密码', 'oncontextmenu': 'return false', 'onpaste': 'return false', }),
+        widget=forms.widgets.PasswordInput(
+            attrs={'class': 'password', 'placeholder': '密码', 'oncontextmenu': 'return false',
+                   'onpaste': 'return false', }),
         error_messages={
             'required': '密码不能为空！',
             'max_length': '密码不能大于16位！',
@@ -537,7 +548,8 @@ class RegisterView(View):
         else:
             cur_user_name = None
 
-        return render(request, 'register.html', {'cur_user_name': cur_user_name, 'categories': categories, 'columns': columns, })
+        return render(request, 'register.html',
+                      {'cur_user_name': cur_user_name, 'categories': categories, 'columns': columns, })
 
     def post(self, request):
         res = {"code": 500, "error": None}
@@ -589,10 +601,10 @@ class UserInfoView(View):
 
         cur_user_name = models.UserInfo.objects.get(id=user_id)
 
-        return render(request, 'userinfo.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
+        return render(request, 'userinfo.html',
+                      {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, })
 
     def post(self, request):
-
 
         # 登录的用户对象
         user_id = request.session.get('user_id')
@@ -623,8 +635,6 @@ class UserInfoView(View):
         return JsonResponse(msg)
 
 
-
-
 class ModifyView(View):
 
     def post(self, request):
@@ -645,8 +655,6 @@ class ModifyView(View):
         return JsonResponse(msg)
 
 
-
-
 class ArchiveView(View):
 
     def get(self, request):
@@ -663,7 +671,8 @@ class ArchiveView(View):
 
         dates = models.Article.objects.datetimes('add_time', 'month', order='DESC')
 
-        return render(request, 'archive.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, 'dates': dates, })
+        return render(request, 'archive.html',
+                      {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, 'dates': dates, })
 
 
 class FriendsForm(forms.ModelForm):
@@ -687,7 +696,6 @@ class FriendsForm(forms.ModelForm):
         }
 
 
-
 class FriendsView(View):
 
     def get(self, request):
@@ -705,8 +713,9 @@ class FriendsView(View):
 
         frieds_obj = models.Links.objects.filter(is_disply=True)
 
-
-        return render(request, 'friends.html', {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, 'frieds_obj': frieds_obj, })
+        return render(request, 'friends.html',
+                      {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns,
+                       'frieds_obj': frieds_obj, })
 
     def post(self, request):
         msg = {'code': 500, 'error': None}
@@ -717,9 +726,6 @@ class FriendsView(View):
             form.save()
         else:
             msg['error'] = form.errors
-
-
-
 
         return JsonResponse(msg)
 
@@ -749,8 +755,8 @@ class MessagesView(View):
         ret = self.get_comment_list(comment_list)
 
         return render(request, 'messages.html',
-                      {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns, 'least_users': least_users, 'ret': ret, })
-
+                      {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns,
+                       'least_users': least_users, 'ret': ret, })
 
     def get_comment_list(self, comment_list):
         # 把msg增加一个chirld键值对，存放它的儿子们
@@ -887,4 +893,3 @@ class SearchView(View):
 
         else:
             return redirect('index')
-

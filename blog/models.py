@@ -227,7 +227,7 @@ class Site(models.Model):
     icp_url = models.CharField(max_length=50, verbose_name='备案链接')
     site_mail = models.CharField(max_length=50, verbose_name='我的邮箱')
     site_qq = models.CharField(max_length=50, verbose_name='我的QQ')
-    site_avatar = models.CharField(max_length=200, default='https://image.3001.net/images/20171226/15142933784705.png', verbose_name='我的头像')
+    site_avatar = models.CharField(max_length=200, default='/avatars/head.jpg', verbose_name='我的头像')
 
     class Meta:
         verbose_name = '网站设置'
@@ -250,9 +250,9 @@ class File(models.Model):
 
 
 class About(models.Model):
-    me = models.CharField(max_length=30, verbose_name='关于博主')
-    site = models.CharField(max_length=30, verbose_name='关于本站')
-    promise = models.CharField(max_length=30, verbose_name='本站声明')
+    me = MDTextField( verbose_name='关于博主')
+    site = MDTextField( verbose_name='关于本站')
+    promise = MDTextField( verbose_name='本站声明')
     class Meta:
         verbose_name = '关于我'
         verbose_name_plural = verbose_name

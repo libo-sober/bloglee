@@ -16,5 +16,6 @@ admin.site.register(models.Site)
 admin.site.register(models.UserInfo)
 admin.site.register(models.Column)
 admin.site.register(models.File)
+admin.site.register(models.About)
 
 

@@ -19,8 +19,8 @@ def img_url(comment):
     qq_number = comment.qq_email[:-7]
     user_obj = models.UserInfo.objects.filter(username=comment.username).first()
     if user_obj:
-        if user_obj.is_admin:
-            img_url = settings.ADMIN_IMG
+        if user_obj.avatar:
+            img_url = user_obj.avatar.url
         else:
             img_url = f'http://q.qlogo.cn/headimg_dl?dst_uin={qq_number}&spec=640&img_type=jpg'
     else:
@@ -62,7 +62,7 @@ def tree_son(comment):
         qq_url = com['qq_url']
         is_admin = com['is_admin']
         fu_is_admin = com['fu_is_admin']
-        admin_img = com['admin_img']
+        # admin_img = com['admin_img']
         avatar = com['avatar']
         if avatar:
             img = avatar
@@ -140,7 +140,7 @@ def build_coment_tree(ret):
         content = comment_dicts['content']
         qq_url = comment_dicts['qq_url']
         is_admin = comment_dicts['is_admin']
-        admin_img = comment_dicts['admin_img']
+        # admin_img = comment_dicts['admin_img']
         avatar = comment_dicts['avatar']
         if avatar:
             img = avatar
