@@ -33,9 +33,12 @@
 
             <div class="card-body py-2">
                 {% for user in least_users %}
+                {% if user.avatar %}
+                <a class="d-inline-block position-relative" style="width:34px;"><img class="rounded-circle xwcms" src="{{ user.avatar.url }}" style="max-width:100%;" onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>
+                    {% else %}
+                  <a class="d-inline-block position-relative" style="width:34px;"><img class="rounded-circle xwcms" src="{% url_about user.email %}" style="max-width:100%;" onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>
 
-                <a class="d-inline-block position-relative" style="width:34px;"><img class="rounded-circle xwcms" src="{{ user.avatar }}" style="max-width:100%;" onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>
-
+                    {% endif %}
                 {% endfor %}
 
 
@@ -162,7 +165,7 @@ var OwO_demo = new OwO({
     logo:'OωO表情',
     container:document.getElementsByClassName('OwO')[0],
     target:document.getElementById('content'),
-    api:window.location.origin+'/emoji',
+    api:window.location.origin + "{% static 'OwO.json' %}",
     position:'down',
     width:'100%',
     maxHeight:'250px'

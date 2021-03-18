@@ -15,6 +15,11 @@ def random_num():
 
 
 @register.simple_tag()
+def url_about(eamil):
+    return f'http://q.qlogo.cn/headimg_dl?dst_uin={eamil[:-7]}&spec=640&img_type=jpg'
+
+
+@register.simple_tag()
 def img_url(comment):
     qq_number = comment.qq_email[:-7]
     user_obj = models.UserInfo.objects.filter(username=comment.username).first()

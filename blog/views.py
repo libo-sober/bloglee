@@ -746,8 +746,9 @@ class MessagesView(View):
             cur_user_name = None
 
         least_users = models.UserInfo.objects.all()[:20]
-        for user in least_users:
-            user.avatar = f'http://q.qlogo.cn/headimg_dl?dst_uin={user.email[:-7]}&spec=640&img_type=jpg'
+        # for user in least_users:
+        #     if user.avatar is None:
+        # url = f'http://q.qlogo.cn/headimg_dl?dst_uin={user.email[:-7]}&spec=640&img_type=jpg'
 
         # 所有评论
         comment_obj = models.Comment.objects.all().order_by('-add_time')[:10]
@@ -807,7 +808,7 @@ class MessagesView(View):
                 data['fu_is_admin'] = fu_user_obj.is_admin
             else:
                 data['fu_is_admin'] = False
-            data['admin_img'] = settings.ADMIN_IMG
+            # data['admin_img'] = settings.ADMIN_IMG
 
             msg.append(data)
         return msg
