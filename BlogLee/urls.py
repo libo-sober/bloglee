@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from blog import views
+from django.conf.urls import url
+from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
@@ -54,6 +56,9 @@ urlpatterns = [
     path('article/search/', views.SearchView.as_view(), name='search'),
     # mdeditor
     path('mdeditor/', include('mdeditor.urls')),
+    url(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
+
+    url(r'^static/(?P<path>.*)$',serve,{'document_root':settings.STATIC_ROOT}),
 
 ]
 # 设置后台名称
