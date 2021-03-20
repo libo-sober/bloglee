@@ -2380,3 +2380,9 @@ table tr th:last-child,
 table tr td:last-child {
     margin-bottom: 0;
 }
+
+.juzhong{
+    text-align: center;
+    font-family: 华文隶书;
+    color: #66A968;
+}

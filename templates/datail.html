@@ -555,10 +555,13 @@
                 //id已经存在
                 $(this).attr('id', headerId + '-' + idArr[headerId]);
                 idArr[headerId]++;
+                $(this).attr('class', 'juzhong');
             } else {
                 //id未存在
                 idArr[headerId] = 1;
                 $(this).attr('id', headerId);
+                $(this).attr('class', 'juzhong');
+
             }
         });
         tocbot.init({
