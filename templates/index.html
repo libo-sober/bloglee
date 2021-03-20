@@ -359,11 +359,14 @@
                     dataType: 'json',
                     async: false,
                     success:function (data) {
+                        console.log(data)
                         var todayWeather = data.data.forecast[0];   //  天气
+                        var ganmao = data.data.ganmao;   //  感冒
+                        var wendu = data.data.wendu;  //温度
                         var date = new Date()                // 日期
                         var year = date.getFullYear()
                         var month = date.getMonth() + 1
-                        $('.one_datetime').html(`${year}年${month}月${todayWeather.date} ${city}  ${todayWeather.type} `)
+                        $('.one_datetime').html(`${year}年${month}月${todayWeather.date} ${city} ${wendu}度 ${todayWeather.type} ${ganmao}`)
                     }
                 })
 
