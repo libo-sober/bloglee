@@ -1557,7 +1557,7 @@ div#comments .comment-list .comment-info cite{
 		margin-top: -60px;
 	}
     .yunmusic{
-        margin-top: -60px;
+        display:none;
     }
 	.hd,.pull-date{
 		display:none;
