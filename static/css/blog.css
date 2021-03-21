@@ -1556,6 +1556,9 @@ div#comments .comment-list .comment-info cite{
 	.cover-desc{
 		margin-top: -60px;
 	}
+    .yunmusic{
+        margin-top: -60px;
+    }
 	.hd,.pull-date{
 		display:none;
 	}
@@ -2385,4 +2388,13 @@ table tr td:last-child {
     text-align: center;
     font-family: 华文隶书;
     color: #66A968;
+}
+.yunmusic{
+    top: 35%;
+    left: 15%;
+	position: absolute;
+	width: 100%;
+	z-index: 2;
+	color:#fff;
+	text-shadow: 2px 2px 2px #666;
 }
