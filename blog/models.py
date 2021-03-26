@@ -14,6 +14,7 @@ class UserInfo(models.Model):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False, null=True, blank=True)
     avatar = models.FileField(upload_to='avatars/', default=None)
+    last_login = models.DateTimeField(auto_now=True, blank=True, null=True, verbose_name='最后登录时间')
 
     class Meta:
         verbose_name_plural = '用户信息表'

@@ -463,9 +463,12 @@ class LoginView(View):
         user = request.POST.get('username')
         pwd = request.POST.get('password')
         # 判断用户名和密码
-        user_obj = models.UserInfo.objects.filter(username=user, password=set_md5(pwd)).first()
+        user_obj_set = models.UserInfo.objects.filter(username=user, password=set_md5(pwd))
+        user_obj = user_obj_set.first()
         if user_obj:
             res['code'] = 200
+            # 更新最后登录时间
+            user_obj_set.update(last_login=datetime.datetime.now())
             # 把当前用户id添加到session中
             request.session['user_id'] = user_obj.id
 
@@ -750,7 +753,7 @@ class MessagesView(View):
         else:
             cur_user_name = None
 
-        least_users = models.UserInfo.objects.all()[:20]
+        least_users = models.UserInfo.objects.all().order_by('-last_login')[:20]
         # for user in least_users:
         #     if user.avatar is None:
         # url = f'http://q.qlogo.cn/headimg_dl?dst_uin={user.email[:-7]}&spec=640&img_type=jpg'
