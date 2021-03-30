@@ -1,6 +1,7 @@
 import datetime
 import mistune
 import re
+import html
 
 from django.core.exceptions import ValidationError
 from django import forms
@@ -333,6 +334,7 @@ class CommentView(View):
             msg['success'] = True
             username = request.POST.get('username')
             content = request.POST.get('content')
+            content = html.escape(content)
             article = request.POST.get('article')
             qq_email = request.POST.get('qq_email')
             web_site = request.POST.get('web_site')
@@ -378,14 +380,17 @@ class CommentView(View):
                 article = request.POST.get('article')
                 models.Article.objects.get(id=article).commented()
                 # 保存
-                # print(form.cleaned_data)
+                print(form.cleaned_data)
+                content = form.cleaned_data.pop('content')
+                content = html.escape(content)
+                form.cleaned_data.update({'content': content})
+                print(form.cleaned_data)
                 comment_obj = form.save()
                 data['pk'] = comment_obj.pk
                 data['content'] = comment_obj.content
                 data['username'] = comment_obj.username
                 data['add_time'] = comment_obj.add_time.strftime('%Y-%m-%d %H:%M:%S')
-                data[
-                    'qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment_obj.qq_email[:-7]}&spec=640&img_type=jpg'
+                data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment_obj.qq_email[:-7]}&spec=640&img_type=jpg'
 
                 # print(comment_obj.pid)
                 # # 评论成功，发送邮件提醒
