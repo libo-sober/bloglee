@@ -148,10 +148,11 @@ RECORD = 10  # 每页显示多少条记录
 # 邮箱配置信息
 EMAIL_HOST = 'smtp.qq.com'  # 邮件服务器地址
 EMAIL_PORT = 25  # 端口号25 or 465
-EMAIL_HOST_USER = '1570140958@qq.com'  # 用户名,可以自定义
+EMAIL_HOST_USER = 'mr.lee.bobo@qq.com'  # 用户名,可以自定义
 EMAIL_HOST_PASSWORD = 'jcilpxwejkxgihbd'  # 邮箱授权码
 EMAIL_USE_TLS = True  # 默认
-EMAIL_FROM = '1570140958@qq.com'  # 发送人
+# EMAIL_FROM = '大聪明博客平台'  # 发送人
+EMAIL_FROM_NAME = '大聪明博客平台'
 
 # mdeditor媒体文件
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')

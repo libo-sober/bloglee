@@ -613,7 +613,7 @@ class RegisterView(View):
             send_mail(
                 f'大聪明博客用户：{username}的激活链接',
                 email_content,
-                settings.EMAIL_HOST_USER,
+                settings.EMAIL_FROM_NAME,
                 [email, ],  # 文章作者邮箱
             )
         else:
