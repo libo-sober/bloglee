@@ -14,164 +14,154 @@
 
 {% block content %}
 
-<!--主内容-start--->
-<main role="main">
-    <div class="container col-md-8 offset-md-2 message" style="min-height:300px;">
-	    <nav class="my-2 p-0" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/" class="text-decoration-none">首页</a></li>
-			    <li class="breadcrumb-item active" aria-current="page">给我留言</li>
-		    </ol>
-	    </nav>
-        <center><strong>自己活着，就是为了使别人过得更美好。</strong></center>
-        <center><img src="{% static 'picture/hhh.gif' %}" width="auto" height="300"></center>
+    <!--主内容-start--->
+    <main role="main">
+        <div class="container col-md-8 offset-md-2 message" style="min-height:300px;">
+            <nav class="my-2 p-0" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/" class="text-decoration-none">首页</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">给我留言</li>
+                </ol>
+            </nav>
+            <center><strong>自己活着，就是为了使别人过得更美好。</strong></center>
+            <center><img src="{% static 'picture/hhh.gif' %}" width="auto" height="300"></center>
 
-        <div class="card">
-            <h4 class="link-title">这些人刚刚来看过我</h4>
+            <div class="card">
+                <h4 class="link-title">这些人刚刚来看过我</h4>
 
 
+                <div class="card-body py-2">
+                    {% for user in least_users %}
+                        {% if user.avatar %}
+                            <a class="d-inline-block position-relative" style="width:34px;"><img
+                                    class="rounded-circle xwcms" src="{{ user.avatar.url }}" style="max-width:100%;"
+                                    onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>
+                        {% else %}
+                            <a class="d-inline-block position-relative" style="width:34px;"><img
+                                    class="rounded-circle xwcms" src="{% url_about user.email %}"
+                                    style="max-width:100%;"
+                                    onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>
 
-            <div class="card-body py-2">
-                {% for user in least_users %}
-                {% if user.avatar %}
-                <a class="d-inline-block position-relative" style="width:34px;"><img class="rounded-circle xwcms" src="{{ user.avatar.url }}" style="max-width:100%;" onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>
-                    {% else %}
-                  <a class="d-inline-block position-relative" style="width:34px;"><img class="rounded-circle xwcms" src="{% url_about user.email %}" style="max-width:100%;" onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>
+                        {% endif %}
+                    {% endfor %}
 
-                    {% endif %}
-                {% endfor %}
 
+                </div>
 
 
             </div>
 
 
-        </div>
+            <div id="comments" class="" style="opacity:0.85;">
 
+                <!--评论列表-start-->
 
+                <ol class="list-group comment-list" id="comments">
+                    {{ ret | build_coment_tree | safe }}
+                </ol>
 
+                <!--评论表单-start-->
+                <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
+                    <a name="comment"></a>
+                    <h4>发表评论
+                        <a class="btn btn-sm btn-info d-none text-white" id="cancel-reply"
+                           onclick="cancelReply();">取消回复</a>
+                    </h4>
+                    {% if not cur_user_name %}
+                        <p class="text-muted">电子邮件地址不会被公开。</p>
+                    {% else %}
+                        <p class="text-muted">当前登录用户：<span style="color:#2b3af0;">{{ cur_user_name.username }}</span>
+                        </p>
+                    {% endif %}
 
+                    <form id="comment-form" onsubmit="return false;" method="post" action="{% url 'comment' %}">
+                        {% csrf_token %}
+                                                    <div class="OwO">
+                            </div>
+                        <div class="form-group" id="article_content">
 
-
-
-
-        <div id="comments" class="" style="opacity:0.85;">
-
-            <!--评论列表-start-->
-
-        <ol class="list-group comment-list" id="comments">
-            {{ ret | build_coment_tree | safe }}
-        </ol>
-
-            <!--评论表单-start-->
-            <div id="respond" class="bg-white mt-3 px-3 pt-3 pb-2">
-                <a name="comment"></a>
-                <h4>发表评论
-                    <a class="btn btn-sm btn-info d-none text-white" id="cancel-reply"
-                       onclick="cancelReply();">取消回复</a>
-                </h4>
-            {% if not cur_user_name %}
-                <p class="text-muted">电子邮件地址不会被公开。</p>
-            {% else %}
-                <p class="text-muted">当前登录用户：<span style="color:#2b3af0;">{{ cur_user_name.username }}</span></p>
-            {% endif %}
-
-                <form id="comment-form" onsubmit="return false;" method="post" action="{% url 'comment' %}" >
-                    {% csrf_token %}
-                    <div class="form-group" id="article_content">
                                         <textarea class="form-control OwO-textarea" id="content" name="content" rows="5"
                                                   placeholder="居然什么都不说，哼！" autocomplete="off" aria-label="content"
                                                   aria-describedby="addon-wrapping" required=""></textarea>
-                        <div class="invalid-feedback" id="content-feedback">
+                            <div class="invalid-feedback" id="content-feedback">
+
+                            </div>
+
+
 
                         </div>
-{#                    <div class="btn btn-sm btn-warning">#}
-                        <div class="OwO">
-{#                        </div>#}
-{#                            <div href="javascript: void(0);" class="btn btn-sm btn-warning OwO-logo OwO"#}
-{#                           rel="external nofollow"><i class="fa fa-smile-o"#}
-{#                                                      aria-hidden="true"></i>表情</div>#}
-                        </div>
 
-                    </div>
+                        <!--评论人信息--->
+                        {% if not cur_user_name %}
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-center"><i class="fa fa-user"></i></span>
+                                </div>
+                                <input name="username" id="username" type="text" class="form-control"
+                                       placeholder="昵称(必填)" aria-label="username"
+                                       aria-describedby="addon-wrapping" required="">
+                                <div class="invalid-feedback" id="username-feedback">
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-center"><i class="fa fa-envelope-o"></i></span>
+                                </div>
+                                <input name="qq_email" type="email" id="qq_email" class="form-control"
+                                       placeholder="QQ邮箱(必填)" aria-label="email"
+                                       aria-describedby="addon-wrapping" required="">
+                                <div class="invalid-feedback" id="qq_email-feedback">
+                                    请输入正确格式的qq邮箱
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text text-center"><i class="fa fa-link"></i></span>
+                                </div>
+                                <input name="link" id="web_site" type="text" class="form-control"
+                                       placeholder="网站(选填)" aria-label="link" aria-describedby="addon-wrapping">
+                                <div class="invalid-feedback">
+                                    请输入以http或https开头的URL,格式如:https://libo_sober.top
+                                </div>
+                            </div>
+                        {% else %}
+                            <input name="username" id="username" type="hidden" value="{{ cur_user_name.username }}">
+                            <input name="qq_email" type="hidden" id="qq_email" value="{{ cur_user_name.email }}">
+                        {% endif %}
 
-                    <!--评论人信息--->
-                    {% if not cur_user_name %}
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text text-center"><i class="fa fa-user"></i></span>
-                        </div>
-                        <input name="username" id="username" type="text" class="form-control"
-                               placeholder="昵称(必填)" aria-label="username"
-                               aria-describedby="addon-wrapping" required="">
-                        <div class="invalid-feedback" id="username-feedback">
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text text-center"><i class="fa fa-envelope-o"></i></span>
-                        </div>
-                        <input name="qq_email" type="email" id="qq_email" class="form-control"
-                               placeholder="QQ邮箱(必填)" aria-label="email"
-                               aria-describedby="addon-wrapping" required="">
-                        <div class="invalid-feedback" id="qq_email-feedback">
-                            请输入正确格式的qq邮箱
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text text-center"><i class="fa fa-link"></i></span>
-                        </div>
-                        <input name="link" id="web_site" type="text" class="form-control"
-                               placeholder="网站(选填)" aria-label="link" aria-describedby="addon-wrapping">
-                        <div class="invalid-feedback">
-                            请输入以http或https开头的URL,格式如:https://libo_sober.top
-                        </div>
-                    </div>
-                    {% else %}
-                        <input name="username" id="username" type="hidden" value="{{ cur_user_name.username }}">
-                        <input name="qq_email" type="hidden" id="qq_email" value="{{ cur_user_name.email }}">
-                    {% endif %}
+                        <button type="submit" class="btn btn-info btn-block" id="comment-submit"
+                                data-placement="top" data-toggle="tooltip" title="畅所欲言">提交评论
+                        </button>
+                        <input type="hidden" name="article" value='8' id="comment_post_ID">
+                        {#                    <input type="hidden" name="category_id" value="7" id="comment_post_type">#}
+                        {#                                        <input type="hidden" name="pid" id="pid" value="{{  }}"><!--为0代表新评论-->#}
+                        {#                    <input type="hidden" name="csrfmiddlewaretoken"#}
+                        {#                           value="13fuPwPJplNcsC9wTDaYPs3KK5qS6W6u9HTA2NaMmjdDkHlqCcSdMO92BzDF0BIs">#}
+                    </form>
 
-                    <button type="submit" class="btn btn-info btn-block" id="comment-submit"
-                            data-placement="top" data-toggle="tooltip" title="畅所欲言">提交评论
-                    </button>
-                                        <input type="hidden" name="article" value='8' id="comment_post_ID">
-                    {#                    <input type="hidden" name="category_id" value="7" id="comment_post_type">#}
-{#                                        <input type="hidden" name="pid" id="pid" value="{{  }}"><!--为0代表新评论-->#}
-                    {#                    <input type="hidden" name="csrfmiddlewaretoken"#}
-                    {#                           value="13fuPwPJplNcsC9wTDaYPs3KK5qS6W6u9HTA2NaMmjdDkHlqCcSdMO92BzDF0BIs">#}
-                </form>
+                </div>
+                <!--评论表单-end-->
 
             </div>
-            <!--评论表单-end-->
+
 
         </div>
-
-
-
-
-
-
-
-
-  </div>
-</main>
+    </main>
 
 {% endblock %}
 
 {% block js %}
     <script src="{% static 'js/OwO.min.js' %}"></script>
     <script>
-var OwO_demo = new OwO({
-    logo:'OωO表情',
-    container:document.getElementsByClassName('OwO')[0],
-    target:document.getElementById('content'),
-    api:window.location.origin + "{% static 'OwO.json' %}",
-    position:'down',
-    width:'100%',
-    maxHeight:'250px'
-});
-</script>
+        var OwO_demo = new OwO({
+            logo: 'OωO表情',
+            container: document.getElementsByClassName('OwO')[0],
+            target: document.getElementById('content'),
+            api: window.location.origin + "{% static 'OwO.json' %}",
+            position: 'down',
+            width: '100%',
+            maxHeight: '250px'
+        });
+    </script>
 
 {% endblock %}
