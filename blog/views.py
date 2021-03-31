@@ -171,8 +171,19 @@ class ArticleView(View):
         # 文章专栏
         columns = models.Column.objects.all().order_by('-weights')
 
-        # 该文章的所有评论
-        comment_obj = models.Comment.objects.filter(article_id=article_id).order_by('-add_time')
+        # 所有评论
+        page_id = request.GET.get('page')  # 获取get请求中的page数据
+        num = models.Comment.objects.all().count()  # 总共记录数
+        base_url = request.path  # 请求路径
+        get_data = request.GET.copy()  # 直接调用这个类自己的copy方法或者deepcopy方法或者自己import copy 都可以实现内容允许修改
+        # 以后直接在settings配置文件中修改即可
+        page_count = settings.PAGE_COUNT  # 页数栏显示多少个数
+        record = settings.RECORD  # 每页显示多少条记录
+        html_obj = MyPagination(page_id=page_id, num=num, base_url=base_url, get_data=get_data, page_count=page_count,
+                                record=record)
+        comment_obj = models.Comment.objects.all().order_by('-add_time')
+        comment_obj = comment_obj[
+                      (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
         comment_list = self.build_msg(comment_obj)
         ret = self.get_comment_list(comment_list)
 
@@ -189,7 +200,7 @@ class ArticleView(View):
         return render(request, 'datail.html',
                       {'article': curr_article, 'detail_html': output, 'categories': categories, 'ret':
                           ret, 'cur_user_name': cur_user_name, 'columns': columns, 'previous_article': previous_article,
-                       'next_article': next_article, 'admin_obj': admin_obj, })
+                       'next_article': next_article, 'admin_obj': admin_obj, 'page_html': html_obj.html_page(),})
 
     def get_comment_list(self, comment_list):
         # 把msg增加一个chirld键值对，存放它的儿子们
@@ -812,13 +823,24 @@ class MessagesView(View):
         # url = f'http://q.qlogo.cn/headimg_dl?dst_uin={user.email[:-7]}&spec=640&img_type=jpg'
 
         # 所有评论
-        comment_obj = models.Comment.objects.all().order_by('-add_time')[:10]
+        page_id = request.GET.get('page')  # 获取get请求中的page数据
+        num = models.Comment.objects.all().count()  # 总共记录数
+        base_url = request.path  # 请求路径
+        get_data = request.GET.copy()  # 直接调用这个类自己的copy方法或者deepcopy方法或者自己import copy 都可以实现内容允许修改
+        # 以后直接在settings配置文件中修改即可
+        page_count = settings.PAGE_COUNT  # 页数栏显示多少个数
+        record = settings.RECORD  # 每页显示多少条记录
+        html_obj = MyPagination(page_id=page_id, num=num, base_url=base_url, get_data=get_data, page_count=page_count,
+                                record=record)
+        comment_obj = models.Comment.objects.all().order_by('-add_time')
+        comment_obj = comment_obj[
+                       (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
         comment_list = self.build_msg(comment_obj)
         ret = self.get_comment_list(comment_list)
 
         return render(request, 'messages.html',
                       {'cur_user_name': cur_user_name, "categories": categories, 'columns': columns,
-                       'least_users': least_users, 'ret': ret, })
+                       'least_users': least_users, 'ret': ret, 'page_html': html_obj.html_page(),})
 
     def get_comment_list(self, comment_list):
         # 把msg增加一个chirld键值对，存放它的儿子们
