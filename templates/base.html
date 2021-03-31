@@ -239,6 +239,7 @@
 
 <script src="{% static 'js/zh-cn-tw.js' %}"></script>
 <script src="{% static 'js/blog.js' %}"></script>
+<script src="{% static 'js/grayscale.js' %}"></script>
 
 {#禁用开发者工具#}
 {#<script src='{% static 'js/disable-devtool.min.js' %}'></script>#}
@@ -247,6 +248,9 @@
 <script>
     DisableDevtool({disableMenu: false})
     loadRightMenu();
+</script>
+<script>
+    grayscale($("body"));
 </script>
 
 
