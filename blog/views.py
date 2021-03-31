@@ -334,7 +334,10 @@ class CommentView(View):
             msg['success'] = True
             username = request.POST.get('username')
             content = request.POST.get('content')
-            content = html.escape(content)
+            # 防止js注入
+            re_script = re.compile(r'<script>(.*?)</script>')
+            if re_script.search(content):
+                content = html.escape(content)
             article = request.POST.get('article')
             qq_email = request.POST.get('qq_email')
             web_site = request.POST.get('web_site')
@@ -356,14 +359,14 @@ class CommentView(View):
             data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment_obj.qq_email[:-7]}&spec=640&img_type=jpg'
 
             # print(comment_obj.pid)
-            # # 评论成功，发送邮件提醒
-            #             # article_obj = models.Article.objects.filter(pk=article_id).first()
-            #             # send_mail(
-            #             #     f'您的{article_obj.title}文章被{comment_obj.username}评论',
-            #             #     comment_obj.content,
-            #             #     settings.EMAIL_HOST_USER,
-            #             #     ["1959013723@qq.com",],  # 文章作者邮箱
-            #             # )
+            # 评论成功，发送邮件提醒
+            article_obj = models.Article.objects.filter(pk=article).first()
+            send_mail(
+                f'您的{article_obj.title}文章被{comment_obj.username}评论',
+                comment_obj.content,
+                settings.EMAIL_HOST_USER,
+                ["libo_sober@163.com",],  # 文章作者邮箱
+            )
             if comment_obj.pid != None:
                 # pid = int(comment_obj.pid)
 
@@ -380,12 +383,16 @@ class CommentView(View):
                 article = request.POST.get('article')
                 models.Article.objects.get(id=article).commented()
                 # 保存
-                print(form.cleaned_data)
                 content = form.cleaned_data.pop('content')
-                content = html.escape(content)
+                # 防止js注入
+                # 防止js注入
+                re_script = re.compile(r'<script>(.*?)</script>')
+                if re_script.search(content):
+                    content = html.escape(content)
                 form.cleaned_data.update({'content': content})
-                print(form.cleaned_data)
-                comment_obj = form.save()
+                comment_obj = models.Comment.objects.create(
+                    **form.cleaned_data
+                )
                 data['pk'] = comment_obj.pk
                 data['content'] = comment_obj.content
                 data['username'] = comment_obj.username
@@ -393,14 +400,14 @@ class CommentView(View):
                 data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment_obj.qq_email[:-7]}&spec=640&img_type=jpg'
 
                 # print(comment_obj.pid)
-                # # 评论成功，发送邮件提醒
-                #             # article_obj = models.Article.objects.filter(pk=article_id).first()
-                #             # send_mail(
-                #             #     f'您的{article_obj.title}文章被{comment_obj.username}评论',
-                #             #     comment_obj.content,
-                #             #     settings.EMAIL_HOST_USER,
-                #             #     ["1959013723@qq.com",],  # 文章作者邮箱
-                #             # )
+                # 评论成功，发送邮件提醒
+                article_obj = models.Article.objects.filter(pk=comment_obj.article).first()
+                send_mail(
+                    f'您的{article_obj.title}文章被{comment_obj.username}评论',
+                    comment_obj.content,
+                    settings.EMAIL_HOST_USER,
+                    ["libo_sober@163.com",],  # 文章作者邮箱
+                )
                 if comment_obj.pid != None:
                     # pid = int(comment_obj.pid)
 

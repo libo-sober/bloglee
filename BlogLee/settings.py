@@ -145,12 +145,13 @@ STATICFILES_DIRS = [
 PAGE_COUNT = 5  # 页数栏显示多少个数,是个奇数
 RECORD = 10  # 每页显示多少条记录
 
-# 服务器邮箱
-EMAILHOST = 'smtp.163.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'libo_sober@163.com'
-EMAIL_HOST_PASSWORD = 'XRZMRKSOXAQNZOZT'
-EMAIL_USE_SSL = True
+# 邮箱配置信息
+EMAIL_HOST = 'smtp.qq.com'  # 邮件服务器地址
+EMAIL_PORT = 25  # 端口号25 or 465
+EMAIL_HOST_USER = '1570140958@qq.com'  # 用户名,可以自定义
+EMAIL_HOST_PASSWORD = 'jcilpxwejkxgihbd'  # 邮箱授权码
+EMAIL_USE_TLS = True  # 默认
+EMAIL_FROM = '1570140958@qq.com'  # 发送人
 
 # mdeditor媒体文件
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
