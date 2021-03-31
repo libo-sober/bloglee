@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from django.views.generic.base import View
 from blog import models
 from blog.utils.page_html import MyPagination
+from blog.utils.email_validation import random_str
 from django.core.mail import send_mail
 from BlogLee import settings
 from blog.utils.hashlib_func import set_md5
@@ -378,50 +379,55 @@ class CommentView(View):
             msg['data'] = data
             # msg['error'] = None
         else:
-            if form.is_valid():
-                msg['success'] = True
-                article = request.POST.get('article')
-                models.Article.objects.get(id=article).commented()
-                # 保存
-                content = form.cleaned_data.pop('content')
-                # 防止js注入
-                # 防止js注入
-                re_script = re.compile(r'<script>(.*?)</script>')
-                if re_script.search(content):
-                    content = html.escape(content)
-                form.cleaned_data.update({'content': content})
-                comment_obj = models.Comment.objects.create(
-                    **form.cleaned_data
-                )
-                data['pk'] = comment_obj.pk
-                data['content'] = comment_obj.content
-                data['username'] = comment_obj.username
-                data['add_time'] = comment_obj.add_time.strftime('%Y-%m-%d %H:%M:%S')
-                data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment_obj.qq_email[:-7]}&spec=640&img_type=jpg'
 
-                # print(comment_obj.pid)
-                # 评论成功，发送邮件提醒
-                article_obj = models.Article.objects.filter(pk=comment_obj.article).first()
-                send_mail(
-                    f'您的{article_obj.title}文章被{comment_obj.username}评论',
-                    comment_obj.content,
-                    settings.EMAIL_HOST_USER,
-                    ["libo_sober@163.com",],  # 文章作者邮箱
-                )
-                if comment_obj.pid != None:
-                    # pid = int(comment_obj.pid)
+            msg['success'] = False
+            msg['error'] = {'login':'为防止匿名攻击，请登录验证邮箱！'}
 
-                    fu = models.Comment.objects.get(pk=pid).username
-                    # print(fu)
-                    data['fu_username'] = fu
-                else:
-                    data['fu_username'] = 0
-                msg['data'] = data
-
-            else:
-                msg['success'] = False
-                msg['error'] = form.errors
-        # print(msg) # 发给AjaxForm的数据
+        #     if form.is_valid():
+        #         msg['success'] = True
+        #         article = request.POST.get('article')
+        #         models.Article.objects.get(id=article).commented()
+        #         # 保存
+        #         content = form.cleaned_data.pop('content')
+        #         # 防止js注入
+        #         # 防止js注入
+        #         re_script = re.compile(r'<script>(.*?)</script>')
+        #         if re_script.search(content):
+        #             content = html.escape(content)
+        #         form.cleaned_data.update({'content': content})
+        #         comment_obj = models.Comment.objects.create(
+        #             **form.cleaned_data
+        #         )
+        #         data['pk'] = comment_obj.pk
+        #         data['content'] = comment_obj.content
+        #         data['username'] = comment_obj.username
+        #         data['add_time'] = comment_obj.add_time.strftime('%Y-%m-%d %H:%M:%S')
+        #         data['qq_url'] = f'http://q.qlogo.cn/headimg_dl?dst_uin={comment_obj.qq_email[:-7]}&spec=640&img_type=jpg'
+        #
+        #         # print(comment_obj.pid)
+        #         # 评论成功，发送邮件提醒
+        #         # article_id = int(comment_obj.article_id)
+        #         # article_obj = models.Article.objects.filter(pk=article_id).first()
+        #         # send_mail(
+        #         #     f'您的{article_obj.title}文章被{comment_obj.username}评论',
+        #         #     comment_obj.content,
+        #         #     settings.EMAIL_HOST_USER,
+        #         #     ["libo_sober@163.com",],  # 文章作者邮箱
+        #         # )
+        #         if comment_obj.pid != None:
+        #             # pid = int(comment_obj.pid)
+        #
+        #             fu = models.Comment.objects.get(pk=pid).username
+        #             # print(fu)
+        #             data['fu_username'] = fu
+        #         else:
+        #             data['fu_username'] = 0
+        #         msg['data'] = data
+        #
+        #     else:
+        #         msg['success'] = False
+        #         msg['error'] = form.errors
+        # # print(msg) # 发给AjaxForm的数据
         return JsonResponse(msg)
 
 
@@ -470,19 +476,25 @@ class LoginView(View):
 
     def post(self, request):
         # 初始化返回值
-        res = {"code": 500}
+        res = {"code": 500, 'errors':''}
 
         user = request.POST.get('username')
         pwd = request.POST.get('password')
         # 判断用户名和密码
         user_obj_set = models.UserInfo.objects.filter(username=user, password=set_md5(pwd))
         user_obj = user_obj_set.first()
-        if user_obj:
-            res['code'] = 200
-            # 更新最后登录时间
-            user_obj_set.update(last_login=datetime.datetime.now())
-            # 把当前用户id添加到session中
-            request.session['user_id'] = user_obj.id
+        if user_obj.is_active:
+
+            if user_obj:
+                res['code'] = 200
+                # 更新最后登录时间
+                user_obj_set.update(last_login=datetime.datetime.now())
+                # 把当前用户id添加到session中
+                request.session['user_id'] = user_obj.id
+            else:
+                res['errors'] = {'userpwd': '用户名或密码错误！！'}
+        else:
+            res['errors'] = {'active': '请先去您的邮箱激活账户！'}
 
         return JsonResponse(res)
 
@@ -577,13 +589,32 @@ class RegisterView(View):
         register_form_obj = RegisterForm(request.POST)
         if register_form_obj.is_valid():
             res['code'] = 200
-            # print(register_form_obj.cleaned_data)
+            print(register_form_obj.cleaned_data)
             register_form_obj.cleaned_data.pop('r_password')
-            password = register_form_obj.cleaned_data.pop('password')
-            password = set_md5(password)
+            password_ = register_form_obj.cleaned_data.pop('password')
+            password = set_md5(password_)
             register_form_obj.cleaned_data.update({'password': password})
             models.UserInfo.objects.create(
                 **register_form_obj.cleaned_data
+            )
+            username = register_form_obj.cleaned_data['username']
+            email = register_form_obj.cleaned_data['email']
+            code = random_str(16)
+            # print(code)
+            # 注册成功，发送邮件激活
+            models.EmailVerifyRecord.objects.create(
+                code=code,
+                email=email,
+            )
+            email_content = f'该邮件为大聪明博客网站用户激活邮件，如果不是您本人操作请勿点击。\n用户名：{username}\n' \
+                            f'密码：{password_}\n请点击下面的链接激活你的账号:https://liboer.top/activation/{code}\n' \
+                            f'若跳转到登录页面则成功激活\n' \
+                            f'若跳转到注册页面则激活失败\n'
+            send_mail(
+                f'大聪明博客用户：{username}的激活链接',
+                email_content,
+                settings.EMAIL_HOST_USER,
+                [email, ],  # 文章作者邮箱
             )
         else:
             res['error'] = register_form_obj.errors
@@ -591,6 +622,16 @@ class RegisterView(View):
 
         return JsonResponse(res)
 
+
+class Activate(View):
+    def get(self, request, active_code):
+        print(active_code)
+        code_obj = models.EmailVerifyRecord.objects.filter(code=active_code).first()
+        if code_obj:
+            models.UserInfo.objects.filter(email=code_obj.email).update(is_active=True)
+            return redirect('login')
+        else:
+            return redirect('register')
 
 def page_not_found(request, exception):
     # 文章分类

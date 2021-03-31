@@ -17,5 +17,6 @@ admin.site.register(models.UserInfo)
 admin.site.register(models.Column)
 admin.site.register(models.File)
 admin.site.register(models.About)
+admin.site.register(models.EmailVerifyRecord)
 
 

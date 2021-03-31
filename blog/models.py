@@ -5,13 +5,23 @@ from datetime import datetime
 # Create your models here.
 
 
+class EmailVerifyRecord(models.Model):
+    # 验证码
+    code = models.CharField(max_length=20, verbose_name=u"验证码")
+    email = models.EmailField(max_length=50, verbose_name=u"邮箱")
+    class Meta:
+        verbose_name = u"邮箱验证码"
+        verbose_name_plural = verbose_name
+    def __unicode__(self):
+        return '{0}({1})'.format(self.code, self.email)
+
 
 class UserInfo(models.Model):
     """用户信息表"""
     username = models.CharField(max_length=16, verbose_name='姓名')
     password = models.CharField(max_length=32, verbose_name='密码')
     email = models.EmailField()
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False, null=True, blank=True)
     avatar = models.FileField(upload_to='avatars/', default=None)
     last_login = models.DateTimeField(auto_now=True, blank=True, null=True, verbose_name='最后登录时间')

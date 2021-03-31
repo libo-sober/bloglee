@@ -56,6 +56,8 @@ urlpatterns = [
     path('article/search/', views.SearchView.as_view(), name='search'),
     # mdeditor
     path('mdeditor/', include('mdeditor.urls')),
+    # 激活用户
+    re_path(r'activation/(?P<active_code>.*)/', views.Activate.as_view(), name='activation'),
     # url(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
 
     # url(r'^static/(?P<path>.*)$',serve,{'document_root':settings.STATIC_ROOT}),

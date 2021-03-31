@@ -98,7 +98,7 @@ $(function () {
 
         $("#comment-submit").html("正在提交评论...");
         $("#comment-form").ajaxSubmit(function (data) {
-            // console.log(data);
+            console.log(data);
             // console.log(data.error.qq_email);
             // console.log(data.error.article);
 
@@ -111,9 +111,14 @@ $(function () {
                     $("#qq_email").addClass("is-invalid");
                     $("#qq_email-feedback").html(data.error.qq_email);
                 }
-                // if (data.error.web_site) {
-                //     $("#web_site").addClass("is-invalid");
-                // }
+                if (data.error.login) {
+                    swal({
+                    title: data.error.login,
+                    type: 'error',  //展示成功的图片
+                    timer: 3000,  //延时毫秒数
+                    showConfirmButton: true  //关闭确认框
+                }, );
+                }
                 if (data.error.content) {
                     $("#content").addClass("is-invalid");
                     $("#content-feedback").html(data.error.content);

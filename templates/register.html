@@ -20,7 +20,7 @@
                 <img class="mb-2" src="{% static 'image/touxiang.jpg' %}" alt="" width="100" height="100">
                 <h1 class="h3 mb-3 font-weight-normal">欢迎注册本博客</h1>
                 <div class="rollContainer">
-                    <p class="rollBlock">友情提示：使用qq邮箱会自动拉取您的qq头像，否则使用默认的企鹅图标。</p>
+                    <p class="rollBlock">友情提示：推荐使用qq邮箱，注册后请到邮箱激活。</p>
                 </div>
                 <div class="login_error">
 
@@ -165,9 +165,9 @@
                     //console.log(arg.status);
                     if (data.code == "200") { //判断http 状态
                         swal({
-                            title: '注册成功！',
+                            title: '注册成功,请到您的邮箱激活账户！',
                             type: 'success',  //展示成功的图片
-                            timer: 500,  //延时500毫秒
+                            timer: 3000,  //延时500毫秒
                             showConfirmButton: false  //关闭确认框
                         }, function () {
                             window.location.href = "{% url 'login' %}";  //跳转后台首页

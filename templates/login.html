@@ -20,7 +20,7 @@
     <img class="mb-2" src="{% static 'image/touxiang.jpg' %}" alt="" width="100" height="100">
     <h1 class="h3 mb-3 font-weight-normal">欢迎登录</h1>
 	<div class="rollContainer">
-	  <p class="rollBlock">友情提示：推荐使用qq邮箱，会自动拉取qq头像，谢谢！</p>
+	  <p class="rollBlock">友情提示：推荐使用qq邮箱，注册后请到邮箱激活。</p>
 	</div>
     <div class="login_error">
       
@@ -126,8 +126,9 @@ function Form_Submit() {
                     window.location.href = "/";  //跳转后台首页
                 });
             } else {
-                swal({
-                    title: '用户名或密码错误！',
+                if(data.errors.userpwd){
+                    swal({
+                    title: data.errors.userpwd,
                     type: 'error',  //展示成功的图片
                     timer: 1000,  //延时毫秒数
                     showConfirmButton: false  //关闭确认框
@@ -136,6 +137,20 @@ function Form_Submit() {
                     //刷新当前页面
                     window.location.reload();
                 });
+                }
+                if(data.errors.active){
+                    swal({
+                    title: data.errors.active,
+                    type: 'error',  //展示成功的图片
+                    timer: 1000,  //延时毫秒数
+                    showConfirmButton: false  //关闭确认框
+                }, function () {
+                    //console.log("登录失败");
+                    //刷新当前页面
+                    window.location.reload();
+                });
+                }
+
             }
         },
         error: function (data) {
