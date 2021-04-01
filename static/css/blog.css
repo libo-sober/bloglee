@@ -1589,6 +1589,14 @@ div#comments .comment-list .comment-info cite{
     background: url(../image/icon-police.png) 0 0 no-repeat;
     vertical-align: middle;
 }
+#footer img {
+    display: inline-block;
+    margin-top: -4px;
+    margin-right: 6px;
+    width: 14px;
+    height: 1pc;
+    vertical-align: middle;
+}
 
 
 
