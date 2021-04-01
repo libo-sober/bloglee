@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block meta %}
-    <meta name="description" content="{{ article.title }}">
+    <meta name="description" content="{{ article.desc }}">
 
 
-    <meta name="keywords" content="{{ article.title }},django,java,Spring,python">
+    <meta name="keywords" content="{{ article.title }}">
 {% endblock %}
 
 {% block css %}
@@ -164,10 +164,10 @@
             <div class="clearfix m-2">
 
 
-                <a class="btn btn-outline-primary float-left" href="{% url 'detail' previous_article.id %}">上一篇</a>
+                <a class="btn btn-outline-primary float-left" href="{% url 'detail' previous_article.en_us %}">上一篇</a>
 
 
-                <a class="btn btn-outline-success float-right" href="{% url 'detail' next_article.id %}">下一篇</a>
+                <a class="btn btn-outline-success float-right" href="{% url 'detail' next_article.en_us %}">下一篇</a>
 
 
             </div>

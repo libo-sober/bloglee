@@ -11,14 +11,14 @@
 
     <div class="media d-block">
     <!--左上文章封面图-start-->
-    <div class="article-thumb"><a href="{% url 'detail' article.id %}"><img src="{{ article.cover.url }}" class="mr-3"></a></div>
+    <div class="article-thumb"><a href="{% url 'detail' article.en_us %}"><img src="{{ article.cover.url }}" class="mr-3"></a></div>
     <!--左上文章封面图-end-->
 
     <!--右上文章概要内容-start-->
     <div class="media-body py-3 pl-1 overflow-hidden">
         <div class="index-article-header">
             <a href="datail.html" class="label ">{{ article.category }}<i class="position-absolute c-arrow"></i></a>
-            <h2 class="d-inline article-title"><a href="{% url 'detail' article.id %}" class="text-dark">{{ article.title }}</a></h2>
+            <h2 class="d-inline article-title"><a href="{% url 'detail' article.en_us %}" class="text-dark">{{ article.title }}</a></h2>
             {% if article.is_recommend == 1 %}
             <span class="new-icon">置顶</span>
             {% endif %}
@@ -38,13 +38,13 @@
         <span class="float-left">
             {% if article.is_recommend == 1 %}
 
-            <a href="{% url 'detail' article.id %}"><i class="fa fa-calendar c4"></i>{{ article.add_time | date:"Y-m-d"}}</a>
+            <a href="{% url 'detail' article.en_us %}"><i class="fa fa-calendar c4"></i>{{ article.add_time | date:"Y-m-d"}}</a>
 
                 {% elif article.is_recommend == 0 %}
-                <a href="{% url 'detail' article.id %}"><i class="fa fa-calendar c4"></i>{{ article.add_time | date:"Y-m-d"}}</a>
+                <a href="{% url 'detail' article.en_us %}"><i class="fa fa-calendar c4"></i>{{ article.add_time | date:"Y-m-d"}}</a>
             {% endif %}
-            <a href="{% url 'detail' article.id %}"><i class="fa fa-comments c5"></i>{{ article.comments }}评论</a>
-            <a href="{% url 'detail' article.id %}"><i class="fa fa-eye c6"></i>{{ article.click_count }}阅读</a>
+            <a href="{% url 'detail' article.en_us %}"><i class="fa fa-comments c5"></i>{{ article.comments }}评论</a>
+            <a href="{% url 'detail' article.en_us %}"><i class="fa fa-eye c6"></i>{{ article.click_count }}阅读</a>
         </span>
         <span class="visible-xs float-left">
             <a href="datail.html#post-like"><i class="fa fa-heart c7"></i>{{ article.upup }}喜欢</a>

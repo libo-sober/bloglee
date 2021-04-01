@@ -37,11 +37,11 @@ urlpatterns = [
     # 关于
     path('about/', views.About.as_view(), name='about'),
     # 文章详情
-    re_path(r'^articles/detail/(\d+)/', views.ArticleView.as_view(), name='detail'),
+    re_path(r'^articles/detail/(?P<en_us>.*)/', views.ArticleView.as_view(), name='detail'),
     # 文章分类
-    re_path(r'^articles/category/(\d+)/', views.Index.as_view(), name='category'),
+    re_path(r'^articles/category/(?P<en_us_c>.*)/', views.Index.as_view(), name='category'),
     # 文章按标签分
-    re_path(r'^articles/tag/(\d+)/(\d+)/', views.Index.as_view(), name='tag'),
+    re_path(r'^articles/tag/(?P<en_us_c>.*)/(?P<en_us_tag>.*)/', views.Index.as_view(), name='tag'),
     # 评论
     path('comment/', views.CommentView.as_view(), name='comment'),
     # 点赞

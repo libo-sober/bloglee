@@ -59,6 +59,7 @@ class Tag(models.Model):
     文章标签
     """
     name = models.CharField(max_length=30, verbose_name='标签名称')
+    en_us = models.CharField(max_length=50, blank=True, null=True, verbose_name='英文标题')
 
     # 统计文章数 并放入后台
     def get_items(self):
@@ -79,6 +80,7 @@ class Category(models.Model):
     文章分类
     """
     name = models.CharField(max_length=30, verbose_name='分类名称')
+    en_us = models.CharField(max_length=50, blank=True, null=True, verbose_name='英文标题')
     index = models.IntegerField(default=99, verbose_name='分类排序')
     active = models.BooleanField(default=True, verbose_name='是否添加到菜单')
     icon = models.CharField(max_length=30, default='fa-home',verbose_name='菜单图标')
@@ -110,6 +112,7 @@ class Article(models.Model):
     文章
     """
     title = models.CharField(max_length=50, verbose_name='文章标题')
+    en_us = models.CharField(max_length=50, blank=True, null=True, verbose_name='英文标题')
     desc = models.TextField(max_length=100, verbose_name='文章描述')
     # cover = models.CharField(max_length=200, default='https://image.3001.net/images/20200304/15832956271308.jpg', verbose_name='文章封面')
     cover = models.FileField(upload_to='covers/', default='covers/1P629140610-3.jpg', verbose_name='文章封面')
