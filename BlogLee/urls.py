@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from blog import views
 from django.conf.urls import url
 from django.views.static import serve
+from blog.feeds import BlogRssFeed
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
@@ -56,6 +57,8 @@ urlpatterns = [
     path('article/search/', views.SearchView.as_view(), name='search'),
     # mdeditor
     path('mdeditor/', include('mdeditor.urls')),
+    # RSS订阅
+    path('rss/', BlogRssFeed(), name='rss'),
     # 激活用户
     re_path(r'activation/(?P<active_code>.*)/', views.Activate.as_view(), name='activation'),
     # url(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),

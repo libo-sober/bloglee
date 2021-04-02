@@ -14,41 +14,42 @@
 
 {% block content %}
 
-      <div class="container">
+    <div class="container">
     <div class="row">
-	<section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
+    <section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
 
-    {% for article in all_articles %}
-        <article class="d-block bg-white hvr-float">
+        {% for article in all_articles %}
+            <article class="d-block bg-white hvr-float">
 
-            <div class="media d-block">
-                <!--左上文章封面图-start-->
-                <div class="article-thumb"><a href="{% url 'detail' article.en_us %}"><img src="{{ article.cover.url }}"
-                                                                                        class="mr-3"></a></div>
-                <!--左上文章封面图-end-->
+                <div class="media d-block">
+                    <!--左上文章封面图-start-->
+                    <div class="article-thumb"><a href="{% url 'detail' article.en_us %}"><img
+                            src="{{ article.cover.url }}"
+                            class="mr-3"></a></div>
+                    <!--左上文章封面图-end-->
 
-                <!--右上文章概要内容-start-->
-                <div class="media-body py-3 pl-1 overflow-hidden">
-                    <div class="index-article-header">
-                        <a href="datail.html" class="label ">{{ article.category }}<i
-                                class="position-absolute c-arrow"></i></a>
-                        <h2 class="d-inline article-title"><a href="{% url 'detail' article.id %}"
-                                                              class="text-dark">{{ article.title }}</a></h2>
-                        {% if article.is_recommend == 1 %}
-                            <span class="new-icon">置顶</span>
-                        {% endif %}
+                    <!--右上文章概要内容-start-->
+                    <div class="media-body py-3 pl-1 overflow-hidden">
+                        <div class="index-article-header">
+                            <a href="datail.html" class="label ">{{ article.category }}<i
+                                    class="position-absolute c-arrow"></i></a>
+                            <h2 class="d-inline article-title"><a href="{% url 'detail' article.id %}"
+                                                                  class="text-dark">{{ article.title }}</a></h2>
+                            {% if article.is_recommend == 1 %}
+                                <span class="new-icon">置顶</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="article-summary">
+
+                            <p class="text-wrap text-secondary">{{ article.desc }}</p>
+
+                        </div>
                     </div>
+                    <!--右上文章概要内容-end-->
 
-                    <div class="article-summary">
-
-                        <p class="text-wrap text-secondary">{{ article.desc }}</p>
-
-                    </div>
-                </div>
-                <!--右上文章概要内容-end-->
-
-                <!--文章相关参数-start-->
-                <div class="article-relative-meta">
+                    <!--文章相关参数-start-->
+                    <div class="article-relative-meta">
 
         <span class="float-left">
             {% if article.is_recommend == 1 %}
@@ -63,21 +64,21 @@
             <a href="{% url 'detail' article.id %}"><i class="fa fa-comments c5"></i>{{ article.comments }}评论</a>
             <a href="{% url 'detail' article.id %}"><i class="fa fa-eye c6"></i>{{ article.click_count }}阅读</a>
         </span>
-                    <span class="visible-xs float-left">
+                        <span class="visible-xs float-left">
             <a href="datail.html#post-like"><i class="fa fa-heart c7"></i>{{ article.upup }}喜欢</a>
             <a href=""><i class="fa fa-user c8"></i>{{ admin_obj.username }}</a>
         </span>
-                    <span class="float-right">
+                        <span class="float-right">
             <a class="mr-0" href="{% url 'detail' article.id %}" title="阅读全文">阅读全文<i
                     class="fa fa-chevron-circle-right"></i></a>
         </span>
+                    </div>
+                    <!--文章相关参数-end-->
                 </div>
-                <!--文章相关参数-end-->
-            </div>
-        </article>
-    {% endfor %}
+            </article>
+        {% endfor %}
 
-    {{ page_html }}
+        {{ page_html }}
     </section>
 
 {% endblock %}
@@ -88,7 +89,7 @@
     <aside class="col-lg-4 col-xl-4 hidden-xs hidden-sm" id="aside">
         <div class="sidebar" id="sidebar">
 
-{#            每日一句#}
+            {#            每日一句#}
             <aside>
                 <div class="sentence">
                     <strong>每日一句</strong>
@@ -107,71 +108,91 @@
                     {% if cur_user_name %}
                         {% if cur_user_name.is_admin %}
 
-                                 <a href="{% url 'about' %}"><img class="xwcms" src="{{ cur_user_name.avatar.url }}"></a>
-                    <a href="{% url 'about' %}" class=""><h5 class="card-title text-dark mt-2 superuser">{{ cur_user_name.username }}</h5></a>
- <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;">生前何必久睡，死后自会长眠！</p>
-                    <div class="contact-me text-center">
-                        <a id="link_weixin" href="javascript:;" rel="nofollow" data-toggle="popover"
-                           data-trigger="hover click" data-html="true" data-title="博主微信"
-                           data-content="<img src='{% static "image/weinxin.jpg" %}' width='150px' height='150px'>"><i
-                                class="fa fa-weixin" aria-hidden="true"></i></a>
-                        <a target="_blank" href="https://github.com/SoberLee/" rel="nofollow"><i class="fa fa-github"
-                                                                                 aria-hidden="true"></i></a>
-                        <a target="_blank" rel="nofollow" href="mailto:libo_sober@163.com"><i class="fa fa-envelope-o"
-                                                                                 aria-hidden="true"></i></a>
-                        <a id="link_qq" href="javascript:;" rel="nofollow" data-toggle="popover" data-title="博主QQ"
-                           data-trigger="hover click" data-html="true"
-                           data-content="<img src='{% static "image/qq.jpg" %}' width='150px' height='150px'>"><i
-                                class="fa fa-qq" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="about-inf">
-                        <span class="about-pn">文章 {{ article_count }}</span>
-                        <span class="about-cn">留言 {{ comment_count }}</span>
-                    </div>
-                            {% else %}
+                            <a href="{% url 'about' %}"><img class="xwcms" src="{{ cur_user_name.avatar.url }}"></a>
+                            <a href="{% url 'about' %}" class=""><h5
+                                    class="card-title text-dark mt-2 superuser">{{ cur_user_name.username }}</h5></a>
+                            <a href="{% url 'rss' %}" rel="alternate">
+                                <i class="fa fa-rss"></i>
+                                RSS
+                            </a>
+                            <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;">生前何必久睡，死后自会长眠！</p>
+                            <div class="contact-me text-center">
+                                <a id="link_weixin" href="javascript:;" rel="nofollow" data-toggle="popover"
+                                   data-trigger="hover click" data-html="true" data-title="博主微信"
+                                   data-content="<img src='{% static "image/weinxin.jpg" %}' width='150px' height='150px'>"><i
+                                        class="fa fa-weixin" aria-hidden="true"></i></a>
+                                <a target="_blank" href="https://github.com/SoberLee/" rel="nofollow"><i
+                                        class="fa fa-github"
+                                        aria-hidden="true"></i></a>
+                                <a target="_blank" rel="nofollow" href="mailto:libo_sober@163.com"><i
+                                        class="fa fa-envelope-o"
+                                        aria-hidden="true"></i></a>
+                                <a id="link_qq" href="javascript:;" rel="nofollow" data-toggle="popover"
+                                   data-title="博主QQ"
+                                   data-trigger="hover click" data-html="true"
+                                   data-content="<img src='{% static "image/qq.jpg" %}' width='150px' height='150px'>"><i
+                                        class="fa fa-qq" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="about-inf">
+                                <span class="about-pn">文章 {{ article_count }}</span>
+                                <span class="about-cn">留言 {{ comment_count }}</span>
+                            </div>
+                        {% else %}
                             {% if cur_user_name.avatar %}
-                    <a ><img class="xwcms" src="/media/{{ cur_user_name.avatar }}" onerror="javascript:this.src='{% static 'image/unknow.png' %}';"></a>
-                                {% else %}
-                                <a href="{% url 'about' %}"><img class="xwcms" src="{{ qq_url}}"></a>
-                                {% endif %}
-                    <a  class=""><h5 class="card-title text-dark mt-2">{{ cur_user_name.username }}</h5></a>
-                                           <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;"></p>
-                        <p>
+                                <a><img class="xwcms" src="/media/{{ cur_user_name.avatar }}"
+                                        onerror="javascript:this.src='{% static 'image/unknow.png' %}';"></a>
+                            {% else %}
+                                <a href="{% url 'about' %}"><img class="xwcms" src="{{ qq_url }}"></a>
+                            {% endif %}
+                            <a class=""><h5 class="card-title text-dark mt-2">{{ cur_user_name.username }}</h5></a>
+                            <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;"></p>
+                            <a href="{% url 'rss' %}" rel="alternate">
+                                <i class="fa fa-rss"></i>
+                                RSS
+                            </a>
+                            <p>
 
-            <a href="{% url 'userinfo' %}" class="text-reset "><i class="fa fa-user-circle"></i>个人资料</a>
-            <a href="{% url 'logout' %}" class="text-reset "><i class="fa fa-sign-out"></i>退出登录</a>
-         </p>{% endif %}
+                                <a href="{% url 'userinfo' %}" class="text-reset "><i class="fa fa-user-circle"></i>个人资料</a>
+                                <a href="{% url 'logout' %}" class="text-reset "><i class="fa fa-sign-out"></i>退出登录</a>
+                            </p>{% endif %}
                     {% else %}
-                                            <a href="{% url 'about' %}"><img class="xwcms" src="{{ admin_obj.avatar.url }}"></a>
-                    <a href="{% url 'about' %}" class=""><h5 class="card-title text-dark mt-2 superuser">{{ admin_obj.username }}</h5></a>
- <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;">生前何必久睡，死后自会长眠！</p>
-                    <div class="contact-me text-center">
-                        <a id="link_weixin" href="javascript:;" rel="nofollow" data-toggle="popover"
-                           data-trigger="hover click" data-html="true" data-title="博主微信"
-                           data-content="<img src='{% static "image/weinxin.jpg" %}' width='150px' height='150px'>"><i
-                                class="fa fa-weixin" aria-hidden="true"></i></a>
-                        <a target="_blank" href="https://github.com/SoberLee/" rel="nofollow"><i class="fa fa-github"
-                                                                                 aria-hidden="true"></i></a>
-                        <a target="_blank" rel="nofollow" href="mailto:libo_sober@163.com"><i class="fa fa-envelope-o"
-                                                                                 aria-hidden="true"></i></a>
-                        <a id="link_qq" href="javascript:;" rel="nofollow" data-toggle="popover" data-title="博主QQ"
-                           data-trigger="hover click" data-html="true"
-                           data-content="<img src='{% static "image/qq.jpg" %}' width='150px' height='150px'>"><i
-                                class="fa fa-qq" aria-hidden="true"></i></a>
-                    </div>
-                    <div class="about-inf">
-                        <span class="about-pn">文章 {{ article_count }}</span>
-                        <span class="about-cn">留言 {{ comment_count }}</span>
-                    </div>
+                        <a href="{% url 'about' %}"><img class="xwcms" src="{{ admin_obj.avatar.url }}"></a>
+                        <a href="{% url 'about' %}" class=""><h5
+                                class="card-title text-dark mt-2 superuser">{{ admin_obj.username }}</h5></a>
+                        <a href="{% url 'rss' %}" rel="alternate">
+                                <i class="fa fa-rss"></i>
+                                RSS
+                            </a>
+                        <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;">生前何必久睡，死后自会长眠！</p>
+                        <div class="contact-me text-center">
+                            <a id="link_weixin" href="javascript:;" rel="nofollow" data-toggle="popover"
+                               data-trigger="hover click" data-html="true" data-title="博主微信"
+                               data-content="<img src='{% static "image/weinxin.jpg" %}' width='150px' height='150px'>"><i
+                                    class="fa fa-weixin" aria-hidden="true"></i></a>
+                            <a target="_blank" href="https://github.com/SoberLee/" rel="nofollow"><i
+                                    class="fa fa-github"
+                                    aria-hidden="true"></i></a>
+                            <a target="_blank" rel="nofollow" href="mailto:libo_sober@163.com"><i
+                                    class="fa fa-envelope-o"
+                                    aria-hidden="true"></i></a>
+                            <a id="link_qq" href="javascript:;" rel="nofollow" data-toggle="popover" data-title="博主QQ"
+                               data-trigger="hover click" data-html="true"
+                               data-content="<img src='{% static "image/qq.jpg" %}' width='150px' height='150px'>"><i
+                                    class="fa fa-qq" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="about-inf">
+                            <span class="about-pn">文章 {{ article_count }}</span>
+                            <span class="about-cn">留言 {{ comment_count }}</span>
+                        </div>
                     {% endif %}
                 </div>
 
             </aside>
 
-                    <aside>
+            <aside>
                 <div class="mt-3 py-2 pl-3 recentcomment tab-6">
                     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=210
-                                src="//music.163.com/outchain/player?type=0&id=6672431488&auto=1&height=430"></iframe>
+                            src="//music.163.com/outchain/player?type=0&id=6672431488&auto=1&height=430"></iframe>
 
                 </div>
             </aside>
@@ -195,22 +216,23 @@
                     <div class="tab-pane active" id="new" role="tabpanel">
                         <ul class="list-group list-group-flush">
                             {% for article in new_articles %}
-                            <a class="pl-0 list-group-item text-truncate text-dark " title="{{ article.title }}"
-                               href="{% url 'detail' article.id %}">
-                                <i class="fa  fa-book"></i>
-                                {{ article.title }}
-                            </a>
+                                <a class="pl-0 list-group-item text-truncate text-dark " title="{{ article.title }}"
+                                   href="{% url 'detail' article.id %}">
+                                    <i class="fa  fa-book"></i>
+                                    {{ article.title }}
+                                </a>
                             {% endfor %}
                         </ul>
                     </div>
                     <div class="tab-pane" id="hot" role="tabpanel">
                         <ul class="list-group list-group-flush">
-                        {% for article in hot_articles %}
-                            <a class="pl-0 list-group-item text-truncate text-dark " title="{{ article.title }}" href="{% url 'detail' article.id %}">
-                                <i class="fa  fa-book"></i>
-                                {{ article.title }}
-                            </a>
-                        {% endfor %}
+                            {% for article in hot_articles %}
+                                <a class="pl-0 list-group-item text-truncate text-dark " title="{{ article.title }}"
+                                   href="{% url 'detail' article.id %}">
+                                    <i class="fa  fa-book"></i>
+                                    {{ article.title }}
+                                </a>
+                            {% endfor %}
 
                         </ul>
                     </div>
@@ -231,32 +253,33 @@
                     <div class="tab-pane active" id="recentcomment" role="tabpanel">
 
                         <ul class="list-group list-group-flush">
-                        {% for comment in new_comments %}
-                            <li class="pl-0 list-group-item">
+                            {% for comment in new_comments %}
+                                <li class="pl-0 list-group-item">
 
-                                <a href="{% url 'detail' comment.article.id %}#div-comment-{{ comment.id }}" class="text-reset ">
-                                    <div class="media pt-3">
+                                    <a href="{% url 'detail' comment.article.id %}#div-comment-{{ comment.id }}"
+                                       class="text-reset ">
+                                        <div class="media pt-3">
 
-                                        <img class="mr-2 rounded" width="32" heigh="32"
-                                             src="{%  img_url comment  %}"
-                                             onerror="javascript:this.src='/static/image/unknow.png';">
-                                        <div class="media-body pb-3 mb-0 small">
+                                            <img class="mr-2 rounded" width="32" heigh="32"
+                                                 src="{% img_url comment %}"
+                                                 onerror="javascript:this.src='/static/image/unknow.png';">
+                                            <div class="media-body pb-3 mb-0 small">
 
 
-                                            「<strong>{{ comment.username }}</strong>」于
-                                            「<strong>{{ comment.add_time|date:"Y-m-d" }}</strong>」在
-                                            「<strong>{{ comment.article.title }}页面</strong>」中说: <br>
+                                                「<strong>{{ comment.username }}</strong>」于
+                                                「<strong>{{ comment.add_time|date:"Y-m-d" }}</strong>」在
+                                                「<strong>{{ comment.article.title }}页面</strong>」中说: <br>
 
-                                            <div style="background-color: #e9ecef;">
-                                                <i class="fa fa-quote-left" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong
-                                                    class="text-break pr-4">{{ comment.content|safe }}</strong><i
-                                                    class="fa fa-quote-right" aria-hidden="true"></i>
+                                                <div style="background-color: #e9ecef;">
+                                                    <i class="fa fa-quote-left" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong
+                                                        class="text-break pr-4">{{ comment.content|safe }}</strong><i
+                                                        class="fa fa-quote-right" aria-hidden="true"></i>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                        {% endfor %}
+                                    </a>
+                                </li>
+                            {% endfor %}
 
                         </ul>
                     </div>
@@ -280,8 +303,9 @@
                         <!--标签云-->
                         <div class="tags btn-group-sm d-inline-block">
                             {% for tag in tags %}
-                            <a class="btn btn-sm border rounded-pill" href="{% url 'tag' 'category' tag.en_us %}" data-toggle="tooltip"
-                               title="该标签下有{{ tag.get_items }}篇文章">{{ tag.name }}</a>
+                                <a class="btn btn-sm border rounded-pill" href="{% url 'tag' 'category' tag.en_us %}"
+                                   data-toggle="tooltip"
+                                   title="该标签下有{{ tag.get_items }}篇文章">{{ tag.name }}</a>
                             {% endfor %}
 
                         </div>
@@ -294,16 +318,16 @@
 
         </div>
     </aside>
-        </div>
+    </div>
 
 
-  </div>
+    </div>
 {% endblock %}
 
 
 
 {% block js %}
-{#    每日一句#}
+    {#    每日一句#}
     <script>
         {#//获得年月日      得到日期oTime#}
         {#function getFormatDate(str) {#}
@@ -323,28 +347,28 @@
             type: 'get',
             success: function (data) {
                 {#console.log(data)#}
-                if(data.code==200){
+                if (data.code == 200) {
                     var content = document.createTextNode(data.data.content)
-                {#var date = getFormatDate(1550113467879)#}
-                {#console.log(data.data.datetime)#}
-                {#console.log(date)#}
-                $('.one_content').html(content)
-                {#$(function () {#}
-                {##}
-                {#    var myDate = new Date;#}
-                {#    var year = myDate.getFullYear(); //获取当前年#}
-                {#    var mon = myDate.getMonth() + 1; //获取当前月#}
-                {#    var date = myDate.getDate(); //获取当前日#}
-                {#    // var h = myDate.getHours();//获取当前小时数(0-23)#}
-                {#    // var m = myDate.getMinutes();//获取当前分钟数(0-59)#}
-                {#    // var s = myDate.getSeconds();//获取当前秒#}
-                {#    var week = myDate.getDay();#}
-                {#    var weeks = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];#}
+                    {#var date = getFormatDate(1550113467879)#}
+                    {#console.log(data.data.datetime)#}
+                    {#console.log(date)#}
+                    $('.one_content').html(content)
+                    {#$(function () {#}
+                    {##}
+                    {#    var myDate = new Date;#}
+                    {#    var year = myDate.getFullYear(); //获取当前年#}
+                    {#    var mon = myDate.getMonth() + 1; //获取当前月#}
+                    {#    var date = myDate.getDate(); //获取当前日#}
+                    {#    // var h = myDate.getHours();//获取当前小时数(0-23)#}
+                    {#    // var m = myDate.getMinutes();//获取当前分钟数(0-59)#}
+                    {#    // var s = myDate.getSeconds();//获取当前秒#}
+                    {#    var week = myDate.getDay();#}
+                    {#    var weeks = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];#}
                     {#console.log(year, mon, date, weeks[week])#}
-                {#    $(".one_datetime").html(year + "年" + mon + "月" + date + "日" + weeks[week]);#}
-                {# })#}
-            }
+                    {#    $(".one_datetime").html(year + "年" + mon + "月" + date + "日" + weeks[week]);#}
+                    {# })#}
                 }
+            }
 
         })
 
@@ -352,20 +376,20 @@
 
     <script>
         $.ajax({
-            url:'http://pv.sohu.com/cityjson?ie=utf-8',
+            url: 'http://pv.sohu.com/cityjson?ie=utf-8',
             dataType: 'script',
             async: false,
-            success:function () {
+            success: function () {
                 var city = returnCitySN.cname;
                 var a = city.indexOf('省', 0);
                 if (a >= 0) {
-                    city = city.substring(a+1);
+                    city = city.substring(a + 1);
                 }
                 $.ajax({
-                    url: "http://wthrcdn.etouch.cn/weather_mini?city="+city,
+                    url: "http://wthrcdn.etouch.cn/weather_mini?city=" + city,
                     dataType: 'json',
                     async: false,
-                    success:function (data) {
+                    success: function (data) {
                         console.log(data)
                         var todayWeather = data.data.forecast[0];   //  天气
                         var ganmao = data.data.ganmao;   //  感冒
