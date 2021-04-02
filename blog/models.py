@@ -113,7 +113,7 @@ class Article(models.Model):
     """
     title = models.CharField(max_length=50, verbose_name='文章标题')
     en_us = models.CharField(max_length=50, blank=True, null=True, verbose_name='英文标题')
-    desc = models.TextField(max_length=100, verbose_name='文章描述')
+    desc = models.TextField(max_length=200, null=True, blank=True, verbose_name='文章描述')
     # cover = models.CharField(max_length=200, default='https://image.3001.net/images/20200304/15832956271308.jpg', verbose_name='文章封面')
     cover = models.FileField(upload_to='covers/', default='covers/1P629140610-3.jpg', verbose_name='文章封面')
     content = MDTextField(verbose_name='文章内容')  # 富文本编辑框，要在models中注册mdeditor
@@ -127,6 +127,7 @@ class Article(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
     category = models.ForeignKey(Category, blank=True, null=True, verbose_name='文章分类', on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag, verbose_name='文章标签')
+
 
     def cover_data(self):
         return format_html(
