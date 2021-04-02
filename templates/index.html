@@ -23,7 +23,7 @@
 
             <div class="media d-block">
                 <!--左上文章封面图-start-->
-                <div class="article-thumb"><a href="{% url 'detail' article.id %}"><img src="{{ article.cover.url }}"
+                <div class="article-thumb"><a href="{% url 'detail' article.en_us %}"><img src="{{ article.cover.url }}"
                                                                                         class="mr-3"></a></div>
                 <!--左上文章封面图-end-->
 
@@ -280,7 +280,7 @@
                         <!--标签云-->
                         <div class="tags btn-group-sm d-inline-block">
                             {% for tag in tags %}
-                            <a class="btn btn-sm border rounded-pill" href="{% url 'tag' 1 tag.id %}" data-toggle="tooltip"
+                            <a class="btn btn-sm border rounded-pill" href="{% url 'tag' 'category' tag.en_us %}" data-toggle="tooltip"
                                title="该标签下有{{ tag.get_items }}篇文章">{{ tag.name }}</a>
                             {% endfor %}
 

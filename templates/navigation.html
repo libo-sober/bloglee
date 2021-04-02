@@ -25,7 +25,7 @@
                     <div class="dropdown-menu text-white" aria-labelledby="program">
                         {% for category in categories %}
                             {% if category.column.id == column.id %}
-                            <a class="dropdown-item text-white" href="{% url 'category' category.id %}"><i
+                            <a class="dropdown-item text-white" href="{% url 'category' category.en_us %}"><i
                                     class="fa {{ category.icon }}"
                                     aria-hidden="true"></i>&nbsp;&nbsp;{{ category.name }}</a>
                             {% endif %}

@@ -22,8 +22,21 @@ time = datetime.datetime(year=2099, month=1, day=1)
 
 class Index(View):
 
-    def get(self, request, cid=None, tag_id=None):
+    def get(self, request, en_us_c=None, en_us_tag=None):
         """首页展示"""
+        print(en_us_c, en_us_tag)
+        cid = en_us_c
+        tag_id = en_us_tag
+        if en_us_c:
+            if en_us_c != 'category':
+                c_obj = models.Category.objects.filter(en_us=en_us_c).first()
+                cid = c_obj.id
+        if en_us_tag:
+            tag_obj = models.Tag.objects.filter(en_us=en_us_tag).first()
+            tag_id = tag_obj.id
+
+
+        print(cid, tag_id)
         # 文章总数
         article_count = models.Article.objects.count()
         # 评论总数
@@ -124,9 +137,12 @@ class Index(View):
 # 文章详情页
 class ArticleView(View):
 
-    def get(self, request, article_id=None):
+    def get(self, request, en_us=None):
         # 上一页下一页
         # print(article_id)
+        print(en_us)
+        article = models.Article.objects.get(en_us=en_us)
+        article_id = article.id
         all_article = models.Article.objects.all()
         previous_index = 0
         next_index = 0
