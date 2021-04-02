@@ -1,21 +1,13 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load custom_tag %}
-{## 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入#}
-{## 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入#}
-{% block Navigation %}
-    {% navigation categories cur_user_name columns %}
-{% endblock %}
-
-{% block content %}
-    <!--主内容-start--->
-    <div class="container">
-        <div class="jumbotron" style="text-align:center;">
-            <div class="container">
-                <p><img src="{% static 'images/404.jpg' %}" width="520" height="320"/></p>
-                <p>wow~这个页面被外星人抢走了~</p>
-                <p><a class="btn btn-primary btn-lg" href="/" role="button">回到主页</a></p>
-            </div>
-        </div>
-    </div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>
+        404-not found
+    </title>
+</head>
+<body>
+<script type="text/javascript" src="https://qzonestyle.gtimg.cn/qzone/hybrid/app/404/search_children.js" charset="utf-8" homePageUrl="https://www.liboer.top" homePageName="回到大聪明博客首页"></script>
+</body>
+</html>
