@@ -303,7 +303,7 @@ class About(View):
 
 # 自定义验证规则
 def email_validate(value):
-    email_re = re.compile(r'(.*)@(.*).com$')
+    email_re = re.compile(r'\w{5,12}@(.*).com$')
     if not email_re.match(value):
         raise ValidationError('邮箱格式错误')  # 自定义验证规则的时候，如果不符合你的规则，需要自己发起错误
     else:
