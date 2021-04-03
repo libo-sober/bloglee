@@ -967,14 +967,8 @@ class SearchView(View):
         # 评论总数
         comment_count = models.Comment.objects.count()
         page_id = request.GET.get('page')  # 获取get请求中的page数据
-
         base_url = request.path  # 请求路径
         get_data = request.GET.copy()  # 直接调用这个类自己的copy方法或者deepcopy方法或者自己import copy 都可以实现内容允许修改
-        # models.Article.objects.filter(is_recommend=1).update(add_time=time)  # <QuerySet [<Article: 太黑的诱惑>]>
-        # all_articles = models.Article.objects.all().order_by('-add_time')  # <QuerySet [<Article: 333>]>
-        top_articles = list(models.Article.objects.filter(is_recommend=1).order_by('-add_time'))
-        articles = list(models.Article.objects.filter(is_recommend=False).order_by('-add_time'))
-        all_articles = top_articles + articles
         # 以后直接在settings配置文件中修改即可
         page_count = settings.PAGE_COUNT  # 页数栏显示多少个数
         record = settings.RECORD  # 每页显示多少条记录
@@ -1008,13 +1002,12 @@ class SearchView(View):
 
         q = request.GET.get('q')
         if q:
-            search_all_articles = models.Article.objects.filter(Q(title__icontains=q) | Q(content__icontains=q))
+            search_all_articles = models.Article.objects.filter(Q(title__icontains=q) | Q(content__icontains=q)).order_by('-add_time')
             num = len(search_all_articles)
             html_obj = MyPagination(page_id=page_id, num=num, base_url=base_url, get_data=get_data,
                                     page_count=page_count,
                                     record=record)
-            # all_articles = articles | top_articles  # 合并两个queryset
-            all_articles = all_articles[
+            search_all_articles = search_all_articles[
                            (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
             return render(request, 'search.html',
                           {'all_articles': search_all_articles, 'page_html': html_obj.html_page(),
