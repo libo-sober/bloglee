@@ -160,6 +160,15 @@
                                 },
                             );
                         }
+                        if (data.error.login) {
+                            swal({
+                                    title: data.error.login,
+                                    type: 'error',  //展示成功的图片
+                                    timer: 1000,  //延时毫秒数
+                                    showConfirmButton: false  //关闭确认框
+                                },
+                            );
+                        }
                         if (data.error.image) {
                             swal({
                                     title: data.error.image,
