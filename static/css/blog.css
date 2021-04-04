@@ -1341,32 +1341,32 @@ div#comments .comment-list .comment-info cite{
     position: relative;
     display: block;
     overflow-x: auto;
-    margin: 4.4px 0px .4px 1px;
+    margin: .4px 0px 0px 0px;
     padding: 0;
-    max-height: 500px;
+    max-height: 1000px;
     padding-left: 3.5em;
     font-size: inherit;
     color: inherit;
 }
 
-#article-content blockquote.blockquote-ue,#morphing-content blockquote.blockquote-ue{
+#article-content blockquote,#morphing-content blockquote{
     color:#888;
     background-color: #eae6f3;
     border-left: 0.5em solid #51aded;;
     word-break: break-all;
     padding: 18px;
-    background-image: url(https://www.oneisall.top/static/images/quote_open.png);
+    background-image: url(https://www.liboer.top/static/images/quote_open.png);
     background-position: 15px 10px;
     background-repeat: no-repeat;
     text-indent: 23px;
     line-height: 1.8;
 }
-#article-content blockquote.blockquote-ue p,
-#morphing-content blockquote.blockquote-ue p{
+#article-content blockquote p,
+#morphing-content blockquote p{
     text-indent:23px;
  }
-#article-content blockquote.blockquote-ue p:last-child,
-#morphing-content blockquote.blockquote-ue p:last-child{
+#article-content blockquote p:last-child,
+#morphing-content blockquote p:last-child{
     background-image: url(https://www.oneisall.top/static/images/quote_close.png);
     background-repeat: no-repeat;
     background-position: bottom right;

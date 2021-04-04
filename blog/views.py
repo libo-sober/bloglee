@@ -15,6 +15,17 @@ from django.core.mail import send_mail
 from BlogLee import settings
 from blog.utils.hashlib_func import set_md5
 from django.db.models import Q
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import html as phtml
+class HighlightRenderer(mistune.Renderer):
+    def block_code(self, code, lang):
+        if not lang:
+            return '\n<pre><code>%s</code></pre>\n' % \
+                mistune.escape(code)
+        lexer = get_lexer_by_name(lang, stripall=True)
+        formatter = phtml.HtmlFormatter()
+        return highlight(code, lexer, formatter)
 
 # Create your views here.
 time = datetime.datetime(year=2099, month=1, day=1)
@@ -179,7 +190,9 @@ class ArticleView(View):
         curr_article.viewed()  # 增加阅读数P
         # 为甚么刷新页面会产生两次访问ArticleView
         # 已经解决，因为文章中的请求js或者csss图片等路径为空或出错的，就会自动请求当前路径
-        mk = mistune.Markdown()
+        renderer = mistune.Renderer(escape=True, hard_wrap=True)
+        # renderer = HighlightRenderer()
+        mk = mistune.Markdown(renderer=renderer)
         output = mk(curr_article.content)
 
         # 文章分类
@@ -363,7 +376,8 @@ class CommentView(View):
             content = request.POST.get('content')
             # 防止js注入
             re_script = re.compile(r'<script>(.*?)</script>')
-            if re_script.search(content):
+            re_js = re.compile(r'javascript')
+            if re_script.search(content) or re_js.search(content):
                 content = html.escape(content)
             article = request.POST.get('article')
             qq_email = request.POST.get('qq_email')
@@ -418,10 +432,12 @@ class CommentView(View):
                 # 保存
                 content = form.cleaned_data.pop('content')
                 # 防止js注入
-                # 防止js注入
+                # 陌生人全部防止js注入
                 re_script = re.compile(r'<script>(.*?)</script>')
-                if re_script.search(content):
+                re_js = re.compile(r'javascript')
+                if re_script.search(content) or re_js.search(content):
                     content = html.escape(content)
+                # content = html.escape(content)
                 form.cleaned_data.update({'content': content})
                 comment_obj = models.Comment.objects.create(
                     **form.cleaned_data
@@ -438,12 +454,12 @@ class CommentView(View):
                 article_obj = models.Article.objects.filter(pk=article_id).first()
                 email_content = f"评论人：{data['username']}\n评论文章：{article_obj.title}\n评论时间：{data['add_time']}\n" \
                                 f"评论人邮箱：{qq_email}\n评论内容：{comment_obj.content}\n"
-                send_mail(
-                    f'您的{article_obj.title}文章被{comment_obj.username}评论',
-                    email_content,
-                    settings.EMAIL_HOST_USER,
-                    ["libo_sober@163.com",],  # 文章作者邮箱
-                )
+                # send_mail(
+                #     f'您的{article_obj.title}文章被{comment_obj.username}评论',
+                #     email_content,
+                #     settings.EMAIL_HOST_USER,
+                #     ["libo_sober@163.com",],  # 文章作者邮箱
+                # )
                 if comment_obj.pid != None:
                     # pid = int(comment_obj.pid)
 
