@@ -190,7 +190,7 @@ class ArticleView(View):
         curr_article.viewed()  # 增加阅读数P
         # 为甚么刷新页面会产生两次访问ArticleView
         # 已经解决，因为文章中的请求js或者csss图片等路径为空或出错的，就会自动请求当前路径
-        renderer = mistune.Renderer(escape=True, hard_wrap=True)
+        renderer = mistune.Renderer(escape=False, hard_wrap=True)
         # renderer = HighlightRenderer()
         mk = mistune.Markdown(renderer=renderer)
         output = mk(curr_article.content)

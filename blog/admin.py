@@ -1,3 +1,6 @@
+import mistune
+
+from bs4 import BeautifulSoup
 from django.contrib import admin
 from blog import models
 from django import forms
@@ -29,7 +32,13 @@ class ArticleForm(forms.ModelForm):
     def clean_desc(self):
 
         desc = self.cleaned_data['desc']
-        content = self.data['content'][:200]
+        content = self.data['content']
+        renderer = mistune.Renderer(escape=True, hard_wrap=True)
+        # renderer = HighlightRenderer()
+        mk = mistune.Markdown(renderer=renderer)
+        output = mk(content)
+        soup = BeautifulSoup(output, 'html.parser')
+        content = soup.text[:150]
         print(desc)
         if desc:
             return desc
