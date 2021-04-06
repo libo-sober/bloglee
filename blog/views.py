@@ -69,7 +69,8 @@ class Index(View):
         # all_articles = articles | top_articles  # 合并两个queryset
         all_articles = all_articles[
                        (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
-
+        # P = models.Article.objects.get(id=8)
+        # print(P.get_absolute_url())
         # 文章分类
         categories = models.Category.objects.all()
         # 文章专栏
@@ -535,18 +536,20 @@ class LoginView(View):
         # 判断用户名和密码
         user_obj_set = models.UserInfo.objects.filter(username=user, password=set_md5(pwd))
         user_obj = user_obj_set.first()
-        if user_obj.is_active:
+        print(user_obj)
+        if user_obj:
 
-            if user_obj:
+            if user_obj.is_active:
                 res['code'] = 200
                 # 更新最后登录时间
                 user_obj_set.update(last_login=datetime.datetime.now())
                 # 把当前用户id添加到session中
                 request.session['user_id'] = user_obj.id
             else:
-                res['errors'] = {'userpwd': '用户名或密码错误！！'}
+                res['errors'] = {'active': '请先去您的邮箱激活账户！'}
+
         else:
-            res['errors'] = {'active': '请先去您的邮箱激活账户！'}
+            res['errors'] = {'userpwd': '用户名或密码错误！！'}
 
         return JsonResponse(res)
 
@@ -565,7 +568,6 @@ class RegisterForm(forms.Form):
         max_length=16,
         min_length=3,
         label='用户名',
-        widget=forms.widgets.TextInput(attrs={'class': 'username', 'autocomplete': 'off', 'placeholder': '用户名', }),
         error_messages={
             'required': '用户名不能为空！',
             'max_length': '用户名不能大于16位！',
@@ -577,9 +579,6 @@ class RegisterForm(forms.Form):
         max_length=32,
         min_length=6,
         label='密码',
-        widget=forms.widgets.PasswordInput(
-            attrs={'class': 'password', 'placeholder': '密码', 'oncontextmenu': 'return false',
-                   'onpaste': 'return false', }),
         error_messages={
             'required': '密码不能为空！',
             'max_length': '密码不能大于16位！',
@@ -589,7 +588,6 @@ class RegisterForm(forms.Form):
 
     r_password = forms.CharField(
         label='确认密码',
-        widget=forms.widgets.PasswordInput(attrs={'class': 'password', 'placeholder': '请再次输入密码', }),
         error_messages={
             'required': '密码不能为空！',
         }
@@ -613,7 +611,7 @@ class RegisterForm(forms.Form):
         if user_obj:
             self.add_error('username', '用户名已存在！')
         else:
-            return values
+            return username
 
     email = forms.EmailField(
         label='邮箱',
@@ -621,7 +619,6 @@ class RegisterForm(forms.Form):
             'invalid': '邮箱格式不对！',
             'required': '邮箱不能为空！',
         },
-        widget=forms.widgets.EmailInput(attrs={'class': 'email', 'placeholder': '输入邮箱地址', 'type': 'email'}),
         validators=[email_validate, ],
     )
 
@@ -649,6 +646,7 @@ class RegisterView(View):
         res = {"code": 500, "error": None}
         # print(request.POST.get('r_password'))
         register_form_obj = RegisterForm(request.POST)
+        print(request.POST.get('username'))
         if register_form_obj.is_valid():
             res['code'] = 200
             print(register_form_obj.cleaned_data)
@@ -672,12 +670,13 @@ class RegisterView(View):
                             f'密码：{password_}\n请点击下面的链接激活你的账号:https://liboer.top/activation/{code}\n' \
                             f'若跳转到登录页面则成功激活\n' \
                             f'若跳转到注册页面则激活失败\n'
-            send_mail(
-                f'大聪明博客用户：{username}的激活链接',
-                email_content,
-                settings.EMAIL_FROM,
-                [email, ],  # 文章作者邮箱
-            )
+            print(email_content)
+            # send_mail(
+            #     f'大聪明博客用户：{username}的激活链接',
+            #     email_content,
+            #     settings.EMAIL_FROM,
+            #     [email, ],  # 文章作者邮箱
+            # )
         else:
             res['error'] = register_form_obj.errors
             # print(register_form_obj.errors)

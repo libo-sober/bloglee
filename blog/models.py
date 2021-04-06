@@ -66,6 +66,9 @@ class Tag(models.Model):
     def get_items(self):
         return len(self.article_set.all())
 
+    def get_absolute_url(self):
+        return reverse('tag', kwargs={'en_us_c': 'category', 'en_us_tag': self.en_us})
+
     get_items.short_description = '文章数'
 
     class Meta:
@@ -96,6 +99,9 @@ class Category(models.Model):
             '<i class="{}"></i>',
             self.icon,
         )
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'en_us_c': self.en_us})
 
     get_items.short_description = '文章数'
     icon_data.short_description = '图标预览'
@@ -169,7 +175,7 @@ class Article(models.Model):
     cover_admin.short_description = '文章封面'
 
     def get_absolute_url(self):
-        return reverse('Index', kwargs={'url_param': self.en_us})
+        return reverse('detail', kwargs={'en_us': self.en_us})
 
     class Meta:
         verbose_name = '文章'

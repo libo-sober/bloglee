@@ -190,5 +190,4 @@ MDEDITOR_CONFIGS = {
         }
 }
 
-# # 管理员头像地址
-# ADMIN_IMG = 'http://127.0.0.1:8000/static/image/snd51t4nl2osnd51t4nl2o.png'
+SIMPLEUI_LOGO = 'https://www.liboer.top/static/image/favicon.ico'

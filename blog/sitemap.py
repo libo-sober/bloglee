@@ -22,7 +22,7 @@ class ArticleSiteMap(Sitemap):
         return Article.objects.all()
 
     def lastmod(self, obj):
-        return obj.last_mod_time
+        return obj.update_time
 
 
 class CategorySiteMap(Sitemap):
@@ -32,8 +32,8 @@ class CategorySiteMap(Sitemap):
     def items(self):
         return Category.objects.all()
 
-    def lastmod(self, obj):
-        return obj.last_mod_time
+    # def lastmod(self, obj):
+    #     return obj.last_mod_time
 
 
 class TagSiteMap(Sitemap):
@@ -43,16 +43,16 @@ class TagSiteMap(Sitemap):
     def items(self):
         return Tag.objects.all()
 
-    def lastmod(self, obj):
-        return obj.last_mod_time
+    # def lastmod(self, obj):
+    #     return obj.last_mod_time
 
 
-class UserSiteMap(Sitemap):
-    changefreq = "Weekly"
-    priority = "0.3"
-
-    def items(self):
-        return UserInfo.objects.all()
-
-    def lastmod(self, obj):
-        return obj.date_joined
+# class UserSiteMap(Sitemap):
+#     changefreq = "Weekly"
+#     priority = "0.3"
+#
+#     def items(self):
+#         return UserInfo.objects.all()
+#
+#     def lastmod(self, obj):
+#         return obj.date_joined

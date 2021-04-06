@@ -20,17 +20,18 @@ from django.conf.urls.static import static
 from blog import views
 from blog.feeds import BlogRssFeed
 from django.contrib.sitemaps.views import sitemap
-from blog.sitemap import StaticViewSitemap, ArticleSiteMap, CategorySiteMap, TagSiteMap, UserSiteMap
+from blog.sitemap import StaticViewSitemap, ArticleSiteMap, CategorySiteMap, TagSiteMap
+from django.views.generic.base import RedirectView
 
 sitemaps = {
 
     'blog': ArticleSiteMap,
     'Category': CategorySiteMap,
     'Tag': TagSiteMap,
-    'User': UserSiteMap,
     'static': StaticViewSitemap
 }
 
+favicon_view = RedirectView.as_view(url='static/image/favicon.ico', permanent=True)
 
 
 urlpatterns = [
@@ -75,6 +76,8 @@ urlpatterns = [
     # sitemap
     re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
         name='django.contrib.sitemaps.views.sitemap'),
+    # 全站图标
+    re_path(r'favicon\.[ico|png]$', favicon_view),
     # url(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
 
     # url(r'^static/(?P<path>.*)$',serve,{'document_root':settings.STATIC_ROOT}),
@@ -83,6 +86,7 @@ urlpatterns = [
 # 设置后台名称
 admin.site.site_header = '大聪明博客后台'
 admin.site.site_title = 'Django Blog 后台'
+admin.site.site_url = 'https://www.liboer.top/static/image/favicon.ico'
 
 # 404
 handler404 = "blog.views.page_not_found"
