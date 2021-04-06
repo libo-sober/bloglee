@@ -1343,7 +1343,7 @@ div#comments .comment-list .comment-info cite{
     overflow-x: auto;
     margin: .4px 0px 0px 0px;
     padding: 0;
-    max-height: 1000px;
+    max-height: 100%;
     padding-left: 3.5em;
     font-size: inherit;
     color: inherit;
@@ -1376,6 +1376,9 @@ div#comments .comment-list .comment-info cite{
 /*解决ueditor文章h标签文字溢出问题*/
 #article-content h1,h2,h3,h4,h5,h6{
     word-break: break-all;
+}
+.article-content p{
+    font-size: large;
 }
 
 

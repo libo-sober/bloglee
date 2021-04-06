@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.html import format_html
 from mdeditor.fields import MDTextField
 from datetime import datetime
+from django.urls import reverse
 # Create your models here.
 
 
@@ -166,6 +167,9 @@ class Article(models.Model):
 
     cover_data.short_description = '文章封面'
     cover_admin.short_description = '文章封面'
+
+    def get_absolute_url(self):
+        return reverse('Index', kwargs={'url_param': self.en_us})
 
     class Meta:
         verbose_name = '文章'

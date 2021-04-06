@@ -18,9 +18,20 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from blog import views
-from django.conf.urls import url
-from django.views.static import serve
 from blog.feeds import BlogRssFeed
+from django.contrib.sitemaps.views import sitemap
+from blog.sitemap import StaticViewSitemap, ArticleSiteMap, CategorySiteMap, TagSiteMap, UserSiteMap
+
+sitemaps = {
+
+    'blog': ArticleSiteMap,
+    'Category': CategorySiteMap,
+    'Tag': TagSiteMap,
+    'User': UserSiteMap,
+    'static': StaticViewSitemap
+}
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
@@ -61,6 +72,9 @@ urlpatterns = [
     path('rss/', BlogRssFeed(), name='rss'),
     # 激活用户
     re_path(r'activation/(?P<active_code>.*)/', views.Activate.as_view(), name='activation'),
+    # sitemap
+    re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap'),
     # url(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
 
     # url(r'^static/(?P<path>.*)$',serve,{'document_root':settings.STATIC_ROOT}),

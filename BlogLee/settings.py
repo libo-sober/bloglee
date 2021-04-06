@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'blog',
     'mdeditor',
 ]
@@ -52,6 +54,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'blog.utils.usermiddleware.MyUserAuth',  # 不让非管理员用户进admin,不登陆不可以查看个人资料
 ]
+
+SITE_ID = 1
 
 ROOT_URLCONF = 'BlogLee.urls'
 

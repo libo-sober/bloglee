@@ -194,7 +194,10 @@ class ArticleView(View):
         # renderer = HighlightRenderer()
         mk = mistune.Markdown(renderer=renderer)
         output = mk(curr_article.content)
-
+        # print(output)
+        # import markdown
+        # md = markdown.markdown(curr_article.content)
+        # print(md)
         # 文章分类
         categories = models.Category.objects.all()
         # 文章专栏
@@ -431,6 +434,8 @@ class CommentView(View):
                 models.Article.objects.get(id=article).commented()
                 # 保存
                 content = form.cleaned_data.pop('content')
+                username = form.cleaned_data.pop('username')
+                username = html.escape(username)
                 # 防止js注入
                 # 陌生人全部防止js注入
                 re_script = re.compile(r'<script>(.*?)</script>')
@@ -439,6 +444,7 @@ class CommentView(View):
                     content = html.escape(content)
                 # content = html.escape(content)
                 form.cleaned_data.update({'content': content})
+                form.cleaned_data.update({'username': username})
                 comment_obj = models.Comment.objects.create(
                     **form.cleaned_data
                 )

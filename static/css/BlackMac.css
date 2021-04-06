@@ -90,11 +90,15 @@ pre.line-numbers {
     padding-bottom: .8em;
     padding-left: .8em;
     counter-reset: linenumber
+
 }
 
 pre.line-numbers > code {
-    white-space: inherit
-    font-size: 15px
+    white-space: inherit;
+    font-size: large;
+    font-family: Source Code Pro,DejaVu Sans Mono,Ubuntu Mono,Anonymous Pro,Droid Sans Mono,Menlo,Monaco,Consolas,Inconsolata,Courier,monospace,PingFang SC,Microsoft YaHei,sans-serif;
+    color: #f8f8f2;
+    background: #313238;
 }
 
 .line-numbers .line-numbers-rows {
