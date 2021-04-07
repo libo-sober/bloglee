@@ -797,7 +797,6 @@ class FriendsForm(forms.ModelForm):
     class Meta:
         model = models.Links
         fields = "__all__"
-        exclude = ['desc', ]
         error_messages = {
             'title': {
                 'required': '昵称不能为空！',
