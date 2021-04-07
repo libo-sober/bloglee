@@ -22,6 +22,7 @@ from blog.feeds import BlogRssFeed
 from django.contrib.sitemaps.views import sitemap
 from blog.sitemap import StaticViewSitemap, ArticleSiteMap, CategorySiteMap, TagSiteMap
 from django.views.generic.base import RedirectView
+from django.views.generic import TemplateView
 
 sitemaps = {
 
@@ -31,7 +32,7 @@ sitemaps = {
     'static': StaticViewSitemap
 }
 
-favicon_view = RedirectView.as_view(url='static/image/favicon.ico', permanent=True)
+favicon_view = RedirectView.as_view(url=r'static/image/favicon.ico', permanent=True)
 
 
 urlpatterns = [
@@ -77,7 +78,10 @@ urlpatterns = [
     re_path(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
         name='django.contrib.sitemaps.views.sitemap'),
     # 全站图标
-    re_path(r'favicon\.[ico|png]$', favicon_view),
+    path('favicon.ico', favicon_view),
+    # robots
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    path('human.txt', TemplateView.as_view(template_name='human.txt', content_type='text/plain')),
     # url(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
 
     # url(r'^static/(?P<path>.*)$',serve,{'document_root':settings.STATIC_ROOT}),

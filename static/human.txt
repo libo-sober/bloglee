@@ -1,0 +1,8 @@
+/* TEAM */
+开发人员：大聪明
+网站： liboer.top
+电子邮件: 1570140958@qq.com
+
+/* SITE */
+最后更新: 2021/04/07
+语言： HTML5、CSS3、javascript、Django、Python、Bootstrap

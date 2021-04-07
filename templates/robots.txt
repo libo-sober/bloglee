@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /media/
+
+Sitemap: https://www.liboer.top/sitemap.xml
+Sitemap: https://liboer.top/sitemap.xml
