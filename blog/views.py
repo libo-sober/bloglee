@@ -732,33 +732,24 @@ class UserInfoView(View):
         user_id = request.session.get('user_id')
         uname = models.UserInfo.objects.get(id=user_id).username
 
-        register_form_obj = RegisterForm(request.POST)
-
         msg = {'code': 500, 'error': None}
-
-        # username = request.POST.get('username')
-        # email = request.POST.get('email')
-        # avatar_obj = request.FILES.get('avatar')
-        # 应户名已经存在的问题
-        # todo libo
-        if register_form_obj.is_valid():
+        username = request.POST.get('username')
+        user_obj = models.UserInfo.objects.filter(~Q(id=user_id)).filter(username=username)
+        if user_obj:
+            msg['error'] = {'username': '用户名已经存在！'}
+        else:
             msg['code'] = 200
             avatar_obj = request.FILES.get('avatar')
-            path = 'uploads' + '/' + 'avatars' + '/' + avatar_obj.name
-            with open(path, mode='wb') as fp:
-                for img in avatar_obj:
-                    fp.write(img)
-            url = 'avatars' + '/' + avatar_obj.name
-
-            # print(register_form_obj.cleaned_data)
-            username = register_form_obj.cleaned_data['username']
-            email = register_form_obj.cleaned_data['email']
-            # update方法智能是queryset调用
-            models.Comment.objects.filter(username=uname).update(username=username)
-            models.UserInfo.objects.filter(id=user_id).update(username=username, email=email, avatar=url)
-
-        else:
-            msg['error'] = register_form_obj.errors
+            print(avatar_obj)
+            if avatar_obj:
+                path = 'uploads' + '/' + 'avatars' + '/' + avatar_obj.name
+                with open(path, mode='wb') as fp:
+                    for img in avatar_obj:
+                        fp.write(img)
+                url = 'avatars' + '/' + avatar_obj.name
+                models.UserInfo.objects.filter(id=user_id).update(avatar=url)
+            models.Comment.objects.filter(username=uname).update(username=uname)
+            models.UserInfo.objects.filter(id=user_id).update(username=uname)
         return JsonResponse(msg)
 
 
