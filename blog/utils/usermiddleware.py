@@ -16,11 +16,12 @@ class MyUserAuth(MiddlewareMixin):
             cur_user_name = models.UserInfo.objects.get(id=user_id)
         else:
             cur_user_name = None
-        # 文章分类
-        categories = models.Category.objects.all()
-        if url_re.match(request.path) or request.path in black_list:
+        if url_re.match(request.path):
             if user_id:
                 if not cur_user_name.is_admin:
-                    return render(request, '404.html',  {'cur_user_name': cur_user_name, "categories": categories, })
+                    return render(request, '404.html')
             else:
-                return render(request, '404.html',  {'cur_user_name': cur_user_name, "categories": categories, })
+                return render(request, '404.html')
+        if request.path in black_list:
+            if not user_id:
+                return render(request, '404.html')

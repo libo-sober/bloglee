@@ -736,6 +736,11 @@ class UserInfoView(View):
 
         msg = {'code': 500, 'error': None}
 
+        # username = request.POST.get('username')
+        # email = request.POST.get('email')
+        # avatar_obj = request.FILES.get('avatar')
+        # 应户名已经存在的问题
+        # todo libo
         if register_form_obj.is_valid():
             msg['code'] = 200
             avatar_obj = request.FILES.get('avatar')
