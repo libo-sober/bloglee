@@ -42,10 +42,11 @@ class Column(models.Model):
     文章专栏
     """
     name = models.CharField(max_length=30, verbose_name='专栏名称')
-    url = models.CharField(max_length=10, null=True, blank=True, default='None', verbose_name='路径')
+    url = models.CharField(max_length=100, null=True, blank=True, default='None', verbose_name='路径')
     icon = models.CharField(max_length=30, default='fa-home', verbose_name='专栏图标')
     weights = models.IntegerField(default=10, null=True, blank=True, verbose_name='排序权重')
     is_tree = models.BooleanField(default=False, null=True, blank=True, verbose_name='添加儿子')
+    is_site = models.BooleanField(default=False, null=True, blank=True, verbose_name='添加子站')
 
     class Meta:
         verbose_name = '专栏'

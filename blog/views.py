@@ -822,6 +822,8 @@ class FriendsView(View):
         categories = models.Category.objects.all()
         # 文章专栏
         columns = models.Column.objects.all().order_by('-weights')
+        for col in columns:
+            print(col.icon)
 
         if user_id:
             cur_user_name = models.UserInfo.objects.get(id=user_id)
