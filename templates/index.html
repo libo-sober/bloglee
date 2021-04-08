@@ -16,15 +16,15 @@
 
     <div class="container">
     <div class="row">
-    <section class="col-sm-12 col-md-12 col-lg-8 index" id="main">
+    <section class="col-sm-12 col-md-12 col-lg-8 index post-content" id="main">
 
         {% for article in all_articles %}
             <article class="d-block bg-white hvr-float">
 
                 <div class="media d-block">
                     <!--左上文章封面图-start-->
-                    <div class="article-thumb"><a href="{% url 'detail' article.en_us %}"><img
-                            src="{{ article.cover.url }}"
+                    <div class="article-thumb"><a href="{% url 'detail' article.en_us %}">
+                        <img title="{{ article.title }}" src="{{ article.cover.url }}"
                             class="mr-3"></a></div>
                     <!--左上文章封面图-end-->
 
@@ -111,7 +111,7 @@
                             <a href="{% url 'about' %}"><img class="xwcms" src="{{ cur_user_name.avatar.url }}"></a>
                             <a href="{% url 'about' %}" class=""><h5
                                     class="card-title text-dark mt-2 superuser">{{ cur_user_name.username }}</h5></a>
-                            <a href="{% url 'rss' %}" rel="alternate">
+                            <a href="{% url 'rss' %}" rel="alternate" class="RSS">
                                 <i class="fa fa-rss"></i>
                                 RSS
                             </a>
@@ -146,7 +146,7 @@
                             {% endif %}
                             <a class=""><h5 class="card-title text-dark mt-2">{{ cur_user_name.username }}</h5></a>
                             <p class="card-text mb-2" style="font-size: 18px;font-family: STXingkai;"></p>
-                            <a href="{% url 'rss' %}" rel="alternate">
+                            <a href="{% url 'rss' %}" rel="alternate" class="RSS">
                                 <i class="fa fa-rss"></i>
                                 RSS
                             </a>
@@ -158,8 +158,8 @@
                     {% else %}
                         <a href="{% url 'about' %}"><img class="xwcms" src="{{ admin_obj.avatar.url }}"></a>
                         <a href="{% url 'about' %}" class=""><h5
-                                class="card-title text-dark mt-2 superuser">{{ admin_obj.username }}</h5></a>
-                        <a href="{% url 'rss' %}" rel="alternate">
+                                class="card-title text-dark mt-2 superuser home-about">{{ admin_obj.username }}</h5></a>
+                        <a href="{% url 'rss' %}" rel="alternate" class="RSS">
                                 <i class="fa fa-rss"></i>
                                 RSS
                             </a>

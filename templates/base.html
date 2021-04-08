@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{% static 'css/hover-min.css' %}">
     <link rel="stylesheet" href="{% static 'css/sweetalert.css' %}">
     <link rel="stylesheet" href="{% static 'css/dist_APlayer.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pio.css' %}">
     {#<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.min.css' %}">#}
     {#<link rel="stylesheet" href="{% static 'mdeditor/css/editormd.preview.css' %}">#}
 
@@ -36,7 +37,7 @@
 </head>
 
 
-<body class="animated">
+<body class="animated night">
 {% block Navigation %}
     <!--导航条-start-->
 
@@ -214,6 +215,11 @@
         </div>
     </div>
 </div>
+{#看板娘容器#}
+<div class="pio-container right">
+    <div class="pio-action"></div>
+    <canvas id="pio" width="200" height="250"></canvas>
+</div>
 
 </body>
 
@@ -338,95 +344,167 @@
 
 
 {#就可以实现博客里面的小人效果了#}
-<script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
-<!--小帅哥： https://unpkg.com/live2d-widget-model-chitose@1.0.5/assets/chitose.model.json-->
-<!--萌娘：https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json-->
-<!--小可爱（女）：https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json-->
-<!--小可爱（男）：https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json-->
-<!--初音：https://unpkg.com/live2d-widget-model-miku@1.0.5/assets/miku.model.json-->
+{#<script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>#}
+{#<!--小帅哥： https://unpkg.com/live2d-widget-model-chitose@1.0.5/assets/chitose.model.json-->#}
+{#<!--萌娘：https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json-->#}
+{#<!--小可爱（女）：https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json-->#}
+{#<!--小可爱（男）：https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json-->#}
+{#<!--初音：https://unpkg.com/live2d-widget-model-miku@1.0.5/assets/miku.model.json-->#}
 {#https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json#}
-<!-- 上边的不同链接显示的是不同的小人，这个可以根据需要来选择 下边的初始化部分，可以修改宽高来修改小人的大小，或者是鼠标移动到小人上的透明度，也可以修改小人在页面出现的位置。 -->
-<script>
-    /*https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json*/
-    L2Dwidget.init({
-            "model": {
-                jsonPath:
-                    "https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json",
-                "scale": 1
-            },
-            "display": {
-                "position": "right", "width": 110, "height": 150,
-                "hOffset": 0, "vOffset": -20
-            },
-            "mobile": {"show": true, "scale": 0.5},
-            "react": {"opacityDefault": 0.8, "opacityOnHover": 0.1},
-            "dialog": {
-                "enable": true,
-                "script": {
-                    //每20s，显示一言（调用一言Api返回的句子）
-                    'every idle 20s': '$hitokoto$',
-                    //触摸到class='star'对象
-                    'hover .star': '星星在天上而你在我心里 (*/ω＼*)',
-                    //触摸到身体
-                    'tap body': '害羞⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄',
-                    //触摸到头部
-                    'tap face': '~~'
-                }
-            },
-        }
-    );
-</script>
-<span class="hitokoto" id="hitokoto" style="display:none">Loading...</span>
-<div id="hjsbox" style="display:none">
-</div>
+{#<!-- 上边的不同链接显示的是不同的小人，这个可以根据需要来选择 下边的初始化部分，可以修改宽高来修改小人的大小，或者是鼠标移动到小人上的透明度，也可以修改小人在页面出现的位置。 -->#}
+{#<script>#}
+{#    /*https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json*/#}
+{#    L2Dwidget.init({#}
+{#            "model": {#}
+{#                jsonPath:#}
+{#                    "https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json",#}
+{#                "scale": 1#}
+{#            },#}
+{#            "display": {#}
+{#                "position": "right", "width": 110, "height": 150,#}
+{#                "hOffset": 0, "vOffset": -20#}
+{#            },#}
+{#            "mobile": {"show": true, "scale": 0.5},#}
+{#            "react": {"opacityDefault": 0.8, "opacityOnHover": 0.1},#}
+{#            "dialog": {#}
+{#                "enable": true,#}
+{#                "script": {#}
+{#                    //每20s，显示一言（调用一言Api返回的句子）#}
+{#                    'every idle 20s': '$hitokoto$',#}
+{#                    //触摸到class='star'对象#}
+{#                    'hover .star': '星星在天上而你在我心里 (*/ω＼*)',#}
+{#                    //触摸到身体#}
+{#                    'tap body': '害羞⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄',#}
+{#                    //触摸到头部#}
+{#                    'tap face': '~~'#}
+{#                }#}
+{#            },#}
+{#        }#}
+{#    );#}
+{#</script>#}
+{#<span class="hitokoto" id="hitokoto" style="display:none">Loading...</span>#}
+{#<div id="hjsbox" style="display:none">#}
+{#</div>#}
+{##}
+{#<!--导入一言API-->#}
+{#<script>#}
+{#    //初始化一言#}
+{#    setTimeout("getkoto()", 1000);#}
+{#    //加载一言#}
+{#    var t;#}
+{##}
+{#    function getkoto() {#}
+{#        var hjs = document.createElement('script');#}
+{#        hjs.setAttribute('id', 'hjs');#}
+{#        hjs.setAttribute('src', 'https://v1.hitokoto.cn/?c=f&encode=text');#}
+{#        document.getElementById("hjsbox").appendChild(hjs);#}
+{#        t = setTimeout("getkoto()", 2000);#}
+{#    }#}
+{##}
+{#    //输出一言#}
+{#    function echokoto(result) {#}
+{#        var hc = eval(result);#}
+{#        //$("#hitokoto").fadeTo(300,0);#}
+{#        document.getElementById("hitokoto").innerHTML = hc.hitokoto;#}
+{#        //$("#hitokoto").fadeTo(300,0.75);#}
+{#    }#}
+{#</script>#}
 
-<!--导入一言API-->
+<script src="{% static 'js/pio.js' %}"></script>
+<script src="{% static 'js/l2d.js' %}"></script>
 <script>
-    //初始化一言
-    setTimeout("getkoto()", 1000);
-    //加载一言
-    var t;
-
-    function getkoto() {
-        var hjs = document.createElement('script');
-        hjs.setAttribute('id', 'hjs');
-        hjs.setAttribute('src', 'https://v1.hitokoto.cn/?c=f&encode=text');
-        document.getElementById("hjsbox").appendChild(hjs);
-        t = setTimeout("getkoto()", 2000);
-    }
-
-    //输出一言
-    function echokoto(result) {
-        var hc = eval(result);
-        //$("#hitokoto").fadeTo(300,0);
-        document.getElementById("hitokoto").innerHTML = hc.hitokoto;
-        //$("#hitokoto").fadeTo(300,0.75);
-    }
-</script>
-{#音乐#}
-<script src="{% static 'js/dist_APlayer.min.js' %}"></script>
-<script>
-const ap = new APlayer({
-    container: document.getElementById('player'),
-    fixed: true,
-    autoplay: true, //自动播放
-    audio: [{
-        name: 'The Song Of Doremi',
-        artist: '林澜叶',
-        url: 'http://music.163.com/song/media/outer/url?id=1358848433',
-        cover: 'http://p1.music.126.net/Ax-zrmAPBrASWxT92t3fdw==/109951164000242827.jpg?param=130y130',
+    var pio = new Paul_Pio({
+    "mode": "fixed",
+     "tips": true,
+    "hidden": true,
+    "content": {
+        "welcome": ["欢迎来到大聪明博客！", "今天天气不错，一起来玩吧！", "博主每天都有些折腾记录，欢迎前往他的小窝阅读~"],
+        "custom": [
+            {"selector": ".comment-form", "text": "欢迎参与本文评论，别发小广告噢~"},
+            {"selector": ".home-about", "text": "在这里可以了解博主的日常噢~"},
+            {"selector": ".RSS", "text": "在这里可以订阅博主噢~"},
+            {"selector": ".post-item a", "type": "read"},
+            {"selector": ".post-content a, .page-content a", "type": "link"}
+        ]
     },
+    "night": "single.night()",
+    "model": ["{% static 'models/koharu/model.json' %}"]
+
+});
+</script>
+
+{#夜间模式#}
+{#<script type="text/javascript">#}
+{#function switchNightMode(){#}
+{#    var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';#}
+{#    if(night == '0'){#}
+{#        document.body.classList.add('night');#}
+{#        document.cookie = "night=1;path=/"#}
+{#        console.log('夜间模式开启');#}
+{#    }else{#}
+{#        document.body.classList.remove('night');#}
+{#        document.cookie = "night=0;path=/"#}
+{#        console.log('夜间模式关闭');#}
+{#    }#}
+{#} (function(){#}
+{#    if(document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1") === ''){#}
+{#        if(new Date().getHours() > 22 || new Date().getHours() < 5){#}
+{#            document.body.classList.add('night');#}
+{#            document.cookie = "night=1;path=/";#}
+{#            console.log('夜间模式自动开启');#}
+{#        }else{#}
+{#            document.body.classList.remove('night');#}
+{#            document.cookie = "night=0;path=/";#}
+{#            console.log('夜间模式自动关闭');#}
+{#        }#}
+{#    }else{#}
+{#        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';#}
+{#        if(night == '0'){#}
+{#            document.body.classList.remove('night');#}
+{#        }else if(night == '1'){#}
+{#            document.body.classList.add('night');#}
+{#        }#}
+{#    }#}
+{# })();</script> #}
+{#<script>#}
+{#function switchNightMode(){#}
+{#    var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';#}
+{#    if(night == '0'){#}
+{#        document.body.classList.add('night');#}
+{#        document.cookie = "night=1;path=/"#}
+{#        console.log('夜间模式开启');#}
+{#     }else{#}
+{#        document.body.classList.remove('night');#}
+{#        document.cookie = "night=0;path=/"#}
+{#        console.log('夜间模式关闭');#}
+{#     }#}
+{#}#}
+{#</script>#}
+
+{#音乐#}
+{#<script src="{% static 'js/dist_APlayer.min.js' %}"></script>#}
+{#<script>#}
+{#const ap = new APlayer({#}
+{#    container: document.getElementById('player'),#}
+{#    fixed: true,#}
+{#    autoplay: true, //自动播放#}
+{#    audio: [{#}
+{#        name: 'The Song Of Doremi',#}
+{#        artist: '林澜叶',#}
+{#        url: 'http://music.163.com/song/media/outer/url?id=1358848433',#}
+{#        cover: 'http://p1.music.126.net/Ax-zrmAPBrASWxT92t3fdw==/109951164000242827.jpg?param=130y130',#}
+{#    },#}
 	{#{#}
  	{#	name: '阳光甚好，微风不噪',#}
     {#    artist: '何石',#}
     {#    url: '.mp3',#}
     {#    cover: '.ico',#}
 	{# } #}
-
-	]
-});
-ap.init();
-</script>
+{##}
+{#	]#}
+{#});#}
+{#ap.init();#}
+{#</script>#}
 
 
 {% block js %}
