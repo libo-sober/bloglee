@@ -1036,3 +1036,6 @@ class SearchView(View):
 
         else:
             return redirect('index')
+class Jiji(View):
+    def get(self, request):
+        return render(request, 'jifenzi.html')

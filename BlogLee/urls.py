@@ -82,6 +82,8 @@ urlpatterns = [
     # robots
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     path('human.txt', TemplateView.as_view(template_name='human.txt', content_type='text/plain')),
+    # 文件
+    path('jiji/', views.Jiji.as_view(), name='jiji'),
     # url(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
 
     # url(r'^static/(?P<path>.*)$',serve,{'document_root':settings.STATIC_ROOT}),
