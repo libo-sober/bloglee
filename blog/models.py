@@ -125,6 +125,7 @@ class Article(models.Model):
     # cover = models.CharField(max_length=200, default='https://image.3001.net/images/20200304/15832956271308.jpg', verbose_name='文章封面')
     cover = models.FileField(upload_to='covers/', default='covers/1P629140610-3.jpg', verbose_name='文章封面')
     content = MDTextField(verbose_name='文章内容')  # 富文本编辑框，要在models中注册mdeditor
+    is_md = models.BooleanField(default=True, verbose_name='是否转md')
     click_count = models.IntegerField(default=0, verbose_name='点击次数')
     upup = models.IntegerField(default=0, verbose_name='点赞次数', null=True, blank=True)
     comments = models.IntegerField(default=0, verbose_name='评论次数', null=True, blank=True)

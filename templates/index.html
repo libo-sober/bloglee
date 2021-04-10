@@ -209,7 +209,7 @@
                         <ul class="list-group list-group-flush">
                             {% for article in new_articles %}
                                 <a class="pl-0 list-group-item text-truncate text-dark " title="{{ article.title }}"
-                                   href="{% url 'detail' article.id %}">
+                                   href="{% url 'detail' article.en_us %}">
                                     <i class="fa  fa-book"></i>
                                     {{ article.title }}
                                 </a>
@@ -220,7 +220,7 @@
                         <ul class="list-group list-group-flush">
                             {% for article in hot_articles %}
                                 <a class="pl-0 list-group-item text-truncate text-dark " title="{{ article.title }}"
-                                   href="{% url 'detail' article.id %}">
+                                   href="{% url 'detail' article.en_us %}">
                                     <i class="fa  fa-book"></i>
                                     {{ article.title }}
                                 </a>

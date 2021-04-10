@@ -32,13 +32,17 @@
 
 
     {% block css %}
+{#        <style>#}
+{#        body{#}
+{#            background:url("{% static 'image/bg_dark.gif' %}");#}
+{#        }#}
+{#        </style>#}
     {% endblock %}
 
 
 </head>
 
-
-<body class="animated night">
+<body class="animated white">
 {% block Navigation %}
     <!--导航条-start-->
 
@@ -414,6 +418,17 @@
 <script src="{% static 'js/pio.js' %}"></script>
 <script src="{% static 'js/l2d.js' %}"></script>
 <script>
+
+    function night(data){
+        document.body.setAttribute('data-theme', 'dark')
+        document.body.classList.remove('white')
+        document.body.classList.add('dark')
+
+    }
+
+
+
+
     var pio = new Paul_Pio({
     "mode": "fixed",
      "tips": true,
@@ -428,7 +443,7 @@
             {"selector": ".post-content a, .page-content a", "type": "link"}
         ]
     },
-    "night": "single.night()",
+    "night": "night()",
     "model": ["{% static 'models/koharu/model.json' %}"]
 
 });

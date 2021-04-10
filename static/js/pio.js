@@ -139,55 +139,55 @@ var Paul_Pio = function (prop) {
             };
         },
         // 右侧按钮
-        buttons: function () {
-            // 返回首页
-            elements.home.onclick = function () {
-                location.href = current.root;
-            };
-            elements.home.onmouseover = function () {
-                modules.render(prop.content.home || "点击这里回到首页！");
-            };
-            current.menu.appendChild(elements.home);
-
-            // 更换模型
-            elements.skin.onclick = function () {
-                loadlive2d("pio", prop.model[modules.idol()]);
-                prop.content.skin && prop.content.skin[1] ? modules.render(prop.content.skin[1]) : modules.render("新衣服真漂亮~");
-            };
-            elements.skin.onmouseover = function () {
-                prop.content.skin && prop.content.skin[0] ? modules.render(prop.content.skin[0]) : modules.render("想看看我的新衣服吗？");
-            };
-            if(prop.model.length > 1) current.menu.appendChild(elements.skin);
-
-            // 关于我
-            elements.info.onclick = function () {
-                window.open(prop.content.link || "https://www.liboer.top/about");
-            };
-            elements.info.onmouseover = function () {
-                modules.render("想了解更多关于我的信息吗？");
-            };
-            current.menu.appendChild(elements.info);
-
-            // 夜间模式
-            if(prop.night){
-                elements.night.onclick = function () {
-                    eval(prop.night);
-                };
-                elements.night.onmouseover = function () {
-                    modules.render("夜间点击这里可以保护眼睛呢");
-                };
-                current.menu.appendChild(elements.night);
-            }
-
-            // 关闭看板娘
-            elements.close.onclick = function () {
-                modules.destroy();
-            };
-            elements.close.onmouseover = function () {
-                modules.render(prop.content.close || "QWQ 下次再见吧~");
-            };
-            current.menu.appendChild(elements.close);
-        },
+        // buttons: function () {
+        //     // 返回首页
+        //     elements.home.onclick = function () {
+        //         location.href = current.root;
+        //     };
+        //     elements.home.onmouseover = function () {
+        //         modules.render(prop.content.home || "点击这里回到首页！");
+        //     };
+        //     current.menu.appendChild(elements.home);
+        //
+        //     // 更换模型
+        //     elements.skin.onclick = function () {
+        //         loadlive2d("pio", prop.model[modules.idol()]);
+        //         prop.content.skin && prop.content.skin[1] ? modules.render(prop.content.skin[1]) : modules.render("新衣服真漂亮~");
+        //     };
+        //     elements.skin.onmouseover = function () {
+        //         prop.content.skin && prop.content.skin[0] ? modules.render(prop.content.skin[0]) : modules.render("想看看我的新衣服吗？");
+        //     };
+        //     if(prop.model.length > 1) current.menu.appendChild(elements.skin);
+        //
+        //     // 关于我
+        //     elements.info.onclick = function () {
+        //         window.open(prop.content.link || "https://www.liboer.top/about");
+        //     };
+        //     elements.info.onmouseover = function () {
+        //         modules.render("想了解更多关于我的信息吗？");
+        //     };
+        //     current.menu.appendChild(elements.info);
+        //
+        //     // 夜间模式
+        //     if(prop.night){
+        //         elements.night.onclick = function () {
+        //             eval(prop.night);
+        //         };
+        //         elements.night.onmouseover = function () {
+        //             modules.render("夜间点击这里可以保护眼睛呢");
+        //         };
+        //         current.menu.appendChild(elements.night);
+        //     }
+        //
+        //     // 关闭看板娘
+        //     elements.close.onclick = function () {
+        //         modules.destroy();
+        //     };
+        //     elements.close.onmouseover = function () {
+        //         modules.render(prop.content.close || "QWQ 下次再见吧~");
+        //     };
+        //     current.menu.appendChild(elements.close);
+        // },
         custom: function () {
             prop.content.custom.forEach(function (t) {
                 if(!t.type) t.type = "default";

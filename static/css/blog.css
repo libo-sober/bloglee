@@ -59,12 +59,18 @@
 }
 
 span.highlighted { color: #ea6f5a; }
-body{
+/*# bg*/
+.white{
     word-break: break-all;
     background:url(../image/b.jpg);
 }
+.dark{
+    word-break: break-all;
+    background:url(../image/bg_dark.gif);
+}
 [data-theme="dark"] body,[data-theme="dark"] article {
     background: #263238!important;
+    background:url(../image/bg_dark.gif);
     color:  #8290a2!important;
 }
 
@@ -786,6 +792,13 @@ img.biaoqing {
 
 /*页面右下角小工具*/
 .web-tool > div{
+
+
+
+
+
+
+
     position: fixed;
 	right: 10px;
 	z-index: 999;
