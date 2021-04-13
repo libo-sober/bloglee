@@ -248,8 +248,13 @@
                         <ul class="list-group list-group-flush">
                             {% for comment in new_comments %}
                                 <li class="pl-0 list-group-item">
+                                {% if comment.article.id == 23 %}
+                                    <a href="{% url 'messages' %}#div-comment-{{ comment.id }}"
+                                       class="text-reset ">
+                                    {% else %}
                                     <a href="{% url 'detail' comment.article.en_us %}#div-comment-{{ comment.id }}"
                                        class="text-reset ">
+                                        {% endif %}
                                         <div class="media pt-3">
 
                                             <img class="mr-2 rounded" width="32" heigh="32"
@@ -270,6 +275,7 @@
                                             </div>
                                         </div>
                                     </a>
+
                                 </li>
                             {% endfor %}
 

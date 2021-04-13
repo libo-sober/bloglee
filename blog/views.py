@@ -901,6 +901,7 @@ class MessagesView(View):
         record = settings.RECORD  # 每页显示多少条记录
         html_obj = MyPagination(page_id=page_id, num=num, base_url=base_url, get_data=get_data, page_count=page_count,
                                 record=record)
+        article_id = 23
         comment_obj = models.Comment.objects.filter(article_id=article_id).order_by('-add_time')
         comment_obj = comment_obj[
                        (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]

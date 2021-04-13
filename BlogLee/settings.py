@@ -191,3 +191,6 @@ MDEDITOR_CONFIGS = {
 }
 
 SIMPLEUI_LOGO = 'https://www.liboer.top/static/image/favicon.ico'
+
+# session过期时间 秒为单位  需要执行数据库迁移命令才会生效
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7  # session一周后失效
