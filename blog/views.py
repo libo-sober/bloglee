@@ -48,18 +48,22 @@ class Index(View):
 
 
         print(cid, tag_id)
+        # 文章对象
+        article_obj = models.Article.objects.filter(is_display=False)
+        # 评论对象
+        comment_obj = models.Comment.objects.all()
         # 文章总数
-        article_count = models.Article.objects.count()
+        article_count = article_obj.count()
         # 评论总数
-        comment_count = models.Comment.objects.count()
+        comment_count = comment_obj.count()
         page_id = request.GET.get('page')  # 获取get请求中的page数据
         num = models.Article.objects.all().count()  # 总共记录数
         base_url = request.path  # 请求路径
         get_data = request.GET.copy()  # 直接调用这个类自己的copy方法或者deepcopy方法或者自己import copy 都可以实现内容允许修改
         # models.Article.objects.filter(is_recommend=1).update(add_time=time)  # <QuerySet [<Article: 太黑的诱惑>]>
         # all_articles = models.Article.objects.all().order_by('-add_time')  # <QuerySet [<Article: 333>]>
-        top_articles = list(models.Article.objects.filter(is_recommend=1).order_by('-add_time'))
-        articles = list(models.Article.objects.filter(is_recommend=False).order_by('-add_time'))
+        top_articles = list(article_obj.filter(is_recommend=1).order_by('-add_time'))
+        articles = list(article_obj.filter(is_recommend=False).order_by('-add_time'))
         all_articles = top_articles + articles
         # 以后直接在settings配置文件中修改即可
         page_count = settings.PAGE_COUNT  # 页数栏显示多少个数
@@ -77,11 +81,11 @@ class Index(View):
         columns = models.Column.objects.all().order_by('-weights')
 
         # 最新文章
-        new_articles = models.Article.objects.all().order_by('-add_time')[:5]
+        new_articles = article_obj.order_by('-add_time')[:5]
         # 最热文章
-        hot_articles = models.Article.objects.all().order_by('-click_count')[:5]
+        hot_articles = article_obj.order_by('-click_count')[:5]
         # 最新评论
-        new_comments = models.Comment.objects.all().order_by('-add_time')[:5]
+        new_comments = comment_obj.order_by('-add_time')[:5]
         # 标签云
         tags = models.Tag.objects.all()
         # 登录的用户对象
@@ -100,11 +104,10 @@ class Index(View):
 
         if tag_id:
             # tag_id对应类下的所有文章
-            tags_num = models.Article.objects.filter(tag__pk=tag_id).count()  # 总共记录数
-            tags_top_articles = list(
-                models.Article.objects.filter(tag__pk=tag_id).filter(is_recommend=1).order_by('-add_time'))
-            tags_articles = list(
-                models.Article.objects.filter(tag__pk=tag_id).filter(is_recommend=False).order_by('-add_time'))
+            obj = models.Article.objects.filter(is_display=False).filter(tag__pk=tag_id)
+            tags_num = obj.count() # 总共记录数
+            tags_top_articles = list(obj.filter(is_recommend=1).order_by('-add_time'))
+            tags_articles = list(obj.filter(is_recommend=False).order_by('-add_time'))
             tags_all_articles = tags_top_articles + tags_articles
             html_obj = MyPagination(page_id=page_id, num=tags_num, base_url=base_url, get_data=get_data,
                                     page_count=page_count, record=record)
@@ -120,11 +123,10 @@ class Index(View):
 
         elif cid:
             # categoriy_id对应类下的所有文章
-            categories_num = models.Article.objects.filter(category_id=cid).all().count()  # 总共记录数
-            categories_top_articles = list(
-                models.Article.objects.filter(category_id=cid).filter(is_recommend=1).order_by('-add_time'))
-            categories_articles = list(
-                models.Article.objects.filter(category_id=cid).filter(is_recommend=False).order_by('-add_time'))
+            categories_obj = models.Article.objects.filter(is_display=False).filter(category_id=cid)
+            categories_num = categories_obj.count()  # 总共记录数
+            categories_top_articles = list(categories_obj.filter(is_recommend=1).order_by('-add_time'))
+            categories_articles = list(categories_obj.filter(is_recommend=False).order_by('-add_time'))
             categories_all_articles = categories_top_articles + categories_articles
             html_obj = MyPagination(page_id=page_id, num=categories_num, base_url=base_url, get_data=get_data,
                                     page_count=page_count, record=record)
@@ -899,7 +901,7 @@ class MessagesView(View):
         record = settings.RECORD  # 每页显示多少条记录
         html_obj = MyPagination(page_id=page_id, num=num, base_url=base_url, get_data=get_data, page_count=page_count,
                                 record=record)
-        comment_obj = models.Comment.objects.all().order_by('-add_time')
+        comment_obj = models.Comment.objects.filter(article_id=article_id).order_by('-add_time')
         comment_obj = comment_obj[
                        (html_obj.page_id - 1) * html_obj.record:html_obj.page_id * html_obj.record]
         comment_list = self.build_msg(comment_obj)

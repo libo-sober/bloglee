@@ -16,7 +16,7 @@
 
     <div class="container">
     <div class="row">
-    <section class="col-sm-12 col-md-12 col-lg-8 index post-content" id="main">
+    <section class="col-xs-12 col-sm-12 col-md-12 col-lg-8 index post-content" id="main">
 
         {% for article in all_articles %}
             <article class="d-block bg-white hvr-float">
@@ -93,6 +93,7 @@
             <aside>
                 <div class="sentence">
                     <strong>每日一句</strong>
+                    <div id="he-plugin-simple"></div>
                     <h2 class="one_datetime">自动获取</h2>
 
                     <p class="one_content">自动获取</p>
@@ -318,7 +319,35 @@
 
 
 {% block js %}
+
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "01234",
+    "background": "5",
+    "tmpColor": "FF00FF",
+    "tmpSize": "16",
+    "cityColor": "980000",
+    "citySize": "16",
+    "aqiColor": "FF9900",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "zh",
+    "borderRadius": "5",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "a5b99fd157df442598228453ddd750a5"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+
     {#    每日一句#}
+
     <script>
         {#//获得年月日      得到日期oTime#}
         {#function getFormatDate(str) {#}
@@ -332,6 +361,8 @@
         {#        oTime = oYear + '-' + oMonth + '-' + oDay;//最后拼接时间#}
         {#    return oTime;#}
         {# };#}
+
+
 
         $.ajax({
             url: 'https://api.xygeng.cn/one',
