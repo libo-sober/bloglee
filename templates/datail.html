@@ -45,7 +45,7 @@
         <!--面包屑-end-->
 
         <!--文章-start-->
-        <article>
+        <article class="examples">
             <div class="article px-2 pt-3 pb-2 bg-white">
                 <!--文章相关参数-start-->
                 <header class="text-center">
@@ -78,7 +78,7 @@
                 </header>
 
                 <!--文章内容区域-start-->
-                <div id="article-content" class="article-content">
+                <div id="article-content" class="article-content example">
 
                     {{ detail_html | custom_markdown | safe }}
                     {#                {{ article.content | safe }}#}
