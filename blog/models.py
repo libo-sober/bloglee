@@ -130,12 +130,14 @@ class Article(models.Model):
     upup = models.IntegerField(default=0, verbose_name='点赞次数', null=True, blank=True)
     comments = models.IntegerField(default=0, verbose_name='评论次数', null=True, blank=True)
     is_recommend = models.BooleanField(default=False, verbose_name='是否推荐')  # 置顶
+    is_display = models.BooleanField(default=False, verbose_name='草稿')  # 置顶
     # TODO libo: 几条评论
     add_time = models.DateTimeField(default=datetime.now, verbose_name='发布时间')
 
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
     category = models.ForeignKey(Category, blank=True, null=True, verbose_name='文章分类', on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag, verbose_name='文章标签')
+
 
 
     def cover_data(self):
