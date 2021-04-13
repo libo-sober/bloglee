@@ -247,8 +247,7 @@
                         <ul class="list-group list-group-flush">
                             {% for comment in new_comments %}
                                 <li class="pl-0 list-group-item">
-
-                                    <a href="{% url 'detail' comment.article.id %}#div-comment-{{ comment.id }}"
+                                    <a href="{% url 'detail' comment.article.en_us %}#div-comment-{{ comment.id }}"
                                        class="text-reset ">
                                         <div class="media pt-3">
 
