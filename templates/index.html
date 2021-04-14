@@ -6,6 +6,10 @@
     {{ admin_obj.username }}的个人博客
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/hint.css' %}">
+{% endblock %}
+
 {## 导航条使用：1.加载自定义标签；2.使用block；3.views.py传入#}
 {% block Navigation %}
     {% navigation categories cur_user_name columns %}
@@ -23,9 +27,8 @@
 
                 <div class="media d-block">
                     <!--左上文章封面图-start-->
-                    <div class="article-thumb"><a href="{% url 'detail' article.en_us %}">
-                        <img title="{{ article.title }}" src="{{ article.cover.url }}"
-                            class="mr-3"></a></div>
+                    <div class="article-thumb"><a class="hint hint--left" data-hint="{{ article.title }}" href="{% url 'detail' article.en_us %}">
+                        <img src="{{ article.cover.url }}" class="mr-3"></a></div>
                     <!--左上文章封面图-end-->
 
                     <!--右上文章概要内容-start-->

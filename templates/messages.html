@@ -9,6 +9,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/OwO.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/hint.css' %}">
 
 {% endblock %}
 
@@ -33,11 +34,11 @@
                 <div class="card-body py-2">
                     {% for user in least_users %}
                         {% if user.avatar %}
-                            <a class="d-inline-block position-relative" style="width:34px;"><img
+                            <a class="d-inline-block position-relative hint hint--success hint--bottom" style="width:34px;"  data-hint="{{ user.username }}"><img
                                     class="rounded-circle xwcms" src="{{ user.avatar.url }}" style="max-width:100%;"
                                     onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>
                         {% else %}
-                            <a class="d-inline-block position-relative" style="width:34px;"><img
+                            <a class="d-inline-block position-relative hint hint--success hint--bottom" data-hint="{{ user.username }}" style="width:34px;"><img
                                     class="rounded-circle xwcms" src="{% url_about user.email %}"
                                     style="max-width:100%;"
                                     onerror="javascript:this.src='{% static 'image/unknow.png' %}';"><i></i></a>

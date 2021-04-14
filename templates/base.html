@@ -225,7 +225,8 @@
     <div class="pio-action"></div>
     <canvas id="pio" width="200" height="250"></canvas>
 </div>
-
+{% block js %}
+{% endblock %}
 </body>
 
 <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
@@ -525,8 +526,7 @@
 
 
 
-{% block js %}
-{% endblock %}
+
 
 
 </html>
