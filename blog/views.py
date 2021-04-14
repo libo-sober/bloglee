@@ -201,6 +201,7 @@ class ArticleView(View):
         else:
             output = curr_article.content
         # 文章分类
+        print(output)
         categories = models.Category.objects.all()
         # 文章专栏
         columns = models.Column.objects.all().order_by('-weights')

@@ -37,13 +37,27 @@ def img_url(comment):
 @stringfilter
 def custom_markdown(content):
     # 给code标签中的代码快添加语言和行号
+    print('custom')
     code_list = re.findall(r'<pre><code class="lang-(.*)">', content, re.M)
+    print(code_list)
     for code in code_list:
         content = re.sub(r'<pre><code class="(.*)">',
-                         '<pre class="language-{code}"><code class="language-{code} line-numbers">'.format(
-                             code=code.lower()), content,  # line-numbers添加行号
+                         '<pre class="language-{code}"><code class="language-{code} line-numbers">'.format(code=code.lower()),
+                         content,
                          1)
+        # print(content)
+    img_list = re.findall(r'<img src="(.*)" alt="(.*)">', content, re.M)
+    print('img_list', img_list)
+    for img in img_list:
+        print('img', img)
+        content = re.sub(r'<img src="(.*)">',
+                         f'<div align="center"><img class="spotlight" src="{img[0]}" alt="{img[1]}" ></div>',
+                         content,
+                         1
+                         )
+        print(content)
 
+    # < a class ="spotlight" href="gallery/canada-2340312.jpg" >< img src = "gallery/canada-2340312-thumb.jpg" >< / a >
     # # 给所有的h标签添加id属性值
     # h_list = re.findall(r'<h\d>')
 
